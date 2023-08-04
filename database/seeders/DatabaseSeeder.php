@@ -12,11 +12,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory()->create([
-            'username' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => '$2y$10$CI5P59ICr/HOihqlnYUrLeKwCajgMKd34HB66.JsJBrIOQY9fazrG',
-            'is_admin'=>true
-        ]);
+        $users = [
+            [
+                'name' => 'admin',
+                'username' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => '$2y$10$CI5P59ICr/HOihqlnYUrLeKwCajgMKd34HB66.JsJBrIOQY9fazrG', #admin
+                'is_super_admin' => true,
+                'phone' => "22961765591",
+            ],
+            [
+                'name' => 'Joel PPJ',
+                'username' => 'ppjjoel',
+                'email' => 'ppjjoel@gmail.com',
+                'password' => '$2y$10$ZT2msbcfYEUWGUucpnrHwekWMBDe1H0zGrvB.pzQGpepF8zoaGIMC', #ppjjoel
+                'is_super_admin' => true,
+                'phone' => "22961765592",
+            ]
+        ];
+
+        foreach ($users as $user) {
+            \App\Models\User::factory()->create($user);
+        }
     }
 }

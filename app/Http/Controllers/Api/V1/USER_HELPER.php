@@ -15,16 +15,16 @@ class USER_HELPER extends BASE_HELPER
     static function register_rules(): array
     {
         return [
-            'username' => 'required',
+            'account' => 'required',
             'email' => ['required', 'email', Rule::unique('users')],
-            'password' => ['required'],
+            'password' => ['required', Rule::unique('users')],
         ];
     }
 
     static function register_messages(): array
     {
         return [
-            'username.required' => 'Le champ username est réquis!',
+            'account.required' => 'Le champ username est réquis!',
             'email.required' => 'Le champ Email est réquis!',
             'email.email' => 'Ce champ est un mail!',
             'email.unique' => 'Ce mail existe déjà!',
@@ -53,7 +53,7 @@ class USER_HELPER extends BASE_HELPER
     static function login_rules(): array
     {
         return [
-            'username' => 'required',
+            'account' => 'required',
             'password' => 'required',
         ];
     }
@@ -61,7 +61,7 @@ class USER_HELPER extends BASE_HELPER
     static function login_messages(): array
     {
         return [
-            'username.required' => 'Le champ Username est réquis!',
+            'account.required' => 'Le champ Username est réquis!',
             'password.required' => 'Le champ Password est réquis!',
         ];
     }
@@ -78,7 +78,17 @@ class USER_HELPER extends BASE_HELPER
 
     static function userAuthentification($request)
     {
-        $credentials = ['username' => $request->username, 'password' => $request->password];
+        if (is_numeric($request->get('account'))) {
+            $credentials  =  ['phone' => $request->get('account'), 'password' => $request->get('password')];
+            // $user = User::where(["phone" => $request->get('account')])->get();
+        } elseif (filter_var($request->get('account'), FILTER_VALIDATE_EMAIL)) {
+            $credentials  =  ['email' => $request->get('account'), 'password' => $request->get('password')];
+            // $user = User::where(["email" => $request->get('account')])->get();
+        } else {
+            $credentials  =  ['username' => $request->get('account'), 'password' => $request->get('password')];
+            // $user = User::where(["username" => $request->get('account')])->get();
+        }
+
         if (Auth::attempt($credentials)) { #SI LE USER EST AUTHENTIFIE
             $user = Auth::user();
             $token = $user->createToken('MyToken', ['api-access'])->accessToken;
