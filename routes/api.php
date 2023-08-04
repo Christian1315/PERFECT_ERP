@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Authorization;
-use App\Http\Controllers\Api\V1\SmsController;
 use App\Http\Controllers\Api\V1\UserController;
-use App\Http\Controllers\Api\V1\ContactController;
-use App\Http\Controllers\Api\V1\GroupeController;
+use App\Http\Controllers\Api\V1\OrganisationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,4 +26,23 @@ Route::prefix('v1')->group(function () {
         Route::any('users/{id}', 'RetrieveUser');
     });
     Route::any('authorization', [Authorization::class, 'Authorization'])->name('authorization');
+
+    ###========== Admin ROUTINGS ========###
+    Route::controller(UserController::class)->group(function () {
+        Route::any('login', 'Login');
+        Route::middleware(['auth:api'])->get('logout', 'Logout');
+        Route::any('users', 'Users');
+        Route::any('users/{id}', 'RetrieveUser');
+    });
+
+    ###========== Organisation ROUTINGS ========###
+    Route::prefix('organisation')->group(function () {
+        Route::controller(OrganisationController::class)->group(function () {
+            Route::any('add', 'AddOrganisation');
+            Route::any('all', 'Organisations');
+            Route::any('{id}/retrieve', 'RetrieveOrganisation');
+            Route::any('{id}/update', 'UpdateOrganisation');
+            Route::any('{id}/delete', 'DeleteOrganisation');
+        });
+    });
 });
