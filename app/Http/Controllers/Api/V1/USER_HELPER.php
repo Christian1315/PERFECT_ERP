@@ -76,6 +76,32 @@ class USER_HELPER extends BASE_HELPER
         return $validator;
     }
 
+    ##======== NEW PASSWORD VALIDATION =======##
+    static function NEW_PASSWORD_rules(): array
+    {
+        return [
+            'new_password' => 'required',
+        ];
+    }
+
+    static function NEW_PASSWORD_messages(): array
+    {
+        return [
+            // 'new_password.required' => 'Veuillez renseigner soit votre username,votre phone ou soit votre email',
+            // 'password.required' => 'Le champ Password est réquis!',
+        ];
+    }
+
+    static function NEW_PASSWORD_Validator($formDatas)
+    {
+        #
+        $rules = self::NEW_PASSWORD_rules();
+        $messages = self::NEW_PASSWORD_messages();
+
+        $validator = Validator::make($formDatas, $rules, $messages);
+        return $validator;
+    }
+
     static function userAuthentification($request)
     {
         if (is_numeric($request->get('account'))) {
@@ -115,6 +141,18 @@ class USER_HELPER extends BASE_HELPER
             return self::sendError("Ce utilisateur n'existe pas!", 404);
         }
         return self::sendResponse($user, "Utilisateur récupéré(e) avec succès:!!");
+    }
+
+    static function _updatePassword($formData, $id)
+    {
+        $user = User::where(['id' => $id])->get();
+        if (count($user) == 0) {
+            return self::sendError("Ce utilisateur n'existe pas!", 404);
+        };
+        $user = User::find($id);
+        // return $user;
+        $user->update(["password" => $formData["new_password"]]);
+        return self::sendResponse($user, 'Mot de passe modifié avec succès!');
     }
 
     static function userLogout($request)

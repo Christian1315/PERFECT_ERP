@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('username');
-            $table->string('password')->unique();
             $table->string('email')->unique();
             $table->string('phone')->unique();
-            $table->string('last_login')->unique();
+            $table->string('last_login')->nullable();
             $table->integer('organisation');
             $table->foreignId('as_user')
                 ->nullable()
@@ -30,7 +29,6 @@ return new class extends Migration
                 ->constrained("users", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
-
             $table->timestamps();
         });
     }
