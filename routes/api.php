@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\Authorization;
 use App\Http\Controllers\Api\V1\CandidatController;
+use App\Http\Controllers\Api\V1\ElectorController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\OrganisationController;
 use App\Models\Admin;
@@ -63,6 +64,17 @@ Route::prefix('v1')->group(function () {
             Route::any('{id}/retrieve', 'RetrieveCandidat');
             Route::any('{id}/update', 'UpdateCandidat');
             Route::any('{id}/delete', 'DeleteCandidat');
+        });
+    });
+
+    ###========== Electors ROUTINGS ========###
+    Route::prefix('elector')->group(function () {
+        Route::controller(ElectorController::class)->group(function () {
+            Route::any('add', 'AddElector');
+            Route::any('all', 'Electors');
+            Route::any('{id}/retrieve', 'RetrieveElector');
+            Route::any('{id}/update', 'UpdateElector');
+            Route::any('{id}/delete', 'DeleteElector');
         });
     });
 });
