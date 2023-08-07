@@ -129,6 +129,26 @@ class VOTE_HELPER extends BASE_HELPER
             }
         }
 
+        #=====ENVOIE D'SMS =======~####
+        #AUX ELECTEURS DU VOTE SI L'UTILISATEUR LES RENSEIGNE
+        if ($request->get("electors")) {
+            foreach ($electors_ids as $id) {
+                $elector = Elector::where(["id" => $id, "owner" => $user->id])->get();
+                $sms_login =  Login_To_Frik_SMS();
+
+                if ($sms_login['status']) {
+                    $token =  $sms_login['data']['token'];
+                    $vote_url = env("BASE_URL") . "/vote/" . $elector->identifiant . "/" . $elector->secret_code . "/" . $vote->id;
+                    Send_SMS(
+                        $elector->phone,
+                        "Vous avez été affecté au vote " . $vote->name . " en tant qu'electeur sur e-voting! Cliquez ici pour voter: " . $vote_url,
+                        $token
+                    );
+                }
+            }
+        }
+
+
         return self::sendResponse($vote, 'Vote crée avec succès!!');
     }
 
@@ -199,6 +219,19 @@ class VOTE_HELPER extends BASE_HELPER
         $vote = $vote[0];
 
         $vote->electors()->attach($elector);
+
+        #++====== ENVOIE D'SMS AU ELECTEUR +++++=======
+        $sms_login =  Login_To_Frik_SMS();
+
+        if ($sms_login['status']) {
+            $token =  $sms_login['data']['token'];
+            $vote_url = env("BASE_URL") . "/vote/" . $elector[0]->identifiant . "/" . $elector[0]->secret_code . "/" . $vote->id;
+            Send_SMS(
+                $elector[0]->phone,
+                "Vous avez été affecté au vote " . $vote->name . " en tant qu'electeur sur e-voting! Cliquez ici pour voter: " . $vote_url,
+                $token
+            );
+        }
 
         return self::sendResponse($vote, "Affectation effectuée avec succès!");
     }

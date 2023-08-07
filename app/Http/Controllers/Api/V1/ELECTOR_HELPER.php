@@ -57,18 +57,6 @@ class ELECTOR_HELPER extends BASE_HELPER
         $elector->identifiant = userCount() . Custom_Timestamp() . userCount();
         $elector->save();
 
-        #=====ENVOIE D'SMS =======~####
-        $sms_login =  Login_To_Frik_SMS();
-
-        if ($sms_login['status']) {
-            $token =  $sms_login['data']['token'];
-            $vote_url = env("BASE_URL") . "/vote/" . $elector->identifiant . "/" . $elector->secret_code;
-            Send_SMS(
-                $formData['phone'],
-                "Vous avez été ajouté en tant qu'electeur sur e-voting! Cliquez ici pour voter: " . $vote_url,
-                $token
-            );
-        }
         return self::sendResponse($elector, 'Electeur crée avec succès!!');
     }
 
