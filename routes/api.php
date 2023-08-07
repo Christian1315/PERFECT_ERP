@@ -6,8 +6,10 @@ use App\Http\Controllers\Api\V1\CandidatController;
 use App\Http\Controllers\Api\V1\ElectorController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\OrganisationController;
+use App\Http\Controllers\Api\V1\VoteController;
 use App\Models\Admin;
 use App\Models\Candidat;
+use App\Models\Vote;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,6 +77,17 @@ Route::prefix('v1')->group(function () {
             Route::any('{id}/retrieve', 'RetrieveElector');
             Route::any('{id}/update', 'UpdateElector');
             Route::any('{id}/delete', 'DeleteElector');
+        });
+    });
+
+    ###========== Vote ROUTINGS ========###
+    Route::prefix('vote')->group(function () {
+        Route::controller(VoteController::class)->group(function () {
+            Route::any('add', 'AddVote');
+            Route::any('all', 'Votes');
+            Route::any('{id}/retrieve', 'RetrieveVote');
+            Route::any('{id}/update', 'UpdateVote');
+            Route::any('{id}/delete', 'DeleteVote');
         });
     });
 });
