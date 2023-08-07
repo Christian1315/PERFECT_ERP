@@ -29,7 +29,7 @@ return new class extends Migration
 
             $table->boolean('status')->default(true);
             $table->boolean('visible')->default(true);
-            $table->boolean('delete_at')->nullable();
+            $table->string('delete_at')->nullable();
             $table->timestamps();
         });
     }

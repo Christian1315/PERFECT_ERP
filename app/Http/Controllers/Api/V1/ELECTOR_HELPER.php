@@ -74,13 +74,13 @@ class ELECTOR_HELPER extends BASE_HELPER
 
     static function getElectors()
     {
-        $elector =  Elector::with(['owner'])->where(["owner" => request()->user()->id])->orderBy("id", "desc")->get();
+        $elector =  Elector::with(['owner', "votes"])->where(["owner" => request()->user()->id])->orderBy("id", "desc")->get();
         return self::sendResponse($elector, 'Tout les electeurs récupérés avec succès!!');
     }
 
     static function retrieveElectors($id)
     {
-        $elector = Elector::with(['owner'])->where(["owner" => request()->user()->id, "id" => $id])->get();
+        $elector = Elector::with(['owner', "votes"])->where(["owner" => request()->user()->id, "id" => $id])->get();
         if ($elector->count() == 0) {
             return self::sendError("Ce elector n'existe pas!", 404);
         }

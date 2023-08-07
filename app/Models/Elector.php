@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Elector extends Model
 {
@@ -22,5 +23,10 @@ class Elector extends Model
     function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, "owner");
+    }
+
+    public function votes(): BelongsToMany
+    {
+        return $this->BelongsToMany(Vote::class, 'electors_votes', 'elector_id', 'vote_id');
     }
 }

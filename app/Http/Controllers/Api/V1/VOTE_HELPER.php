@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Models\Candidat;
 use App\Models\Elector;
 use App\Models\Vote;
 use Illuminate\Validation\Rule;
@@ -17,6 +18,7 @@ class VOTE_HELPER extends BASE_HELPER
         return [
             'name' => ['required', Rule::unique('votes')],
             'status' => ['required'],
+            'candidats' => ['required'],
         ];
     }
 
@@ -40,6 +42,36 @@ class VOTE_HELPER extends BASE_HELPER
         return $validator;
     }
 
+    ##======== VOTE AFFECTATION TO ELECTOR VALIDATION =======##
+    static function vote_affect__rules(): array
+    {
+        return [
+            'vote_id' => ['required', "integer"],
+            'elector_id' => ['required', "integer"],
+        ];
+    }
+
+    static function vote_affect_messages(): array
+    {
+        return [
+            // 'name.required' => 'Le name est réquis!',
+            // 'name.uniq' => 'Ce Champ est un mail!',
+            // 'phone.required' => 'Le phone est réquis!',
+            // 'phone.unique' => 'Le phone est existe déjà!',
+        ];
+    }
+
+    static function Vote_affect_Validator($formDatas)
+    {
+        #
+        $rules = self::vote_affect__rules();
+        $messages = self::vote_affect_messages();
+
+        $validator = Validator::make($formDatas, $rules, $messages);
+        return $validator;
+    }
+
+
     static function createVote($request)
     {
         $formData = $request->all();
@@ -48,35 +80,67 @@ class VOTE_HELPER extends BASE_HELPER
 
         if ($user->is_super_admin) { #S'IL EST UN SUPER ADMIN
             #ON VERIFIE JUSTE L'ORGANISATION VIA SON ID
-            $organisation = null;
+            $organisation_id = null;
         } else { #S'IL N'EST PAS UN SUPER ADMIN
             #ON RECUPERE SON ORGANISATION
             $user_organisation_id = $user->organisation; #recuperation de l'ID de l'organisation affectée au user
             $organisation = Get_User_Organisation($user_organisation_id);
-
-            $formData["organisation"] = $organisation->id;
+            $organisation_id = $organisation->id;
         }
-        // #AFFECTATION DU ROLE **$role** AU USER **$user** 
-        // $user->roles()->attach($role);
-        ##ENREGISTREMENT DE L'ELECTEUR DANS LA DB
-        $vote = Vote::create($formData);
+        $formData["organisation"] = $organisation_id;
 
+        #TRAITEMENT DU CHAMP **candidats** renseigné PAR LE USER
+        $candidats = $formData["candidats"];
+        $candidats_ids = explode(",", $candidats);
+        foreach ($candidats_ids as $id) {
+            $candidat = Candidat::where(["id" => $id, "owner" => $user->id]);
+            if ($candidat->count() == 0) {
+                return self::sendError("Le candidat d'id :" . $id . " n'existe pas!", 404);
+            }
+        }
+
+        #TRAITEMENT DU CHAMP **electors** S'IL EST renseigné PAR LE USER
+        if ($request->get("electors")) {
+            $electors = $formData["electors"];
+            $electors_ids = explode(",", $electors);
+            foreach ($electors_ids as $id) {
+                $elector = Elector::where(["id" => $id, "owner" => $user->id]);
+                if ($elector->count() == 0) {
+                    return self::sendError("L'electeur d'id :" . $id . " n'existe pas!", 404);
+                }
+            }
+        }
+
+        $vote = Vote::create($formData);
         $vote->owner = request()->user()->id;
-        $vote->organisation = $formData["organisation"];
         $vote->save();
+
+        #AFFECTATION DU CANDIDAT AU VOTE 
+        foreach ($candidats_ids as $id) {
+            $candidat = Candidat::where(["id" => $id, "owner" => $user->id])->get();
+            $vote->candidats()->attach($candidat);
+        }
+
+        #AFFECTATION DE L'ELECTEUR AU VOTE S'IL LE CHAMP EST RENSEIGNE PAR LE USER
+        if ($request->get("electors")) {
+            foreach ($electors_ids as $id) {
+                $elector = Elector::where(["id" => $id, "owner" => $user->id])->get();
+                $vote->electors()->attach($elector);
+            }
+        }
 
         return self::sendResponse($vote, 'Vote crée avec succès!!');
     }
 
     static function getVotes()
     {
-        $vote =  Vote::with(['owner'])->where(["owner" => request()->user()->id])->orderBy("id", "desc")->get();
+        $vote =  Vote::with(['owner', "candidats", "electors"])->where(["owner" => request()->user()->id])->orderBy("id", "desc")->get();
         return self::sendResponse($vote, 'Tout les votes récupérés avec succès!!');
     }
 
     static function retrieveVotes($id)
     {
-        $vote = Vote::with(['owner'])->where(["owner" => request()->user()->id, "id" => $id])->get();
+        $vote = Vote::with(['owner', "candidats", "electors"])->where(["owner" => request()->user()->id, "id" => $id])->get();
         if ($vote->count() == 0) {
             return self::sendError("Ce vote n'existe pas!", 404);
         }
@@ -93,16 +157,16 @@ class VOTE_HELPER extends BASE_HELPER
 
         #FILTRAGE POUR EVITER LES DOUBLONS
         if ($request->get("name")) {
-            $name = Elector::where(['name' => $formData['name'], 'owner' => request()->user()->id])->get();
+            $name = Vote::where(['name' => $formData['name'], 'owner' => request()->user()->id])->get();
 
             if (!count($name) == 0) {
                 return self::sendError("Ce name existe déjà!!", 404);
             }
         }
 
-        $elector = $elector[0];
+        $elector = $vote[0];
         $elector->update($formData);
-        return self::sendResponse($elector, "Electeur modifié(e) avec succès:!!");
+        return self::sendResponse($elector, "Vote modifié(e) avec succès:!!");
     }
 
     static function voteDelete($id)
@@ -112,7 +176,30 @@ class VOTE_HELPER extends BASE_HELPER
             return self::sendError("Ce Vote n'existe pas!", 404);
         };
         $vote = $vote[0];
-        $vote->delete();
+        $vote->visible = false;
+        $vote->delete_at = now();
+        // return $vote;
+        $vote->save();
         return self::sendResponse($vote, 'Ce Vote a été supprimé avec succès!');
+    }
+
+    static function AffectToElector($request)
+    {
+        $formData = $request->all();
+        $elector = Elector::where(['id' => $formData['elector_id'], 'owner' => request()->user()->id])->get();
+        if ($elector->count() == 0) {
+            return self::sendError("Ce electeur n'existe pas!", 404);
+        };
+
+        $vote = Vote::where(['id' => $formData['vote_id'], 'owner' => request()->user()->id])->get();
+        if ($vote->count() == 0) {
+            return self::sendError("Ce vote n'existe pas!", 404);
+        };
+
+        $vote = $vote[0];
+
+        $vote->electors()->attach($elector);
+
+        return self::sendResponse($vote, "Affectation effectuée avec succès!");
     }
 }

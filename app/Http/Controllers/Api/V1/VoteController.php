@@ -81,4 +81,23 @@ class VoteController extends VOTE_HELPER
         };
         return $this->VoteDelete($id);
     }
+
+    function _AffectToElector(Request $request)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "POST") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS Vote_HELPER
+            return $this->sendError("La méthode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+
+        #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR Vote_HELPER
+        $validator = $this->Vote_affect_Validator($request->all());
+
+        if ($validator->fails()) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR Vote_HELPER
+            return $this->sendError($validator->errors(), 404);
+        }
+
+        return $this->AffectToElector($request);
+    }
 }
