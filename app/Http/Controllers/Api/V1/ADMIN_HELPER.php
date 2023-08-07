@@ -49,7 +49,7 @@ class ADMIN_HELPER extends BASE_HELPER
     {
 
         $formData = $request->all();
-        $organisation = Organisation::where(["id" => $formData["organisation"], "owner" => request()->user()->id])->get();
+        $organisation = Organisation::where(["id" => $formData["organisation"]])->get();
 
         if ($organisation->count() == 0) {
             return self::sendError("Cette organisation n'existe pas!", 404);
@@ -113,13 +113,13 @@ class ADMIN_HELPER extends BASE_HELPER
 
     static function getAdmins()
     {
-        $admins =  Admin::where(["owner" => request()->user()->id])->orderBy("id", "desc")->get();
-        return self::sendResponse($admins, 'Toutes les organisations récupérés avec succès!!');
+        $admins =  Admin::with(['parent', 'owner', 'organisation'])->where(["owner" => request()->user()->id])->orderBy("id", "desc")->get();
+        return self::sendResponse($admins, 'Tout les admins récupérés avec succès!!');
     }
 
     static function retrieveAdmins($id)
     {
-        $admin = Admin::where(["owner" => request()->user()->id, "id" => $id])->get();
+        $admin = Admin::with(['parent', 'owner', 'organisation'])->where(["owner" => request()->user()->id, "id" => $id])->get();
         if ($admin->count() == 0) {
             return self::sendError("Cet admin n'existe pas!", 404);
         }

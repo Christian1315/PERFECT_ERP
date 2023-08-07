@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>FRIK SMS</title>
-    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <title>E-VOTING</title>
+    <link rel="shortcut icon" href="e-voting.jpeg" type="image/x-icon">
     <link rel="stylesheet" href="bootstrap.css">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="style.css">
@@ -22,7 +22,7 @@
             <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid">
-                        <a class="navbar-brand text-white bg-dark px-3" href="/"> <strong>FRIK SMS</strong></a>
+                        <a class="navbar-brand text-white bg-success btn roundered px-3" href="/"> <strong>E-VOTING</strong></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -36,7 +36,7 @@
                                 </li> -->
                             </ul>
                             <form class="d-flex" role="search">
-                                <!-- <img src="logo.png" class="shadow-lg p-3 bg-body rounded" alt="" srcset=""> -->
+                                <img src="e-voting.jpeg" width="100px" class="shadow-lg p-3 bg-body rounded" alt="" srcset="">
                             </form>
                         </div>
                     </div>
@@ -47,22 +47,11 @@
     <div class="container content">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h1 class="title">Soyez les bienvenu sur l'API du HSMC</h1>
+                <h1 class="title">Soyez les bienvenu sur l'API de E-VOTING</h1>
                 <p class="text-dark">Pour commencer,veuillez jetter un oeil sur la documentation pour avoir une vision plus claire de l'implementation des différentes routes!</p>
-                <a href="#" class="btn documentation">Voir la documentation</a>
+                <a href="#" class="btn documentation bg-success">Voir la documentation</a>
             </div>
         </div>
-
-        <!-- <div class="row">
-
-            <div class="offset-3 col-md-6 my-5 text-center">
-                <form action="api/v1/contact/import" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <input type="file" required name="contacts" class="form-control" id="">
-                    <button type="submit" class="btn btn-primary form-control mt-3">Importer</button>
-                </form>
-            </div>
-        </div> -->
     </div>
 
     <div class="container-fluid bg-light shadow-lg py-3 footer fixed-bottom">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Organisation;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 
@@ -24,6 +25,7 @@ function Get_Username($user, $type)
     $username =  $type . $an . userCount();
     return $username;
 }
+
 ##======== CE HELPER PERMET D'ENVOYER DES SMS VIA PHONE ==========## 
 
 function Login_To_Frik_SMS()
@@ -48,6 +50,13 @@ function Send_SMS($phone, $message, $token)
     ]);
 
     $response->getBody()->rewind();
+}
 
-    // return $response;
+
+
+##======== CE HELPER PERMET DeE RECUPERER L'ORGANISATION D'UN USER ==========## 
+
+function Get_User_Organisation($user_organisation_id)
+{
+    return Organisation::find($user_organisation_id);
 }

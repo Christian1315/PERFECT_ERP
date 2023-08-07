@@ -131,15 +131,24 @@ class USER_HELPER extends BASE_HELPER
     static function getUsers()
     {
         $users =  User::all();
+
+        foreach ($users as $user) {
+            $user_organisation_id = $user->organisation;
+            $user["belong_to_organisation"] = Get_User_Organisation($user_organisation_id);
+        }
         return self::sendResponse($users, 'Touts les utilisatreurs récupérés avec succès!!');
     }
 
     static function retrieveUsers($id)
     {
-        $user = User::where('id', $id)->get();
+        $user = User::with(["my_admins"])->where('id', $id)->get();
         if ($user->count() == 0) {
             return self::sendError("Ce utilisateur n'existe pas!", 404);
         }
+
+        $user = $user[0];
+        $user_organisation_id = $user->organisation;
+        $user["belong_to_organisation"] = Get_User_Organisation($user_organisation_id);
         return self::sendResponse($user, "Utilisateur récupéré(e) avec succès:!!");
     }
 
@@ -150,7 +159,6 @@ class USER_HELPER extends BASE_HELPER
             return self::sendError("Ce utilisateur n'existe pas!", 404);
         };
         $user = User::find($id);
-        // return $user;
         $user->update(["password" => $formData["new_password"]]);
         return self::sendResponse($user, 'Mot de passe modifié avec succès!');
     }

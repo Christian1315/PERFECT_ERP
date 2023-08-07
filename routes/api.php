@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\Authorization;
+use App\Http\Controllers\Api\V1\CandidatController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\OrganisationController;
 use App\Models\Admin;
+use App\Models\Candidat;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,6 +52,17 @@ Route::prefix('v1')->group(function () {
             Route::any('{id}/retrieve', 'retrieveAdmins');
             Route::any('{id}/update', 'updateAdmins');
             Route::any('{id}/delete', 'adminDelete');
+        });
+    });
+
+    ###========== Candidats ROUTINGS ========###
+    Route::prefix('candidat')->group(function () {
+        Route::controller(CandidatController::class)->group(function () {
+            Route::any('add', 'AddCandidat');
+            Route::any('all', 'Candidats');
+            Route::any('{id}/retrieve', 'RetrieveCandidat');
+            Route::any('{id}/update', 'UpdateCandidat');
+            Route::any('{id}/delete', 'DeleteCandidat');
         });
     });
 });

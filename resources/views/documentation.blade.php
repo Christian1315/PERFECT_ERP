@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>AGBANDE - DOCUMENTATION</title>
+    <title>E-VOTING - DOCUMENTATION</title>
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="style.css">
@@ -61,16 +61,16 @@
                             <p class="text-dark">AGBANWA innove afin de garantir à ses clients une visibilité optimale sur leurs coûts logistiques tout en leur permettant de visualiser les possibilités d’optimisation, <br> en mutualisant les chargements, par exemple</p>
                         </div>
                     </div>
-        
+
                     <!-- ################ TOUTES LES ROUTES RELATIVES AUX USERS ############### -->
                     <div class="bg-dark text-center mb-5">
                         <h1 class="text-white">TOUTES LES ROUTES RELATIVES AUX USERS</h1>
                     </div>
                     <div class="row" id="documenation">
                         <div class="col-md-12">
-        
+
                             <!-- REGISTRATION -->
-        
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
@@ -100,7 +100,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.POST(url,json=data)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- LOGIN -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -124,7 +124,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.POST(url,json=data)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- LOGOUT -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -149,7 +149,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,option=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- GET ALL USERS -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -157,12 +157,12 @@
                                         <button disabled class="btn documentation ">##============ RECUPERER TOUT LES USERS ==========##</button>
                                     </div>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">URL ::</strong> BASE_URL/api/v1/users </h5>
-        
+
                                     </p>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- GET A USER -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -171,22 +171,22 @@
                                     </div>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">URL ::</strong> BASE_URL/api/v1/users/< user_id>
                                     </h5>
-        
+
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url)</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
-        
+
                     <!-- ################ LES URLs RELATIFS AUX TYPES TRANSPORTS ############### -->
                     <div class="bg-dark text-center mt-5">
                         <h1 class="text-white">LES URLs RELATIFS AUX TYPES DE TRANSPORTS</h1>
                     </div>
                     <div class="row" id="documenation">
                         <div class="col-md-12">
-        
+
                             <!-- AJOUT D'UN TYPE DE MOYEN DE TRANSPORT -->
-        
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
@@ -220,7 +220,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.POST(url,option=header,json=data)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- RECUPERATION DE TOUT LES TYPES DE MOYENS DE TRANSPORT -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -245,7 +245,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,json=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- RECHERCHE D'UN TYPE DE MOYEN DE TRANSPORT -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -279,7 +279,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.POST(url,option=header,json=data)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- SUPPRESSION D'UN TYPE DE MOYEN DE TRANSPORT -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -303,7 +303,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.DELETE(url,option = header)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- UPDATE D'UN TYPE DE MOYEN DE TRANSPORT -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -335,22 +335,22 @@
                                             </ul>
                                         </li>
                                     </ul>
-        
+
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.PATCH(url,option=header,json=data)</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
-        
+
                     <!-- ################ LES URLs RELATIFS AUX MOYENS DE TRANSPORTS ############### -->
                     <div class="bg-dark text-center mt-5">
                         <h1 class="text-white">LES URLs RELATIFS AUX MOYENS DE TRANSPORTS</h1>
                     </div>
                     <div class="row" id="documenation">
                         <div class="col-md-12">
-        
+
                             <!-- AJOUT D'UN MOYEN DE TRANSPORT -->
-        
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
@@ -390,7 +390,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.POST(url,option=header,json=data)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- RECUPERATION DE TOUT LES MOYENS DE TRANSPORT -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -415,7 +415,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,json=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- RECUPERATION DE TOUT LES MOYENS DE TRANSPORT D'UN USER(transporteur) -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -426,7 +426,7 @@
                                     </h5>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">DATA ::</strong></h5>
                                     <p class="">
-        
+
                                     <ul>
                                         <li>header =
                                             <ul>
@@ -442,7 +442,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,option=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!--   RECUPERATION D'UN MOYEN DE TRANSPORT -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -453,7 +453,7 @@
                                     </h5>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">DATA ::</strong></h5>
                                     <p class="">
-        
+
                                     <ul>
                                         <li>header =
                                             <ul>
@@ -469,7 +469,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,option=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!--   RECUPERATION DE TOUT LES MOYEN DE TRANSPORT VALIDES D'UN USER(transporteur) -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -480,7 +480,7 @@
                                     </h5>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">DATA ::</strong></h5>
                                     <p class="">
-        
+
                                     <ul>
                                         <li>header =
                                             <ul>
@@ -496,7 +496,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,option=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- SUPPRESSION D'UN MOYEN DE TRANSPORT -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -520,7 +520,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.DELETE(url,option = header)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- UPDATE D'UN MOYEN DE TRANSPORT -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -552,22 +552,22 @@
                                             </ul>
                                         </li>
                                     </ul>
-        
+
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.PATCH(url,option=header,json=data)</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
-        
+
                     <!-- ################ LES URLs RELATIFS AUX FRETS ############### -->
                     <div class="bg-dark text-center mt-5">
                         <h1 class="text-white">LES URLs RELATIFS AUX FRETS</h1>
                     </div>
                     <div class="row" id="documenation">
                         <div class="col-md-12">
-        
+
                             <!-- AJOUT D'UN FRET  -->
-        
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
@@ -607,7 +607,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.POST(url,option=header,json=data)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- RECUPERATION DE TOUT LES FRETS -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -632,7 +632,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,json=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- RECUPERATION DE TOUT LES FRETS D'UN USER(Expéditeur) -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -643,7 +643,7 @@
                                     </h5>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">DATA ::</strong></h5>
                                     <p class="">
-        
+
                                     <ul>
                                         <li>header =
                                             <ul>
@@ -659,7 +659,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,option=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!--   RECUPERATION D'UN FRET -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -670,7 +670,7 @@
                                     </h5>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">DATA ::</strong></h5>
                                     <p class="">
-        
+
                                     <ul>
                                         <li>header =
                                             <ul>
@@ -686,7 +686,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,option=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!--   RECUPERATION DE TOUT LES FRETS VALIDES D'UN USER(Expéditeur) -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -697,7 +697,7 @@
                                     </h5>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">DATA ::</strong></h5>
                                     <p class="">
-        
+
                                     <ul>
                                         <li>header =
                                             <ul>
@@ -713,7 +713,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,option=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- SUPPRESSION D'UN FRET -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -737,7 +737,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.DELETE(url,option = header)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- UPDATE D'UN FRET -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -769,22 +769,22 @@
                                             </ul>
                                         </li>
                                     </ul>
-        
+
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.PATCH(url,option=header,json=data)</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
-        
+
                     <!-- ################ LES URLs RELATIFS AUX NOTIFICATIONS ############### -->
                     <div class="bg-dark text-center mt-5">
                         <h1 class="text-white">LES URLs RELATIFS AUX NOTIFICATIONS</h1>
                     </div>
                     <div class="row" id="documenation">
                         <div class="col-md-12">
-        
+
                             <!-- AJOUT D'UNE NOTIFICATION  -->
-        
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
@@ -819,7 +819,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.POST(url,option=header,json=data)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- RECUPERATION DE TOUTE LES NOTIFICATIONS -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -844,7 +844,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,json=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!-- RECUPERATION DE TOUTES LES NOTIFICATIONS REçU PAR UN USER -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -855,7 +855,7 @@
                                     </h5>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">DATA ::</strong></h5>
                                     <p class="">
-        
+
                                     <ul>
                                         <li>header =
                                             <ul>
@@ -871,7 +871,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,option=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!--   RECUPERATION D'UNE NOTIFICATION -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -882,7 +882,7 @@
                                     </h5>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">DATA ::</strong></h5>
                                     <p class="">
-        
+
                                     <ul>
                                         <li>header =
                                             <ul>
@@ -898,7 +898,7 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.GET(url,option=header)</h5>
                                 </div>
                             </div>
-        
+
                             <!--   SUPPRESSION D'UNE NOTIFICATION -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -909,7 +909,7 @@
                                     </h5>
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">DATA ::</strong></h5>
                                     <p class="">
-        
+
                                     <ul>
                                         <li>header =
                                             <ul>
@@ -925,9 +925,9 @@
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.DELETE(url,option=header)</h5>
                                 </div>
                             </div>
-        
-        
-        
+
+
+
                             <!-- UPDATE D'UNE NOTIFICATION -->
                             <div class="row mt-5">
                                 <div class="col-md-12">
@@ -959,7 +959,7 @@
                                             </ul>
                                         </li>
                                     </ul>
-        
+
                                     <h5 class="mt-5"> <strong class="bg-dark p-1 text-white ">EXEMPLE DE REQUEST::</strong> fetch.PATCH(url,option=header,json=data)</h5>
                                 </div>
                             </div>
