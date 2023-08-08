@@ -90,8 +90,9 @@ class VOTE_HELPER extends BASE_HELPER
         $formData["organisation"] = $organisation_id;
 
         #TRAITEMENT DU CHAMP **candidats** renseigné PAR LE USER
-        $candidats = $formData["candidats"];
-        $candidats_ids = explode(",", $candidats);
+        $candidats_ids = $formData["candidats"];
+        // return $candidats;
+        // $candidats_ids = explode(",", $candidats);
         foreach ($candidats_ids as $id) {
             $candidat = Candidat::where(["id" => $id, "owner" => $user->id]);
             if ($candidat->count() == 0) {
