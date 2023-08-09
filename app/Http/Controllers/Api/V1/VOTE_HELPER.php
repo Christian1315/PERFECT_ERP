@@ -102,8 +102,8 @@ class VOTE_HELPER extends BASE_HELPER
 
         #TRAITEMENT DU CHAMP **electors** S'IL EST renseigné PAR LE USER
         if ($request->get("electors")) {
-            $electors = $formData["electors"];
-            $electors_ids = explode(",", $electors);
+            $electors_ids = $formData["electors"];
+            // $electors_ids = explode(",", $electors);
             foreach ($electors_ids as $id) {
                 $elector = Elector::where(["id" => $id, "owner" => $user->id]);
                 if ($elector->count() == 0) {
