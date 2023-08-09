@@ -105,7 +105,7 @@ class VOTE_HELPER extends BASE_HELPER
             $electors_ids = $formData["electors"];
             // $electors_ids = explode(",", $electors);
             foreach ($electors_ids as $id) {
-                $elector = Elector::where(["id" => $id, "owner" => $user->id]);
+                $elector = Elector::where(["id" => $id, "owner" => $user->id])->get();
                 if ($elector->count() == 0) {
                     return self::sendError("L'electeur d'id :" . $id . " n'existe pas!", 404);
                 }
