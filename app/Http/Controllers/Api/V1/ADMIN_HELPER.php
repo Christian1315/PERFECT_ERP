@@ -104,7 +104,7 @@ class ADMIN_HELPER extends BASE_HELPER
 
             Send_SMS(
                 $formData['phone'],
-                "Votre compte admin a été crée avec succès sur E-VOTING. Voici ci-dessous vos identifiants de connexion: Username::" . $username,
+                "Votre compte admin a été crée avec succès sur ERP_FINANFA. Voici ci-dessous vos identifiants de connexion: Username::" . $username,
                 $token
             );
         }
