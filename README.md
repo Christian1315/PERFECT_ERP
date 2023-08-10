@@ -1,7 +1,7 @@
 
-## POURQUOI FRIK SMS
+## POURQUOI ERP_FINANFA ?
 
-FRIK SMS innove afin de garantir à ses clients 
+ERP FINANFA innove afin de garantir à ses clients 
 une visibilité optimale DE MARKETING par messagérie
 
 ## Development Technology
@@ -13,8 +13,8 @@ une visibilité optimale DE MARKETING par messagérie
 
 Accéder au projet
 ```bash
-$ git clone https://github.com/joelppj/FrikSMS_Backend.git
-$ cd FrikSMS_Backend
+$ git clone https://github.com/joelppj/PerfectPlus_ERP_API.git
+$ cd PerfectPlus_ERP_API
 
 ```
 Installer les dépendances
@@ -56,4 +56,4 @@ Accéder à AGBANDE_API/DOCUMENTATION.txt POUR VOIR TOUTES LES ROUTES AINSI QUE 
 
 ## TEST DE L'API
 
-Importer  FRIK SMS.postman_collection.json sur Postman puis passer au test de l'API
+
