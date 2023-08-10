@@ -60,7 +60,7 @@ class ADMIN_HELPER extends BASE_HELPER
         $user = request()->user();
         $type = "ADM";
 
-        $username =  Get_Username($user, $type); ##Add_Number est un helper qui genère le **number** 
+        $username =  Get_Username($user, $type); ##Get_Username est un helper qui genère le **number** 
 
         ##VERIFIONS SI LE USER EXISTAIT DEJA
         $user = User::where("username", $username)->get();
