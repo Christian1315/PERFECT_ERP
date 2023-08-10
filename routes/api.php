@@ -27,13 +27,16 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     ###========== USERs ROUTINGS ========###
     Route::controller(UserController::class)->group(function () {
-        Route::any('login', 'Login');
-        Route::middleware(['auth:api'])->get('logout', 'Logout');
-        Route::any('users', 'Users');
-        Route::any('users/{id}', 'RetrieveUser');
-        Route::any('{id}/password/update', 'UpdatePassword');
-        Route::any('{id}/delete', 'DeleteUser');
+        Route::prefix("user")->group(function () {
+            Route::any('login', 'Login');
+            Route::middleware(['auth:api'])->get('logout', 'Logout');
+            Route::any('users', 'Users');
+            Route::any('users/{id}', 'RetrieveUser');
+            Route::any('{id}/password/update', 'UpdatePassword');
+            Route::any('{id}/delete', 'DeleteUser');
+        });
     });
+    
     Route::any('authorization', [Authorization::class, 'Authorization'])->name('authorization');
 
     ###========== Organisation ROUTINGS ========###

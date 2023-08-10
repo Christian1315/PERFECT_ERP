@@ -7,7 +7,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
@@ -52,5 +51,10 @@ class User extends Authenticatable
     function my_admins(): HasMany
     {
         return $this->hasMany(Admin::class, "owner");
+    }
+
+    function belong_to_organisation(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "organisation")->where("is_super_admin", 0);
     }
 }
