@@ -61,13 +61,13 @@ class ORGANISATION_HELPER extends BASE_HELPER
 
     static function getOrganisations()
     {
-        $organisations =  Organisation::orderBy("id", "desc")->get();
+        $organisations =  Organisation::with(["admins"])->orderBy("id", "desc")->get();
         return self::sendResponse($organisations, 'Toutes les organisations récupérés avec succès!!');
     }
 
     static function retrieveOrganisations($id)
     {
-        $organisation = Organisation::where('id', $id)->get();
+        $organisation = Organisation::with(["admins"])->where('id', $id)->get();
         if ($organisation->count() == 0) {
             return self::sendError("Cette organisation n'existe pas!", 404);
         }

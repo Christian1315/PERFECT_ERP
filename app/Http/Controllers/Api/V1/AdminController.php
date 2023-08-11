@@ -13,7 +13,7 @@ class AdminController extends ADMIN_HELPER
         $this->middleware("CheckSuperAdmin");
     }
 
-    #AJOUT DU ORGANISATION
+    #AJOUT DU ADMIN
     function AddAdmin(Request $request)
     {
         #VERIFICATION DE LA METHOD
@@ -44,12 +44,12 @@ class AdminController extends ADMIN_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION DE TOUTES LES ORGANISATIONS
-        return $this->getOrganisations();
+        #RECUPERATION DE TOUTS LES Admins
+        return $this->getAdmins();
     }
 
-    #GET A ORGANISATION
-    function RetrieveOrganisation(Request $request, $id)
+    #GET AN ADMIN
+    function RetrieveAdmin(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "GET") == False) {
@@ -57,12 +57,12 @@ class AdminController extends ADMIN_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION DU ORGANISATION
-        return $this->retrieveOrganisations($id);
+        #RECUPERATION DU ADMIN
+        return $this->retrieveAdmins($id);
     }
 
-    #RECUPERER UN ORGANISATION
-    function UpdateOrganisation(Request $request, $id)
+    #RECUPERER UN ADMIN
+    function UpdateAdmin(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "POST") == False) {
@@ -70,11 +70,11 @@ class AdminController extends ADMIN_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION D'UNE ORGANISATION VIA SON **id**
-        return $this->updateOrganisations($request, $id);
+        #RECUPERATION D'UNE ADMIN VIA SON **id**
+        return $this->updateAdmins($request, $id);
     }
 
-    function DeleteOrganisation(Request $request, $id)
+    function DeleteAdmin(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "DELETE") == False) {
@@ -82,6 +82,6 @@ class AdminController extends ADMIN_HELPER
             return $this->sendError("La méthode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        return $this->organisationDelete($id);
+        return $this->adminDelete($id);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Member;
-use App\Models\Organisation;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
@@ -123,13 +122,13 @@ class MEMBER_HELPER extends BASE_HELPER
 
     static function getMembers()
     {
-        $members =  Member::with(["belong_to_admin", "belong_to_organisation"])->orderBy("id", "desc")->get();
+        $members =  Member::with(["belong_to_admin", "belong_to_organisation", "teams"])->where(["owner" => request()->user()->id])->orderBy("id", "desc")->get();
         return self::sendResponse($members, 'Tout les membres récupérés avec succès!!');
     }
 
     static function retrieveMembers($id)
     {
-        $member = Member::with(["belong_to_admin", "belong_to_organisation"])->where('id', $id)->get();
+        $member = Member::with(["belong_to_admin", "belong_to_organisation", "teams"])->where(['id' => $id, "owner" => request()->user()->id])->get();
         if ($member->count() == 0) {
             return self::sendError("Ce membre n'existe pas!", 404);
         }

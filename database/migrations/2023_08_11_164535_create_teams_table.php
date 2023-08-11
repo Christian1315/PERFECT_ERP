@@ -11,30 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('members', function (Blueprint $table) {
+        Schema::create('teams', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone')->unique();
-            $table->string('img');
-            $table->foreignId('as_user')
-                ->nullable()
-                ->constrained("users", "id")
-                ->onUpdate("CASCADE")
-                ->onDelete("CASCADE");
-            $table->foreignId('organisation')
-                ->nullable()
-                ->constrained("organisations", "id")
-                ->onUpdate("CASCADE")
-                ->onDelete("CASCADE");
-            $table->foreignId('admin')
+            $table->string("name");
+            $table->text("description");
+            $table->foreignId("admin")
                 ->nullable()
                 ->constrained("admins", "id")
+                ->nullable()
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
-            $table->foreignId('owner')
+            $table->foreignId("organisation")
+                ->nullable()
+                ->constrained("organisations", "id")
+                ->nullable()
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
+            $table->foreignId("owner")
                 ->nullable()
                 ->constrained("users", "id")
+                ->nullable()
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
             $table->timestamps();
@@ -46,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('members');
+        Schema::dropIfExists('teams');
     }
 };

@@ -86,7 +86,7 @@ class ADMIN_HELPER extends BASE_HELPER
         ];
 
         // return $formData;
-        $formData["username"] = $username;
+        // $formData["username"] = $username;
 
         $user = User::create($userData);
         $user->is_admin = true;

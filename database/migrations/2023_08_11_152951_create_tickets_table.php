@@ -11,21 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone')->unique();
-            $table->string('last_login')->nullable();
-            $table->integer('organisation');
-            $table->foreignId('as_user')
+            $table->foreignId("organisation")
                 ->nullable()
-                ->constrained("users", "id")
+                ->constrained("organisations", "id")
+                ->nullable()
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
-            $table->foreignId('owner')
+            $table->foreignId("member")
                 ->nullable()
-                ->constrained("users", "id")
+                ->constrained("members", "id")
+                ->nullable()
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
             $table->timestamps();
@@ -37,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('tickets');
     }
 };

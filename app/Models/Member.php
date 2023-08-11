@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Member extends Model
 {
@@ -25,5 +26,10 @@ class Member extends Model
     function belong_to_admin(): BelongsTo
     {
         return $this->belongsTo(Admin::class, "admin");
+    }
+
+    function teams(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class, "members_teams","member_id","team_id");
     }
 }

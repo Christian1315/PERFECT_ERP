@@ -2,15 +2,10 @@
 
 use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\Authorization;
-use App\Http\Controllers\Api\V1\CandidatController;
-use App\Http\Controllers\Api\V1\ElectorController;
 use App\Http\Controllers\Api\V1\MemberController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\OrganisationController;
-use App\Http\Controllers\Api\V1\VoteController;
-use App\Models\Admin;
-use App\Models\Candidat;
-use App\Models\Vote;
+use App\Http\Controllers\Api\V1\TeamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,10 +50,22 @@ Route::prefix('v1')->group(function () {
     Route::prefix('admin')->group(function () {
         Route::controller(AdminController::class)->group(function () {
             Route::any('add', 'AddAdmin');
-            Route::any('all', 'getAdmins');
-            Route::any('{id}/retrieve', 'retrieveAdmins');
-            Route::any('{id}/update', 'updateAdmins');
-            Route::any('{id}/delete', 'adminDelete');
+            Route::any('all', 'Admins');
+            Route::any('{id}/retrieve', 'RetrieveAdmins');
+            Route::any('{id}/update', 'UpdateAdmins');
+            Route::any('{id}/delete', 'AdminDelete');
+        });
+    });
+
+    ###========== TEAM ROUTINGS ========###
+    Route::prefix('team')->group(function () {
+        Route::controller(TeamController::class)->group(function () {
+            Route::any('add', 'AddTeam');
+            Route::any('all', 'TEAMs');
+            Route::any('{id}/retrieve', 'RetrieveTeams');
+            Route::any('{id}/update', 'UpdateTEAM');
+            Route::any('{id}/delete', 'TeamDelete');
+            Route::any('/affect-to-member', '_AffectToMember');
         });
     });
 

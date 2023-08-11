@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Organisation extends Model
 {
@@ -15,4 +16,9 @@ class Organisation extends Model
         "img",
         "sigle",
     ];
+
+    function admins(): HasMany
+    {
+        return $this->hasMany(Admin::class, "organisation")->with(["teams"]);
+    }
 }
