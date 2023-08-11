@@ -4,81 +4,84 @@ namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 
-class ElectorController extends ELECTOR_HELPER
+class MemberController extends MEMBER_HELPER
 {
     #VERIFIONS SI LE USER EST AUTHENTIFIE
     public function __construct()
     {
         $this->middleware(['auth:api', 'scope:api-access']);
+        $this->middleware('ChechSuperAdminOrSimpleAdmin');
     }
 
-    #AJOUT D'UN ELECTEUR
-    function AddElector(Request $request)
+    #AJOUT D'UN MEMBRE
+    function AddMember(Request $request)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "POST") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR ELECTOR_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR MEMBER_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR ELECTOR_HELPER
-        $validator = $this->Elector_Validator($request->all());
+        #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR MEMBER_HELPER
+        $validator = $this->Member_Validator($request->all());
 
         if ($validator->fails()) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR ELECTOR_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR MEMBER_HELPER
             return $this->sendError($validator->errors(), 404);
         }
 
-        #ENREGISTREMENT DANS LA DB VIA **createElector** DE LA CLASS BASE_HELPER HERITEE PAR ELECTOR_HELPER
-        return $this->createElector($request);
+
+        #ENREGISTREMENT DANS LA DB VIA **createMember** DE LA CLASS BASE_HELPER HERITEE PAR MEMBER_HELPER
+        return $this->createMember($request);
     }
 
-    #GET ALL ELECTORS
-    function Electors(Request $request)
+    #GET ALL MEMBERS
+    function Members(Request $request)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "GET") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR ELECTOR_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR MEMBER_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION DE TOUT LES ELECTEURS
-        return $this->getElectors();
+        #RECUPERATION DE TOUT LES MEMBRES
+        return $this->getMembers();
     }
 
-    #GET AN ELECTOR
-    function RetrieveElector(Request $request, $id)
+    #GET A MEMBER
+    function RetrieveMember(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "GET") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR ELECTOR_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR MEMBER_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION D'UN ELECTEUR
-        return $this->retrieveElectors($id);
+        #RECUPERATION DU MEMBRE
+        return $this->retrieveMembers($id);
     }
 
-    #RECUPERER UN ELECTEUR
-    function UpdateElector(Request $request, $id)
+    #RECUPERER UN MEMBER
+    function UpdateMember(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "POST") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR ELECTOR_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR MEMBER_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION D'UN ELECTEUR VIA SON **id**
-        return $this->updateElectors($request, $id);
+        #RECUPERATION D'UN MEMBER VIA SON **id**
+        return $this->updateMembers($request, $id);
     }
 
-    function DeleteElector(Request $request, $id)
+    function DeleteMember(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "DELETE") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS ELECTOR_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS MEMBER_HELPER
             return $this->sendError("La méthode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
-        return $this->electorDelete($id);
+
+        return $this->memberDelete($id);
     }
 }

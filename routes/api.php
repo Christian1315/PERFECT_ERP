@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\Authorization;
 use App\Http\Controllers\Api\V1\CandidatController;
 use App\Http\Controllers\Api\V1\ElectorController;
+use App\Http\Controllers\Api\V1\MemberController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\OrganisationController;
 use App\Http\Controllers\Api\V1\VoteController;
@@ -36,7 +37,7 @@ Route::prefix('v1')->group(function () {
             Route::any('{id}/delete', 'DeleteUser');
         });
     });
-    
+
     Route::any('authorization', [Authorization::class, 'Authorization'])->name('authorization');
 
     ###========== Organisation ROUTINGS ========###
@@ -61,37 +62,14 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-    ###========== Candidats ROUTINGS ========###
-    Route::prefix('candidat')->group(function () {
-        Route::controller(CandidatController::class)->group(function () {
-            Route::any('add', 'AddCandidat');
-            Route::any('all', 'Candidats');
-            Route::any('{id}/retrieve', 'RetrieveCandidat');
-            Route::any('{id}/update', 'UpdateCandidat');
-            Route::any('{id}/delete', 'DeleteCandidat');
-        });
-    });
-
-    ###========== Electors ROUTINGS ========###
-    Route::prefix('elector')->group(function () {
-        Route::controller(ElectorController::class)->group(function () {
-            Route::any('add', 'AddElector');
-            Route::any('all', 'Electors');
-            Route::any('{id}/retrieve', 'RetrieveElector');
-            Route::any('{id}/update', 'UpdateElector');
-            Route::any('{id}/delete', 'DeleteElector');
-        });
-    });
-
-    ###========== Vote ROUTINGS ========###
-    Route::prefix('vote')->group(function () {
-        Route::controller(VoteController::class)->group(function () {
-            Route::any('add', 'AddVote');
-            Route::any('all', 'Votes');
-            Route::any('{id}/retrieve', 'RetrieveVote');
-            Route::any('{id}/update', 'UpdateVote');
-            Route::any('{id}/delete', 'DeleteVote');
-            Route::any('/affect-to-elector', '_AffectToElector');
+    ###========== MEMBERS ROUTINGS ========###
+    Route::prefix('member')->group(function () {
+        Route::controller(MemberController::class)->group(function () {
+            Route::any('add', 'AddMember');
+            Route::any('all', 'Members');
+            Route::any('{id}/retrieve', 'RetrieveMember');
+            Route::any('{id}/update', 'UpdateMember');
+            Route::any('{id}/delete', 'DeleteMember');
         });
     });
 });

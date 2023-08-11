@@ -53,10 +53,30 @@ function Send_SMS($phone, $message, $token)
 }
 
 
+##======== CE HELPER PERMET DE VERIFIER SI LE USER EST UN SIMPLE ADMIN OU PAS ==========## 
+function Is_User_An_Admin($userId)
+{ #
+    $user = User::where(['id' => $userId, 'is_admin' => 1])->get();
+    if (count($user) == 0) {
+        return false;
+    }
+    return true; #Sil est un Simple Admin
+}
 
-##======== CE HELPER PERMET DeE RECUPERER L'ORGANISATION D'UN USER ==========## 
+##======== CE HELPER PERMET DE VERIFIER SI LE USER EST UN SUPER ADMIN OU PAS ==========## 
+function Is_User_A_Super_Admin($userId)
+{ #
+    $user = User::where(['id' => $userId, 'is_super_admin' => 1])->get();
+    if (count($user) == 0) {
+        return false;
+    }
+    return true; #Sil est un Super Admin
+}
 
-function Get_User_Organisation($user_organisation_id)
+function Is_User_A_SimpleAdmin_Or_SuperAdmin($userId)
 {
-    return Organisation::find($user_organisation_id);
+    if (Is_User_An_Admin($userId) || Is_User_A_Super_Admin($userId)) {
+        return true; #S'il s'agit d'un Simple Admin ou d'un Super Admin
+    }
+    return false; #S'il n'est ni l'un nil'autre
 }

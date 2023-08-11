@@ -28,7 +28,12 @@ class Admin extends Model
         return $this->belongsTo(User::class, "owner");
     }
 
-    function organisation(): BelongsTo
+    function as_user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "as_user");
+    }
+
+    function belong_to_organisation(): BelongsTo
     {
         return $this->belongsTo(Organisation::class, "organisation");
     }

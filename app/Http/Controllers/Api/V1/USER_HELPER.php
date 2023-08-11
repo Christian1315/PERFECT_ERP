@@ -130,13 +130,13 @@ class USER_HELPER extends BASE_HELPER
 
     static function getUsers()
     {
-        $users =  User::with(["my_admins", "belong_to_organisation"])->orderBy("id", "desc")->get();
+        $users =  User::with(["as_admin", "my_admins", "belong_to_organisation"])->orderBy("id", "desc")->get();
         return self::sendResponse($users, 'Touts les utilisatreurs récupérés avec succès!!');
     }
 
     static function retrieveUsers($id)
     {
-        $user = User::with(["my_admins", "belong_to_organisation"])->where('id', $id)->get();
+        $user = User::with(["as_admin", "my_admins", "belong_to_organisation"])->where('id', $id)->get();
         if ($user->count() == 0) {
             return self::sendError("Ce utilisateur n'existe pas!", 404);
         }

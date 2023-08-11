@@ -54,10 +54,10 @@ class ADMIN_HELPER extends BASE_HELPER
         if ($organisation->count() == 0) {
             return self::sendError("Cette organisation n'existe pas!", 404);
         }
+        $user = request()->user();
 
         #SON ENREGISTREMENT EN TANT QU'UN USER
 
-        $user = request()->user();
         $type = "ADM";
 
         $username =  Get_Username($user, $type); ##Get_Username est un helper qui genère le **number** 
@@ -89,6 +89,9 @@ class ADMIN_HELPER extends BASE_HELPER
         $formData["username"] = $username;
 
         $user = User::create($userData);
+        $user->is_admin = true;
+        $user->save();
+
 
         ##ENREGISTREMENT DE L'ADMIN DANS LA DB
         $admin = Admin::create($formData);
@@ -104,7 +107,7 @@ class ADMIN_HELPER extends BASE_HELPER
 
             Send_SMS(
                 $formData['phone'],
-                "Votre compte admin a été crée avec succès sur ERP_FINANFA. Voici ci-dessous vos identifiants de connexion: Username::" . $username,
+                "Votre compte admin a été crée avec succès sur ERP_FINANFA. Voici ci-dessous vos identifiants de connexion: Username::" . $username . "; Password:: " . $username,
                 $token
             );
         }
@@ -113,13 +116,13 @@ class ADMIN_HELPER extends BASE_HELPER
 
     static function getAdmins()
     {
-        $admins =  Admin::with(['parent', 'owner', 'organisation'])->where(["owner" => request()->user()->id])->orderBy("id", "desc")->get();
+        $admins =  Admin::with(["as_user",'parent', 'owner', 'belong_to_organisation'])->where(["owner" => request()->user()->id])->orderBy("id", "desc")->get();
         return self::sendResponse($admins, 'Tout les admins récupérés avec succès!!');
     }
 
     static function retrieveAdmins($id)
     {
-        $admin = Admin::with(['parent', 'owner', 'organisation'])->where(["owner" => request()->user()->id, "id" => $id])->get();
+        $admin = Admin::with(["as_user",'parent', 'owner', 'belong_to_organisation'])->where(["owner" => request()->user()->id, "id" => $id])->get();
         if ($admin->count() == 0) {
             return self::sendError("Cet admin n'existe pas!", 404);
         }
@@ -170,8 +173,15 @@ class ADMIN_HELPER extends BASE_HELPER
         if (count($admin) == 0) {
             return self::sendError("Cet admin n'existe pas!", 404);
         };
+
+        #DELETE DU ADMIN
         $admin = $admin[0];
         $admin->delete();
+
+        #DELETE DU USER CORRESPONDANT
+        $userId = $admin->as_user;
+        $user = User::find($userId);
+        $user->delete();
         return self::sendResponse($admin, 'Cet admin a été supprimé avec succès!');
     }
 }
