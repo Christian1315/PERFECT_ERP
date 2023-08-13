@@ -13,6 +13,21 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->text("name");
+            $table->integer("priority");
+            $table->text("tags");
+            $table->foreignId("type")
+                ->nullable()
+                ->constrained("ticket_types", "id")
+                ->nullable()
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
+            $table->foreignId("status")
+                ->nullable()
+                ->constrained("ticket_statuses", "id")
+                ->nullable()
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
             $table->foreignId("organisation")
                 ->nullable()
                 ->constrained("organisations", "id")
@@ -22,6 +37,12 @@ return new class extends Migration
             $table->foreignId("member")
                 ->nullable()
                 ->constrained("members", "id")
+                ->nullable()
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
+            $table->foreignId("owner")
+                ->nullable()
+                ->constrained("users", "id")
                 ->nullable()
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");

@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        ###======== CREATION DES USERS PAR DEFAUT==========###
         $users = [
             [
                 'name' => 'admin',
@@ -33,6 +35,40 @@ class DatabaseSeeder extends Seeder
 
         foreach ($users as $user) {
             \App\Models\User::factory()->create($user);
+        }
+
+        ###========CREATION DES TYPES DE TICKETS PAR DEFAUT ==========###
+        $ticket_types = [
+            [
+                'name' => 'Issue',
+            ],
+            [
+                'name' => 'Question',
+            ]
+        ];
+
+        foreach ($ticket_types as $ticket_type) {
+            \App\Models\TicketType::factory()->create($ticket_type);
+        }
+
+        ###========CREATION DES STATUS DE TICKETS PAR DEFAUT ==========###
+        $ticket_status = [
+            [
+                'name' => 'Nouveau',
+            ],
+            [
+                'name' => 'En Cour',
+            ],
+            [
+                'name' => 'Suspendu',
+            ],
+            [
+                'name' => 'Fini',
+            ],
+        ];
+
+        foreach ($ticket_status as $status) {
+            \App\Models\TicketStatus::factory()->create($status);
         }
     }
 }

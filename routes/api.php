@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\V1\MemberController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\OrganisationController;
 use App\Http\Controllers\Api\V1\TeamController;
+use App\Http\Controllers\Api\V1\TicketController;
+use App\Http\Controllers\Api\V1\TicketStatusController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -77,6 +79,25 @@ Route::prefix('v1')->group(function () {
             Route::any('{id}/retrieve', 'RetrieveMember');
             Route::any('{id}/update', 'UpdateMember');
             Route::any('{id}/delete', 'DeleteMember');
+        });
+    });
+
+    ###========== TICKETS STATUS ROUTINGS ========###
+    Route::prefix('tickeStatus')->group(function () {
+        Route::controller(TicketStatusController::class)->group(function () {
+            Route::any('all', 'Status');
+            Route::any('{id}/retrieve', '_RetrieveStatus');
+        });
+    });
+
+    ###========== TICKETS ROUTINGS ========###
+    Route::prefix('ticket')->group(function () {
+        Route::controller(TicketController::class)->group(function () {
+            Route::any('add', 'AddTICKET');
+            Route::any('all', 'TICKETs');
+            Route::any('{id}/retrieve', 'RetrieveTICKET');
+            Route::any('{id}/update', 'UpdateTICKET');
+            Route::any('{id}/delete', 'DeleteTICKET');
         });
     });
 });
