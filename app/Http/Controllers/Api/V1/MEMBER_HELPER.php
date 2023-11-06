@@ -105,16 +105,22 @@ class MEMBER_HELPER extends BASE_HELPER
         $member->save();
 
         #=====ENVOIE D'SMS =======~####
-        $sms_login =  Login_To_Frik_SMS();
+        $message = "Vous avez été ajouté.e à " . $organisation . " entant que membre sur ERP_FINANFA. Voici ci-dessous vos identifiants de connexion: Username:: " . $username . "; Password:: " . $username;
 
-        if ($sms_login['status']) {
-            $token =  $sms_login['data']['token'];
-
+        try {
             Send_SMS(
                 $formData['phone'],
-                "Vous avez été ajouté.e à " . $organisation . " entant que membre sur ERP_FINANFA. Voici ci-dessous vos identifiants de connexion: Username:: " . $username . "; Password:: " . $username,
-                $token
+                $message,
             );
+
+            ###___
+            Send_Notification(
+                $user,
+                "AJOUTER EN TANT QUE MEMBRE SUR ERP FINANFA",
+                $message
+            );
+        } catch (\Throwable $th) {
+            //throw $th;
         }
 
         return self::sendResponse($member, 'Member crée avec succès!!');

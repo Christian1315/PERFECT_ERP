@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Admin;
 use App\Models\Organisation;
 use App\Models\User;
+use App\Notifications\SendNotification;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
@@ -47,7 +48,6 @@ class ADMIN_HELPER extends BASE_HELPER
 
     static function createAdmin($request)
     {
-
         $formData = $request->all();
         $organisation = Organisation::where(["id" => $formData["organisation"]])->get();
 
@@ -100,29 +100,34 @@ class ADMIN_HELPER extends BASE_HELPER
         $admin->save();
 
         #=====ENVOIE D'SMS =======~####
-        $sms_login =  Login_To_Frik_SMS();
+        $message = "Votre compte admin a été crée avec succès sur ERP_FINANFA. Voici ci-dessous vos identifiants de connexion: Username::" . $username . "; Password:: " . $username;
 
-        if ($sms_login['status']) {
-            $token =  $sms_login['data']['token'];
-
+        try {
             Send_SMS(
                 $formData['phone'],
-                "Votre compte admin a été crée avec succès sur ERP_FINANFA. Voici ci-dessous vos identifiants de connexion: Username::" . $username . "; Password:: " . $username,
-                $token
+                $message,
             );
+
+            Send_Notification(
+                $user,
+                "CREATION DE COMPTE ADMIN SUR ERP FINANFA",
+                $message
+            );
+        } catch (\Throwable $th) {
+            //throw $th;
         }
         return self::sendResponse($admin, 'Admin crée avec succès!!');
     }
 
     static function getAdmins()
     {
-        $admins =  Admin::with(["as_user",'parent', 'owner', 'belong_to_organisation'])->where(["owner" => request()->user()->id])->orderBy("id", "desc")->get();
+        $admins =  Admin::with(["as_user", 'parent', 'owner', 'belong_to_organisation'])->where(["owner" => request()->user()->id])->orderBy("id", "desc")->get();
         return self::sendResponse($admins, 'Tout les admins récupérés avec succès!!');
     }
 
     static function retrieveAdmins($id)
     {
-        $admin = Admin::with(["as_user",'parent', 'owner', 'belong_to_organisation'])->where(["owner" => request()->user()->id, "id" => $id])->get();
+        $admin = Admin::with(["as_user", 'parent', 'owner', 'belong_to_organisation'])->where(["owner" => request()->user()->id, "id" => $id])->get();
         if ($admin->count() == 0) {
             return self::sendError("Cet admin n'existe pas!", 404);
         }

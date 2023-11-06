@@ -6,6 +6,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -62,5 +63,11 @@ class User extends Authenticatable
     function belong_to_organisation(): BelongsTo
     {
         return $this->belongsTo(Organisation::class, "organisation");
+    }
+
+    ####_____NEW FUNCTIONS
+    function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, "roles_users", "user_id", "role_id");
     }
 }

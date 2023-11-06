@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Notifications;
 use App\Http\Controllers\PdfController;
+use App\Models\User;
+use App\Notifications\SendNotification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,10 +25,19 @@ Route::get('/', function () {
 Route::get('/documentation', function () {
     return view('documentation');
 });
-Route::get("user/{id?}",function($id=null){
-    return 'User '.$id;
+Route::get("user/{id?}", function ($id = null) {
+    return 'User ' . $id;
 });
 
-Route::get('pdf',[PdfController::class,'getPostPdf']);
+Route::get('pdf', [PdfController::class, 'getPostPdf']);
 
-Route::get('send-mail',[Notifications::class,'testMail']);
+Route::get('send-mail', function () {
+    $data = [
+        "subject" => "CREATION DE COMPTE ADMIN SUR ERP FINANFA",
+        "message" => "Salut Christ",
+    ];
+
+    Notification::send(User::find(1), new SendNotification($data));
+
+    dd("Notification envoyée avec succès!");
+});

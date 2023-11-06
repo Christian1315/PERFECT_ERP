@@ -34,7 +34,6 @@ class USER_HELPER extends BASE_HELPER
 
     static function Register_Validator($formDatas)
     {
-        #
         $rules = self::register_rules();
         $messages = self::register_messages();
 
@@ -68,7 +67,6 @@ class USER_HELPER extends BASE_HELPER
 
     static function Login_Validator($formDatas)
     {
-        #
         $rules = self::login_rules();
         $messages = self::login_messages();
 
@@ -106,18 +104,16 @@ class USER_HELPER extends BASE_HELPER
     {
         if (is_numeric($request->get('account'))) {
             $credentials  =  ['phone' => $request->get('account'), 'password' => $request->get('password')];
-            // $user = User::where(["phone" => $request->get('account')])->get();
         } elseif (filter_var($request->get('account'), FILTER_VALIDATE_EMAIL)) {
             $credentials  =  ['email' => $request->get('account'), 'password' => $request->get('password')];
-            // $user = User::where(["email" => $request->get('account')])->get();
         } else {
             $credentials  =  ['username' => $request->get('account'), 'password' => $request->get('password')];
-            // $user = User::where(["username" => $request->get('account')])->get();
         }
 
         if (Auth::attempt($credentials)) { #SI LE USER EST AUTHENTIFIE
             $user = Auth::user();
             $token = $user->createToken('MyToken', ['api-access'])->accessToken;
+            $user['roles'] = GET_USER_ROLES($user->id);
             $user['token'] = $token;
 
             #RENVOIE D'ERREURE VIA **sendResponse** DE LA CLASS BASE_HELPER
