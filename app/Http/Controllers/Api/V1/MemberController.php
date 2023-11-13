@@ -10,7 +10,11 @@ class MemberController extends MEMBER_HELPER
     public function __construct()
     {
         $this->middleware(['auth:api', 'scope:api-access']);
-        $this->middleware('ChechSuperAdminOrSimpleAdmin');
+        $this->middleware("ChechSuperAdminOrSimpleAdmin")->only([
+            "AddMember",
+            "UpdateMember",
+            "DeleteMember",
+        ]);
     }
 
     #AJOUT D'UN MEMBRE

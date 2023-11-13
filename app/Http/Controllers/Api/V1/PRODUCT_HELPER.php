@@ -5,11 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductType;
-use App\Models\Store;
-use App\Models\StoreCategory;
-use App\Models\StoreProduit;
-use App\Models\StoreSupply;
-use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class PRODUCT_HELPER extends BASE_HELPER
@@ -109,7 +104,7 @@ class PRODUCT_HELPER extends BASE_HELPER
         $formData = $request->all();
         $user = request()->user();
 
-        $product_type = ProductType::find($formData["product_type"]);
+        $product_type = ProductType::find($formData["type"]);
 
         $product_category = ProductCategory::find($formData["category"]);
 
@@ -140,7 +135,7 @@ class PRODUCT_HELPER extends BASE_HELPER
     {
         $user = request()->user();
 
-        $product =  Product::with(['owner', "category", "type", "stock", "inventory"])->where("owner", $user->id)->orderBy('id', 'desc')->get();
+        $product =  Product::with(['owner', "category", "type", "inventory"])->where("owner", $user->id)->orderBy('id', 'desc')->get();
 
         // $session = GetSession($user->id); #LA SESSTION DANS LAQUELLE LE PRODUIT A ETE CREE
         return self::sendResponse($product, 'Tout les produits récupérés avec succès!!');
@@ -149,7 +144,7 @@ class PRODUCT_HELPER extends BASE_HELPER
     static function _retrieveProduct($id)
     {
         $user = request()->user();
-        $product = Product::with(['owner', "category", "type", "stock", "inventory"])->find($id);
+        $product = Product::with(['owner', "category", "type", "inventory"])->find($id);
         if (!$product) {
             return self::sendError("Ce Product n'existe pas!", 404);
         }
@@ -171,7 +166,6 @@ class PRODUCT_HELPER extends BASE_HELPER
             return self::sendError("Ce Product ne vous appartient pas!", 404);
         }
 
-        // return $request->file("img");
         if ($request->file("img")) {
             $img = $request->file('img');
 

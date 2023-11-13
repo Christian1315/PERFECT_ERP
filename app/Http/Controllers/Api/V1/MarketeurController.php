@@ -10,6 +10,11 @@ class MarketeurController extends MARKETER_HELPER
     public function __construct()
     {
         $this->middleware(['auth:api', 'scope:api-access']);
+        $this->middleware("ChechSuperAdminOrSimpleAdmin")->only([
+            "AddMarketer",
+            "_UpdateMarketer",
+            "DeleteMarketer",
+        ]);
     }
 
     #AJOUT D'UN Marketer
@@ -59,7 +64,6 @@ class MarketeurController extends MARKETER_HELPER
         return $this->retrieveMarketer($id);
     }
 
-    #RECUPERER UN MEMBER
     function _UpdateMarketer(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD

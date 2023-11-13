@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Marketeur extends Model
+class Logistique extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,8 @@ class Marketeur extends Model
         "name",
         'username',
         'email',
-        "phone"
+        "phone",
+        "description"
     ];
 
     function owner(): BelongsTo
@@ -30,6 +31,6 @@ class Marketeur extends Model
 
     function chargOrders(): HasMany
     {
-        return $this->hasMany(ChargeOrder::class, "owner");
+        return $this->hasMany(ChargeOrder::class, "logistique");
     }
 }

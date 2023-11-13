@@ -10,9 +10,6 @@ class ProductController extends PRODUCT_HELPER
     public function __construct()
     {
         $this->middleware(['auth:api', 'scope:api-access'])->except(['Login']);
-        // $this->middleware('CheckAgent')->except(["CreateProduct", "Products", "RetrieveProduct"]);
-        // $this->middleware('CheckMaster')->only(["CreateProduct"]);
-        // $this->middleware('CheckSession')->only(["UpdateProduct", "CreateProduct", "_SupplyProduct"]);
     }
 
     #GET ALL PRODUCTS

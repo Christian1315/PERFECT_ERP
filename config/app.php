@@ -157,12 +157,12 @@ return [
 
     'providers' => ServiceProvider::defaultProviders()->merge([
         /*
-         * Package Service Providers...
+        * Package Service Providers...
         */
-
+        Barryvdh\DomPDF\ServiceProvider::class,
         /*
-         * Application Service Providers...
-         */
+        * Application Service Providers...
+        */
 
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
@@ -172,6 +172,7 @@ return [
 
         // Maatwebsite\Excel\ExcelServiceProvider::class
 
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -186,6 +187,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        "PDF" => Barryvdh\DomPDF\Facade::class,
         // 'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ])->toArray(),
 ];

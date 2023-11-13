@@ -52,6 +52,10 @@
                 <p class="text-dark">Pour commencer,veuillez jetter un oeil sur la documentation pour avoir une vision plus claire de l'implementation des différentes routes!</p>
                 <a href="#" class="btn documentation">Voir la documentation</a>
             </div>
+            <div class="visible-print text-center">
+                {!! QrCode::size(100)->generate(Request::url()); !!}
+                <p>Flashez-moi pour revenir à la page d'origine.</p>
+            </div>
         </div>
     </div>
 

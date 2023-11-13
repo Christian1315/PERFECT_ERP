@@ -11,24 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('marketeurs', function (Blueprint $table) {
+        Schema::create('chargements', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username');
-            $table->string('email')->unique();
-            $table->string('phone')->unique();
-            $table->foreignId("as_user")
-                ->nullable()
-                ->constrained("users", "id")
-                ->onUpdate("CASCADE")
-                ->onUpdate("CASCADE");
             $table->foreignId("owner")
                 ->nullable()
                 ->constrained("users", "id")
                 ->onUpdate("CASCADE")
-                ->onUpdate("CASCADE");
-            $table->boolean('visible')->default(false);
+                ->onDelete("CASCADE", "id");
+            $table->foreignId("product")
+                ->nullable()
+                ->constrained("products", "id")
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE", "id");
+            $table->string("qty");
+            $table->string("immatriculation");
+            $table->text("driver_identification");
+            $table->text("destination");
+            $table->string("emetteur");
+
+            $table->boolean('visible')->default(true);
             $table->text('deleted_at')->nullable();
+
             $table->timestamps();
         });
     }
@@ -38,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('marketeurs');
+        Schema::dropIfExists('chargements');
     }
 };

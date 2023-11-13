@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\Authorization;
+use App\Http\Controllers\Api\V1\ChargeOrderController;
 use App\Http\Controllers\Api\V1\MemberController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\OrganisationController;
@@ -12,8 +13,12 @@ use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\TicketStatusController;
 use App\Http\Controllers\Api\V1\ProductTypeController;
 use App\Http\Controllers\Api\V1\EtiquetteController;
+use App\Http\Controllers\Api\V1\LogistiqueController;
 use App\Http\Controllers\Api\V1\MarketeurController;
 use App\Http\Controllers\Api\V1\ProductStockController;
+use App\Http\Controllers\Api\V1\ExploitationController;
+use App\Http\Controllers\Api\V1\ChargementController;
+use App\Http\Controllers\Api\V1\MINISTERS\RepertoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -166,4 +171,62 @@ Route::prefix('v1')->group(function () {
         });
     });
 
+    ###========== LOGISTIQUES ROUTINGS ========###
+    Route::prefix('logistique')->group(function () {
+        Route::controller(LogistiqueController::class)->group(function () {
+            Route::any('add', 'AddLogistique');
+            Route::any('all', 'Logistiques');
+            Route::any('{id}/retrieve', '_RetrieveLogistique');
+            // Route::any('{id}/update', '_UpdateMarketer');
+            Route::any('{id}/delete', 'DeleteLogistique');
+        });
+    });
+
+    ###========== LOGISTIQUES ROUTINGS ========###
+    Route::prefix('exploitation')->group(function () {
+        Route::controller(ExploitationController::class)->group(function () {
+            Route::any('add', 'AddExploitation');
+            Route::any('all', 'Exploitations');
+            Route::any('{id}/retrieve', '_RetrieveExploitation');
+            // Route::any('{id}/update', '_UpdateMarketer');
+            Route::any('{id}/delete', 'DeleteExploitation');
+        });
+    });
+
+    ###========== ORDRE DE RECHARGEMENT ROUTINGS ========###
+    Route::prefix('order')->group(function () {
+        Route::controller(ChargeOrderController::class)->group(function () {
+            Route::any('add', 'AddOrderCharg');
+            Route::any('all', '_GetChargOrders');
+            Route::any('{id}/retrieve', '_RetrieveChargOrder');
+            Route::any('{id}/update', '_UpdateChargOrder');
+            Route::any('{id}/delete', 'DeleteChargOrder');
+            Route::any('/generate_list', 'GenerateOderList');
+        });
+    });
+
+    ###========== CHARGEMENT ROUTINGS ========###
+    Route::prefix('chargement')->group(function () {
+        Route::controller(ChargementController::class)->group(function () {
+            Route::any('add', 'AddChargement');
+            Route::any('all', 'Chargements');
+            Route::any('{id}/retrieve', '_RetrieveChargement');
+            Route::any('{id}/update', '_UpdateChargement');
+            Route::any('{id}/delete', 'DeleteChargement');
+            Route::any('/generate_list', '_GenerateChargementList');
+        });
+    });
+
+
+    ###========== REPERTORIES ROUTINGS ========###
+    Route::prefix('repertory')->group(function () {
+        Route::controller(RepertoryController::class)->group(function () {
+            Route::any('add', 'AddRepertory');
+            Route::any('all', 'Repertories');
+            Route::any('{id}/retrieve', '_RetrieveRepertory');
+            Route::any('{id}/update', '_UpdateRepertory');
+            Route::any('{id}/delete', 'DeleteRepertory');
+            Route::any('{id}/generate-qr', '_GenerateRepertoryQr');
+        });
+    });
 });

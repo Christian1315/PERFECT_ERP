@@ -56,6 +56,15 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'CheckSuperAdmin' => \App\Http\Middleware\CheckSuperAdmin::class,
         'ChechSuperAdminOrSimpleAdmin' => \App\Http\Middleware\ChechSuperAdminOrSimpleAdmin::class,
+
+        'CheckIfUserIsAdminOrLogistique' => \App\Http\Middleware\CheckIfUserIsAdminOrLogistique::class,
+        'CheckIfUserIsAdminOrExploitation' => \App\Http\Middleware\CheckIfUserIsAdminOrExploitation::class,
+        'CheckIfUserIsAdminOrMarketeur' => \App\Http\Middleware\CheckIfUserIsAdminOrMarketeur::class,
+
+        'CheckIfUserIsMarketeur' => \App\Http\Middleware\CheckIfUserIsMarketeur::class,
+        'CheckIfUserIsLogistique' => \App\Http\Middleware\CheckIfUserIsLogistique::class,
+        'CheckIfUserIsExploitation' => \App\Http\Middleware\CheckIfUserIsExploitation::class,
+
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

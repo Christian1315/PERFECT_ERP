@@ -5,17 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Marketeur extends Model
+class ChargeOrder extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        "name",
-        'username',
-        'email',
-        "phone"
+        "transportor",
+        "driver",
+        "driver_permit_ref",
+        "camion_number",
+        "product_volume",
+        "driver_phone",
+        "owner",
+        "logistique"
     ];
 
     function owner(): BelongsTo
@@ -23,13 +26,8 @@ class Marketeur extends Model
         return $this->belongsTo(User::class, "owner");
     }
 
-    function as_user(): BelongsTo
+    function logistique(): BelongsTo
     {
-        return $this->belongsTo(User::class, "as_user");
-    }
-
-    function chargOrders(): HasMany
-    {
-        return $this->hasMany(ChargeOrder::class, "owner");
+        return $this->belongsTo(Logistique::class, "logistique");
     }
 }

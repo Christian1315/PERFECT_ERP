@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Product;
 use App\Models\User;
 use App\Models\UserRole;
 use App\Notifications\SendNotification;
@@ -94,4 +95,80 @@ function GET_USER_ROLES($userId)
 {
     $roles = UserRole::with(["role", "user"])->where(["user_id" => $userId])->get();
     return $roles;
+}
+
+##======== CE HELPER PERMET DE VERIFIER SI LE USER EST UN MARKETEUR OU PAS ==========## 
+function Is_User_A_Marketeur($userId)
+{ #
+    $user_roles = GET_USER_ROLES($userId);
+    $result = false;
+    foreach ($user_roles as $user_role) {
+        if ($user_role->role_id == 1) {
+            $result = true;
+        }
+    }
+    ##____
+    return $result;
+}
+
+##======== CE HELPER PERMET DE VERIFIER SI LE USER EST UN LOGISTIQUE OU PAS ==========## 
+function Is_User_A_Logistique($userId)
+{ #
+    $user_roles = GET_USER_ROLES($userId);
+    $result = false;
+    foreach ($user_roles as $user_role) {
+        if ($user_role->role_id == 3) {
+            $result = true;
+        }
+    }
+    ##____
+    return $result;
+}
+
+##======== CE HELPER PERMET DE VERIFIER SI LE USER EST UN EXPLOITATION OU PAS ==========## 
+function Is_User_A_Exploitation($userId)
+{ #
+    $user_roles = GET_USER_ROLES($userId);
+    $result = false;
+    foreach ($user_roles as $user_role) {
+        if ($user_role->role_id == 2) {
+            $result = true;
+        }
+    }
+    ##____
+    return $result;
+}
+
+function Is_User_A_Admin_Or_A_Marketeur($userId)
+{
+    if (Is_User_A_SimpleAdmin_Or_SuperAdmin($userId) || Is_User_A_Marketeur($userId)) {
+        return true; #S'il s'agit d'un Admin(ou admin simple) ou d'un marketeur
+    }
+    return false; #S'il n'est ni l'un nil'autre
+}
+
+function Is_User_A_Admin_Or_A_Logistique($userId)
+{
+    if (Is_User_A_SimpleAdmin_Or_SuperAdmin($userId) || Is_User_A_Logistique($userId)) {
+        return true; #S'il s'agit d'un Admin(ou admin simple) ou d'un logistique
+    }
+    return false; #S'il n'est ni l'un ni l'autre
+}
+
+function Is_User_A_Admin_Or_A_Exploitation($userId)
+{
+    if (Is_User_A_SimpleAdmin_Or_SuperAdmin($userId) || Is_User_A_Exploitation($userId)) {
+        return true; #S'il s'agit d'un Admin(ou admin simple) ou d'un Exploitation
+    }
+    return false; #S'il n'est ni l'un ni l'autre
+}
+
+function Get_Product_Name($id)
+{
+    $product = Product::find($id);
+    if ($product) {
+        return $product->name;
+    }
+
+    return null;
 }
