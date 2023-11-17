@@ -22,6 +22,18 @@ return new class extends Migration
             $table->boolean('is_super_admin')->default(false);
             $table->integer('organisation')->nullable();
 
+            $table->foreignId("rang_id")
+                ->nullable()
+                ->constrained('rangs', 'id')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
+
+            $table->foreignId("profil_id")
+                ->nullable()
+                ->constrained('profils', 'id')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
+
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

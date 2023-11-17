@@ -2,85 +2,84 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+
 use Illuminate\Http\Request;
 
-class AdminController extends ADMIN_HELPER
+class ActionController extends ACTION_HELPER
 {
     #VERIFIONS SI LE USER EST AUTHENTIFIE
     public function __construct()
     {
         $this->middleware(['auth:api', 'scope:api-access']);
-        $this->middleware("CheckSuperAdmin");
     }
 
-    #AJOUT DU ADMIN
-    function AddAdmin(Request $request)
+    function CreateAction(Request $request)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "POST") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR ADMIN_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR ADMIN_HELPER
-        $validator = $this->Admin_Validator($request->all());
+        #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
+        $validator = $this->Action_Validator($request->all());
 
         if ($validator->fails()) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR ADMIN_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
             return $this->sendError($validator->errors(), 404);
         }
 
-        #ENREGISTREMENT DANS LA DB VIA **createAdmin** DE LA CLASS BASE_HELPER HERITEE PAR ADMIN_HELPER
-        return $this->createAdmin($request);
+        #ENREGISTREMENT DANS LA DB VIA **createUser** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
+        return $this->_createAction($request->all());
     }
 
-    #GET ALL ADMINS
-    function Admins(Request $request)
+    #GET ALL RANGS
+    function Actions(Request $request)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "GET") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR ADMIN_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION DE TOUTS LES Admins
-        return $this->getAdmins();
+        #RECUPERATION DE TOUTES LES ACTIONS
+        return $this->allActions();
     }
 
-    #GET AN ADMIN
-    function RetrieveAdmin(Request $request, $id)
+    #GET A RANG
+    function RetrieveAction(Request $request,$id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "GET") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR ADMIN_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION DU ADMIN
-        return $this->retrieveAdmins($id);
+        #RECUPERATION DU RANG
+        return $this->_retrieveAction($id);
     }
 
-    #RECUPERER UN ADMIN
-    function UpdateAdmin(Request $request, $id)
+    #MODIFIER UNE ACTION
+    function UpdateAction(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "POST") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR ADMIN_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION D'UNE ADMIN VIA SON **id**
-        return $this->updateAdmins($request, $id);
+        #UPDATE D'UN RANG VIA SON **id**
+        return $this->_updateAction($request->all(),$id);
     }
 
-    function DeleteAdmin(Request $request, $id)
+    function DeleteAction(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "DELETE") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS ADMIN_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS USER_HELPER
             return $this->sendError("La méthode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        return $this->adminDelete($id);
+        return $this->actionDelete($id);
     }
 }

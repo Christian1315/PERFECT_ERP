@@ -1,7 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ActionController;
 use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\Authorization;
+use App\Http\Controllers\Api\V1\CARDS\CompanyController;
+use App\Http\Controllers\Api\V1\CARDS\ElectedConsularController;
+use App\Http\Controllers\Api\V1\CARDS\FonctionController;
+use App\Http\Controllers\Api\V1\CARDS\MandateController;
+use App\Http\Controllers\Api\V1\CARDS\PosteController;
 use App\Http\Controllers\Api\V1\ChargeOrderController;
 use App\Http\Controllers\Api\V1\MemberController;
 use App\Http\Controllers\Api\V1\UserController;
@@ -19,6 +25,9 @@ use App\Http\Controllers\Api\V1\ProductStockController;
 use App\Http\Controllers\Api\V1\ExploitationController;
 use App\Http\Controllers\Api\V1\ChargementController;
 use App\Http\Controllers\Api\V1\MINISTERS\RepertoryController;
+use App\Http\Controllers\Api\V1\ProfilController;
+use App\Http\Controllers\Api\V1\RangController;
+use App\Http\Controllers\Api\V1\RightController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +43,50 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('v1')->group(function () {
+
+    ###========== PROFILS ROUTINGS ========###
+    Route::controller(ProfilController::class)->group(function () {
+        Route::prefix('profil')->group(function () {
+            Route::any('add', 'CreateProfil'); #AJOUT DE PROFIL
+            Route::any('all', 'Profils'); #RECUPERATION DE TOUT LES PROFILS
+            Route::any('{id}/retrieve', 'RetrieveProfil'); #RECUPERATION D'UN PROFIL
+            Route::any('{id}/update', 'UpdateProfil'); #MODIFICATION D'UN PROFIL
+            Route::any('{id}/delete', 'DeleteProfil'); #SUPPRESSION D'UN PROFIL
+        });
+    });
+
+    ###========== RANG ROUTINGS ========###
+    Route::controller(RangController::class)->group(function () {
+        Route::prefix('rang')->group(function () {
+            Route::any('add', 'CreateRang'); #AJOUT DE RANG
+            Route::any('all', 'Rangs'); #RECUPERATION DE TOUT LES RANGS
+            Route::any('{id}/retrieve', 'RetrieveRang'); #RECUPERATION D'UN RANG
+            Route::any('{id}/delete', 'DeleteRang'); #SUPPRESSION D'UN RANG
+            Route::any('{id}/update', 'UpdateRang'); #MODIFICATION D'UN RANG'
+        });
+    });
+
+    ###========== ACTION ROUTINGS ========###
+    Route::controller(ActionController::class)->group(function () {
+        Route::prefix('action')->group(function () {
+            Route::any('add', 'CreateAction'); #AJOUT D'UNE ACTION'
+            Route::any('all', 'Actions'); #GET ALL ACTIONS
+            Route::any('{id}/retrieve', 'RetrieveAction'); #RECUPERATION D'UNE ACTION
+            Route::any('{id}/delete', 'DeleteAction'); #SUPPRESSION D'UNE ACTION
+            Route::any('{id}/update', 'UpdateAction'); #MODIFICATION D'UNE ACTION
+        });
+    });
+
+    ###========== RIGHTS ROUTINGS ========###
+    Route::controller(RightController::class)->group(function () {
+        Route::prefix('right')->group(function () {
+            Route::any('add', 'CreateRight'); #AJOUT D'UN DROIT'
+            Route::any('all', 'Rights'); #GET ALL RIGHTS
+            Route::any('{id}/retrieve', 'RetrieveRight'); #RECUPERATION D'UN DROIT
+            Route::any('{id}/delete', 'DeleteRight'); #SUPPRESSION D'UN DROIT
+        });
+    });
+
     ###========== USERs ROUTINGS ========###
     Route::controller(UserController::class)->group(function () {
         Route::prefix("user")->group(function () {
@@ -217,7 +270,6 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-
     ###========== REPERTORIES ROUTINGS ========###
     Route::prefix('repertory')->group(function () {
         Route::controller(RepertoryController::class)->group(function () {
@@ -227,6 +279,60 @@ Route::prefix('v1')->group(function () {
             Route::any('{id}/update', '_UpdateRepertory');
             Route::any('{id}/delete', 'DeleteRepertory');
             Route::any('{id}/generate-qr', '_GenerateRepertoryQr');
+        });
+    });
+
+    ###========== CARTES CONSULAIRES ROUTINGS ========###
+    Route::prefix('card')->group(function () {
+        ##__MANDATURES
+        Route::prefix("mandate")->group(function () {
+            Route::controller(MandateController::class)->group(function () {
+                Route::any('add', 'AddMandate');
+                Route::any('all', 'Mandates');
+                Route::any('{id}/retrieve', '_RetrieveMandate');
+                Route::any('{id}/update', '_UpdateMandate');
+                Route::any('{id}/delete', 'DeleteMandate');
+            });
+
+            // LES POSTES DANS UNE MANDATURE
+            Route::prefix("poste")->group(function () {
+                Route::controller(PosteController::class)->group(function () {
+                    Route::any('all', 'Postes');
+                    Route::any('{id}/retrieve', '_RetrievePoste');
+                });
+            });
+        });
+
+        ###___COMPANY
+        Route::prefix("company")->group(function () {
+            Route::controller(CompanyController::class)->group(function () {
+                Route::any('add', 'AddCompany');
+                Route::any('all', 'Companies');
+                Route::any('{id}/retrieve', '_RetrieveCompany');
+                Route::any('{id}/update', '_UpdateCompany');
+                Route::any('{id}/delete', 'DeleteCompany');
+            });
+
+            // LES FONCTIONS DANS UNE ENTREPRISE
+            Route::prefix("fonction")->group(function () {
+                Route::controller(FonctionController::class)->group(function () {
+                    Route::any('all', 'Fonctions');
+                    Route::any('{id}/retrieve', '_RetrieveFonction');
+                });
+            });
+        });
+
+        ##___ELUS CONSULAIRES
+        Route::prefix("elected_consular")->group(function () {
+            Route::controller(ElectedConsularController::class)->group(function () {
+                Route::any('add', 'AddConsular');
+                Route::any('all', 'Consulars');
+                Route::any('{id}/retrieve', '_RetrieveConsular');
+                Route::any('{id}/update', '_UpdateConsular');
+                Route::any('{id}/delete', 'DeleteConsular');
+                Route::any('{id}/affect-to-company', 'AffectToCompany');
+                Route::any('{id}/affect-to-poste', 'AffectToPoste');
+            });
         });
     });
 });

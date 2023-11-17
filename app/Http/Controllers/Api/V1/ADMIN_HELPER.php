@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Admin;
 use App\Models\Organisation;
 use App\Models\User;
-use App\Notifications\SendNotification;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
