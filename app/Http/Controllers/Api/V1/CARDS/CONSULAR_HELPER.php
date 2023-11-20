@@ -153,7 +153,7 @@ class CONSULAR_HELPER extends BASE_HELPER
         $user = request()->user();
         ##__
         $formData["owner"] = $user->id;
-
+        // return $formData;
         ####___TRAITEMENT DE L'IMAGE
         $photo = $request->file("photo");
         $photo_name = $photo->getClientOriginalName();

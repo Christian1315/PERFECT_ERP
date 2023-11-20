@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Card extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "consular",
+        "mandate",
+        "card_img",
+        "reference"
+    ];
 }

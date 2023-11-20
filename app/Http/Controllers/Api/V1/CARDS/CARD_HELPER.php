@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Api\V1\CARDS;
 use App\Http\Controllers\Api\V1\BASE_HELPER;
 use App\Models\Card;
 use App\Models\Company;
-use App\Models\ConsularMandate;
 use App\Models\ElectedConsular;
 use App\Models\Mandate;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
+use PDF;
+
 
 class CARD_HELPER extends BASE_HELPER
 {
@@ -68,20 +69,48 @@ class CARD_HELPER extends BASE_HELPER
         }
 
         // return $consular->company_fonction_mandate;
+
+        #CETTE VARIABLE PERMET DE SAVOIR SI CE ELU APPARTIENT A CETTYE MANDATURE OU PAS
         $is_this_electedConsular_has_this_mandate = false;
         foreach ($consular->company_fonction_mandate as $company_fonction_mandate) {
-            return $company_fonction_mandate->mandate->id;
-            if ($company_fonction_mandate->id = $formData["mandate"]) {
+            $mandate = $company_fonction_mandate->mandate;
+            if ($mandate->id == $formData["mandate"]) {
                 $is_this_electedConsular_has_this_mandate = true;
             }
         }
 
-        // if (!$is_this_electedConsular_has_this_mandate) {
-        //     return self::sendError("")
-        // }
+        if (!$is_this_electedConsular_has_this_mandate) {
+            return self::sendError("Ce élu consulaire n'appartient pas à cette mandature", 505);
+        }
+
+        // return $is_this_electedConsular_has_this_mandate;
+        #CETTE VARIABLE PERMET DE SAVOIR SI CE ELU APPARTIENT A CETTE ENTREPRISE OU PAS
+        $is_this_electedConsular_has_this_company = false;
+        foreach ($consular->company_fonction_mandate as $company_fonction_mandate) {
+            $company = $company_fonction_mandate->company;
+            if ($company->id == $formData["company"]) {
+                $is_this_electedConsular_has_this_company = true;
+            }
+        }
+
+        if (!$is_this_electedConsular_has_this_company) {
+            return self::sendError("Ce élu consulaire n'appartient pas à cette entreprise", 505);
+        }
+
+        ##__
+        $reference = Custom_Timestamp();
+        $pdf = PDF::loadView('card-exemple', compact(["consular", "reference"]));
+        $pdf->save(public_path("cards/" . $reference . ".pdf"));
+        ###____
+
+        $cardpdf_path = asset("cards/" . $reference . ".pdf");
+
+        ##__
+        $formData["reference"] = $reference;
         $formData["consular"] = $consular;
 
-        $card = Card::create($formData); #GENERATION DE LA CARTE DANS LA DB
+        #GENERATION DE LA CARTE DANS LA DB
+        $card = Card::create($formData);
         return self::sendResponse($card, "Carte générée a vec succès!!");
     }
 

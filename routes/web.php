@@ -41,3 +41,7 @@ Route::get('send-mail', function () {
 
     dd("Notification envoyée avec succès!");
 });
+
+Route::get("card", function () {
+    return view("card");
+});

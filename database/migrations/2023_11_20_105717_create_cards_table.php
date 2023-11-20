@@ -30,6 +30,7 @@ return new class extends Migration
                 ->onDelete('CASCADE');
 
             $table->text("card_img")->nullable();
+            $table->text("reference")->nullable();
             $table->timestamps();
         });
     }
