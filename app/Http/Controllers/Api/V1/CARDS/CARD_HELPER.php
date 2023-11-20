@@ -97,17 +97,17 @@ class CARD_HELPER extends BASE_HELPER
             return self::sendError("Ce élu consulaire n'appartient pas à cette entreprise", 505);
         }
 
-        // ##__
-        // $reference = Custom_Timestamp();
-        // $pdf = PDF::loadView('card-exemple', compact(["consular", "reference"]));
-        // $pdf->save(public_path("cards/" . $reference . ".pdf"));
-        // ###____
+        ##__
+        $reference = Custom_Timestamp();
+        $pdf = PDF::loadView('card-exemple', compact(["consular", "reference"]));
+        $pdf->save(public_path("cards/" . $reference . ".pdf"));
+        ###____
 
-        // $cardpdf_path = asset("cards/" . $reference . ".pdf");
+        $cardpdf_path = asset("cards/" . $reference . ".pdf");
 
-        // ##__
-        // $formData["reference"] = $reference;
-        // $formData["consular"] = $consular;
+        ##__
+        $formData["reference"] = $reference;
+        $formData["consular"] = $consular;
 
         #GENERATION DE LA CARTE DANS LA DB
         $card = Card::create($formData);

@@ -158,7 +158,7 @@ class CONSULAR_HELPER extends BASE_HELPER
         $photo = $request->file("photo");
         $photo_name = $photo->getClientOriginalName();
 
-        $photo->move("/rccms", $photo_name);
+        $photo->move("rccms", $photo_name);
         $formData["photo"] = asset("elu_consulaires/" . $photo_name);
 
         ###____
