@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\CARDS\ElectedConsularController;
 use App\Http\Controllers\Api\V1\CARDS\FonctionController;
 use App\Http\Controllers\Api\V1\CARDS\MandateController;
 use App\Http\Controllers\Api\V1\CARDS\PosteController;
+use App\Http\Controllers\Api\V1\CARDS\CardController;
 use App\Http\Controllers\Api\V1\ChargeOrderController;
 use App\Http\Controllers\Api\V1\MemberController;
 use App\Http\Controllers\Api\V1\UserController;
@@ -332,6 +333,18 @@ Route::prefix('v1')->group(function () {
                 Route::any('{id}/delete', 'DeleteConsular');
                 Route::any('{id}/affect-to-company', 'AffectToCompany');
                 Route::any('{id}/affect-to-poste', 'AffectToPoste');
+            });
+        });
+
+
+        ###___GESTION DES CARTES PROPREMENT DITES
+        Route::prefix("manage_card")->group(function () {
+            Route::controller(CardController::class)->group(function () {
+                Route::any('{consular}/generate', 'GenerateCard');
+                Route::any('all', 'Cards');
+                Route::any('{id}/retrieve', 'RetrieveCard');
+                Route::any('{id}/update', 'UpdateCard');
+                Route::any('{id}/delete', 'DeleteCard');
             });
         });
     });
