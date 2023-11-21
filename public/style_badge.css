@@ -66,10 +66,3 @@ p.theme {
     /* border-radius: 10px; */
     border: solid 10px #043311;
 }
-
-
-ul.second li {
-    list-style-type: none;
-    font-size: 16px;
-    margin-block: 5px;
-}

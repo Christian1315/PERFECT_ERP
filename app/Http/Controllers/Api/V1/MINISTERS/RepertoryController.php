@@ -14,6 +14,8 @@ class RepertoryController extends REPERTORY_HELPER
             "_GenerateRepertoryBadgeViaHtml",
             "_RetrieveRepertory"
         ]);
+
+        set_time_limit(0);
     }
 
     #AJOUT DU Repertory

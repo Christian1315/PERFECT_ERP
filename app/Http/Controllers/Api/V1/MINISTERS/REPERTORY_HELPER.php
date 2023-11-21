@@ -174,10 +174,11 @@ class REPERTORY_HELPER extends BASE_HELPER
         if (!$repertory->qr_code) {
             return self::sendError("Ce contact ne dispose pas de code Qr! Vous ne pouvez donc pas lui générer un badge", 505);
         }
+
         ###___
         $reference = Custom_Timestamp();
-        // $badge = PDF::loadView('badge', compact(["repertory"]));
-        // $badge->save(public_path("badges/badge_repertory_$id.pdf"));
+        $badge = PDF::loadView('badge', compact(["repertory"]));
+        $badge->save(public_path("badges/badge_repertory_$id.pdf"));
         // return "gogo";
         ###____
 
