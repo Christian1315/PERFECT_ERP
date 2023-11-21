@@ -11,7 +11,8 @@ class RepertoryController extends REPERTORY_HELPER
     public function __construct()
     {
         $this->middleware(['auth:api', 'scope:api-access'])->except([
-            "_GenerateRepertoryBadgeViaHtml"
+            "_GenerateRepertoryBadgeViaHtml",
+            "_RetrieveRepertory"
         ]);
     }
 

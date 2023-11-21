@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\V1\MINISTERS\RepertoryController;
 use App\Http\Controllers\PdfController;
 use App\Models\ElectedConsular;
-use App\Models\Repertory;
 use App\Models\User;
 use App\Notifications\SendNotification;
 use Illuminate\Support\Facades\Notification;
