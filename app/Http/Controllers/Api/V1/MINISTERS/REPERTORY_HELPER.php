@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\BASE_HELPER;
 use App\Models\Repertory;
 use Illuminate\Support\Facades\Validator;
 use QrCode;
+use PDF;
 
 class REPERTORY_HELPER extends BASE_HELPER
 {
@@ -153,12 +154,36 @@ class REPERTORY_HELPER extends BASE_HELPER
         ###___
 
         $qrcode = "repertory_" . $id . ".png";
-        QrCode::format("png")->size(100)->backgroundColor(127, 17, 224, .5)->merge("logo.png", .3, true)->generate("/api/v1/repertory/$id/retrieve", "qrcodes/" . $qrcode);
+        QrCode::format("png")->size(100)->backgroundColor(32, 135, 131, 1)->merge("logo.png", .3, true)->generate("/api/v1/repertory/$id/retrieve", "qrcodes/" . $qrcode);
 
         $repertory->qr_code = asset("qrcodes/" . $qrcode);
         $repertory->save();
 
         ##___
         return self::sendResponse($repertory, "Code Qr généré avec succès!!");
+    }
+
+    static function generateBadge($request, $id)
+    {
+        $repertory = Repertory::where(["visible" => 1])->find($id);
+        if (!$repertory) {
+            return self::sendError("Ce repertoire n'existe pas!", 404);
+        }
+
+        if (!$repertory->qr_code) {
+            return self::sendError("Ce contact ne dispose pas de code Qr! Vous ne pouvez donc pas lui générer un badge", 505);
+        }
+
+        ###___
+        // $reference = Custom_Timestamp();
+        // $badge = PDF::loadView('badge', compact(["repertory"]));
+        // $badge->save(public_path("badges/repertory_$id.pdf"));
+        ###____
+
+        // $repertory->badge = asset("badges/repertory_$id.pdf");
+        // $repertory->save();
+        $repertory["htmlbadge_url"] = env("APP_URL")."/$id/badge";
+        ##___
+        return self::sendResponse($repertory, "Badge generé avec succès!!");
     }
 }

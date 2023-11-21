@@ -51,29 +51,29 @@ class CARD_HELPER extends BASE_HELPER
     {
         $formData = $request->all();
         $user = request()->user();
-        // return $formData;
 
-        $mandate = Mandate::find($formData["mandate"]);
+        $mandate = Mandate::where(["visible" => 1])->find($formData["mandate"]);
         if (!$mandate) {
             return self::sendError("Cette mandature n'existe pas!", 404);
         }
 
-        $company = Company::find($formData["company"]);
+        $company = Company::where(["visible" => 1])->find($formData["company"]);
         if (!$company) {
             return self::sendError("Cette entreprise n'existe pas!", 404);
         }
 
-        $consular = ElectedConsular::with(["company_fonction_mandate"])->find($consular);
-        if (!$consular) {
+        $_consular = ElectedConsular::with(["company_fonction_mandate"])->where(["visible" => 1])->find($consular);
+        if (!$_consular) {
             return self::sendError("Cet élu consulaire n'existe pas!", 404);
         }
 
-        // return $consular->company_fonction_mandate;
+        // return $_consular->company_fonction_mandate;
 
         #CETTE VARIABLE PERMET DE SAVOIR SI CE ELU APPARTIENT A CETTYE MANDATURE OU PAS
         $is_this_electedConsular_has_this_mandate = false;
-        foreach ($consular->company_fonction_mandate as $company_fonction_mandate) {
+        foreach ($_consular->company_fonction_mandate as $company_fonction_mandate) {
             $mandate = $company_fonction_mandate->mandate;
+            // return $mandate;
             if ($mandate->id == $formData["mandate"]) {
                 $is_this_electedConsular_has_this_mandate = true;
             }
@@ -86,7 +86,7 @@ class CARD_HELPER extends BASE_HELPER
         // return $is_this_electedConsular_has_this_mandate;
         #CETTE VARIABLE PERMET DE SAVOIR SI CE ELU APPARTIENT A CETTE ENTREPRISE OU PAS
         $is_this_electedConsular_has_this_company = false;
-        foreach ($consular->company_fonction_mandate as $company_fonction_mandate) {
+        foreach ($_consular->company_fonction_mandate as $company_fonction_mandate) {
             $company = $company_fonction_mandate->company;
             if ($company->id == $formData["company"]) {
                 $is_this_electedConsular_has_this_company = true;
@@ -98,27 +98,28 @@ class CARD_HELPER extends BASE_HELPER
         }
 
         ##__
-        $reference = Custom_Timestamp();
-        $pdf = PDF::loadView('card-exemple', compact(["consular", "reference"]));
-        $pdf->save(public_path("cards/" . $reference . ".pdf"));
-        ###____
+        $reference = Get_Username($user, "CCIB_");
+        // $pdf = PDF::loadView('card', compact(["consular", "reference"]));
+        // $pdf->save(public_path("cards/" . $reference . ".pdf"));
+        // ###____
 
-        $cardpdf_path = asset("cards/" . $reference . ".pdf");
-
+        // $card_img = asset("cards/" . $reference . ".pdf");
+        // return $consular->company_fonction_mandate;
         ##__
         $formData["reference"] = $reference;
         $formData["consular"] = $consular;
+        // $formData["company"] = $consular->company_fonction_mandate;
 
         #GENERATION DE LA CARTE DANS LA DB
         $card = Card::create($formData);
-        return self::sendResponse($card, "Carte générée a vec succès!!");
+        return self::sendResponse($card, "Carte générée avec succès!!");
     }
 
-    static function allCards()
+    static function getCartes()
     {
         $user = request()->user();
 
-        $cards =  Card::where("owner", $user->id)->orderBy('id', 'desc')->get();
+        $cards = Card::with(["consular", "mandate", "company"])->get();
 
         return self::sendResponse($cards, 'Toutes les cartes récupérés avec succès!!');
     }
@@ -126,7 +127,7 @@ class CARD_HELPER extends BASE_HELPER
     static function _retrieveCard($id)
     {
         $user = request()->user();
-        $card = Card::with(['owner', "category", "type", "inventory"])->find($id);
+        $card = Card::with(["consular", "mandate", "company"])->find($id);
         if (!$card) {
             return self::sendError("Cette Carte n'existe pas!", 404);
         }
@@ -138,7 +139,7 @@ class CARD_HELPER extends BASE_HELPER
         $user = request()->user();
 
         $formData = $request->all();
-        $card = Product::where(["visible" => 1])->find($id);
+        $card = Card::find($id);
         if (!$card) {
             return self::sendError("Cette Carte n'existe pas!", 404);
         };

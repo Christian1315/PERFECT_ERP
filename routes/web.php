@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\V1\MINISTERS\RepertoryController;
 use App\Http\Controllers\PdfController;
+use App\Models\ElectedConsular;
+use App\Models\Repertory;
 use App\Models\User;
 use App\Notifications\SendNotification;
 use Illuminate\Support\Facades\Notification;
@@ -43,5 +46,9 @@ Route::get('send-mail', function () {
 });
 
 Route::get("card", function () {
-    return view("card");
+    $consular = ElectedConsular::find(1);
+    // dd($consular);
+    return view("card-exemple", compact(["consular"]));
 });
+
+Route::get("{id}/badge",[RepertoryController::class,"_GenerateRepertoryBadgeViaHtml"]);

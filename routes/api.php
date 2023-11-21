@@ -280,6 +280,7 @@ Route::prefix('v1')->group(function () {
             Route::any('{id}/update', '_UpdateRepertory');
             Route::any('{id}/delete', 'DeleteRepertory');
             Route::any('{id}/generate-qr', '_GenerateRepertoryQr');
+            Route::any('{id}/generate-badge', '_GenerateRepertoryBadge');
         });
     });
 

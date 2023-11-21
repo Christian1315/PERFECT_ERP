@@ -19,7 +19,8 @@ class Repertory extends Model
         "commune",
         "contact",
         "owner",
-        "present"
+        "present",
+        "badge"
     ];
 
     function owner(): BelongsTo

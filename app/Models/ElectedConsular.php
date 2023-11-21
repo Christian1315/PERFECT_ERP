@@ -40,6 +40,6 @@ class ElectedConsular extends Model
 
     function postes(): HasMany
     {
-        return $this->hasMany(ConsularPoste::class, "poste_id")->with(["mandate", "consular"]);
+        return $this->hasMany(ConsularPoste::class, "elected_consular")->with(["mandate", "consular"]);
     }
 }

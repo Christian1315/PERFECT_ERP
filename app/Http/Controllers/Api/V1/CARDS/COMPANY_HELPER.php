@@ -70,7 +70,7 @@ class COMPANY_HELPER extends BASE_HELPER
         $rccm = $request->file("rccm");
         $rccm_name = $rccm->getClientOriginalName();
 
-        $rccm->move("/rccms", $rccm_name);
+        $rccm->move("rccms", $rccm_name);
         $formData["rccm"] = asset("rccms/" . $rccm_name);
 
         ###____

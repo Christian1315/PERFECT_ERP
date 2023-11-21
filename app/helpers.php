@@ -18,14 +18,16 @@ function Custom_Timestamp()
     $micro = (int)$date->format('Uu'); // Timestamp in microseconds
     return $micro;
 }
+
 function Get_Username($user, $type)
 {
     $created_date = $user->created_at;
 
-    $year = explode("-", $created_date)[0]; ##RECUPERATION DES TROIS PREMIERS LETTRES DU USERNAME
+    $year = explode("-", $created_date)[0];
     $an = substr($year, -2);
+    $tierce = substr(Custom_Timestamp(), -3);
 
-    $username =  $type . $an . userCount();
+    $username =  $type . $an . userCount() . $tierce;
     return $username;
 }
 

@@ -131,7 +131,7 @@ class CONSULAR_HELPER extends BASE_HELPER
             'poste_id.required' => "Veuillez précisez le poste à atttribuer",
             'poste_id.integer' => "Le champ *poste* doit être un entier!",
 
-            'mandate.required' => 'La mandature est réquise!',
+            'mandate_id.required' => 'La mandature est réquise!',
             'mandate_id.integer' => 'La mandate doit être un entier!',
         ];
     }
@@ -153,12 +153,12 @@ class CONSULAR_HELPER extends BASE_HELPER
         $user = request()->user();
         ##__
         $formData["owner"] = $user->id;
-        // return $formData;
+
         ####___TRAITEMENT DE L'IMAGE
         $photo = $request->file("photo");
         $photo_name = $photo->getClientOriginalName();
 
-        $photo->move("rccms", $photo_name);
+        $photo->move("elu_consulaires", $photo_name);
         $formData["photo"] = asset("elu_consulaires/" . $photo_name);
 
         ###____
@@ -259,7 +259,19 @@ class CONSULAR_HELPER extends BASE_HELPER
             return self::sendError("Cette fonction n'existe pas!", 404);
         }
 
-        // return "gogo";
+        ###___VERIFIONS SI CETTE ELU CONSULAIRE APPARTIENT A CE MANDAT
+        $is_this_consular_belong_to_this_mandate = ConsularPoste::where([
+            "elected_consular" => $id,
+            "mandate_id" => $formData["mandate_id"],
+            // "poste_id" => $formData["poste_id"],
+        ])->first();
+
+        if (!$is_this_consular_belong_to_this_mandate) {
+            return self::sendError("Ce elu consulaire n'appartient pas à cette mandature! Veuillez bien l'affecter à une mandature bien en précisant le poste qu'il y occupe!", 505);
+        }
+
+        // return $is_this_consular_belong_to_this_mandate;
+
         $is_this_affectation_existe = CompanyConsular::where([
             "elected_consular" => $id,
             "company_id" => $formData["company_id"],

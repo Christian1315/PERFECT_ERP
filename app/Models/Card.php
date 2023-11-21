@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Card extends Model
 {
@@ -13,6 +14,22 @@ class Card extends Model
         "consular",
         "mandate",
         "card_img",
-        "reference"
+        "reference",
+        "company"
     ];
+
+    function consular(): BelongsTo
+    {
+        return $this->belongsTo(ElectedConsular::class, "consular");
+    }
+
+    function mandate(): BelongsTo
+    {
+        return $this->belongsTo(Mandate::class, "mandate");
+    }
+
+    function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, "company");
+    }
 }

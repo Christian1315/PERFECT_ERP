@@ -10,7 +10,9 @@ class RepertoryController extends REPERTORY_HELPER
     #VERIFIONS SI LE USER EST AUTHENTIFIE
     public function __construct()
     {
-        $this->middleware(['auth:api', 'scope:api-access']);
+        $this->middleware(['auth:api', 'scope:api-access'])->except([
+            "_GenerateRepertoryBadgeViaHtml"
+        ]);
     }
 
     #AJOUT DU Repertory
@@ -94,5 +96,32 @@ class RepertoryController extends REPERTORY_HELPER
         };
 
         return $this->generateQr($request, $id);
+    }
+
+    function _GenerateRepertoryBadge(Request $request, $id)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "GET") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR REPERTORY_HELPER
+            return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+
+        return $this->generateBadge($request, $id);
+    }
+
+    function _GenerateRepertoryBadgeViaHtml(Request $request, $id)
+    {
+        $repertory = Repertory::where(["visible" => 1])->find($id);
+
+        if (!$repertory) {
+            return $this->sendError("Ce repertoire n'existe pas!", 404);
+        }
+
+        if (!$repertory->qr_code) {
+            return self::sendError("Ce contact ne dispose pas de code Qr! Vous ne pouvez donc pas lui générer un badge", 505);
+        }
+
+        // dd($repertory);
+        return view("badge", compact(["repertory"]));
     }
 }

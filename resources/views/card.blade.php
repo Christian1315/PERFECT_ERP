@@ -104,6 +104,97 @@
 </head>
 
 <body>
+    <div class="container-fluid">
+        <div class="row" style="background-color: #9F9A0F;">
+            <div class="col-md-12">
+                <p class="text-light text-center mt-2"> <strong>FACTURE DE TRANSACTION SUR AGBANDE</strong></p>
+            </div>
+        </div>
+        <br>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <h1 class="text-center">Reference : <strong style="background-color: #000;padding:10px;color:#fff"> {{$reference}} </strong> </h1>
+                <br>
+                <table class="table table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Client</th>
+                            <th scope="col">Entreprise</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="">
+                                    <strong>Nom :</strong>{{$client->firstname}} <br>
+                                    <strong>Prénom :</strong>{{$client->lastname}} <br>
+                                    <strong>Téléphone :</strong>{{$client->phone}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="">
+                                    <strong>Company :</strong>{{env("APP_NAME")}}<br>
+                                    <strong>N° IFU :</strong>{{env("AGBADE_IFU")}} <br>
+                                    <strong>Téléphone:</strong>{{env("AGBADE_PHONE")}}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br><br><br>
+        <div class="row">
+            <div class="col-12">
+                <h1 class="" style="font-style: italic;text-align:center">Détail de la Facture</h1>
+                <table class="table table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">N°</th>
+                            <th scope="col">Fret</th>
+                            <th scope="col">Prix</th>
+                            <th scope="col">Transport</th>
+                            <th scope="col">Commission</th>
+                            <th scope="col">Date de validation de livraison</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($frets as $fret)
+                        <tr>
+                            <th scope="row">{{$loop->index + 1}}</th>
+                            <td class="text-center">{{$fret->id}}</td>
+                            <td class="text-center">{{$fret->price}}</td>
+                            <td class="text-center">{{$fret->transport->name}}</td>
+                            <td class="text-danger text-center">{{TRANSACTION_COMMISSION($fret->price)}}</td>
+                            <td class="text-center">{{$fret->updated_at}}</td>
+                        </tr>
+                        @endforeach
+                        <tr>
+                            <th scope="row"></th>
+                            <td class="text-center" colspan="3" style="font-style: italic;">Total à payer :</td>
+                            <td class="text-center text-danger"> <strong style="background-color: #000;color:#fff;padding:5px;">{{$commission_totale}}</strong></td>
+                            <td class="text-danger text-center"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <img src="https://res.cloudinary.com/duk6hzmju/image/upload/v1693321022/logo_vpxoml.png" alt="" srcset="">
+            </div>
+        </div>
+        <br><br>
+        <div class="row bottom-fixed" style="background-color: #9F9A0F;">
+            <div class="col-md-12">
+                <p class="text-light text-center mt-2">© Copyright - <?php echo date("Y"); ?></p>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br>
     <div class="container my-5">
         <div class="row" id="body">
             <div class="col-2"></div>
