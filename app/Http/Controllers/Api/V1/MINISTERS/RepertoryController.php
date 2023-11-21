@@ -122,7 +122,6 @@ class RepertoryController extends REPERTORY_HELPER
             return self::sendError("Ce contact ne dispose pas de code Qr! Vous ne pouvez donc pas lui générer un badge", 505);
         }
 
-        // dd($repertory);
         return view("badge", compact(["repertory"]));
     }
 }

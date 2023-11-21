@@ -153,10 +153,9 @@ class REPERTORY_HELPER extends BASE_HELPER
         }
         ###___
 
-        $qrcode = "repertory_" . $id . ".png";
+        $qrcode = "qrCode_repertory_" . $id . ".png";
         // QrCode::format("png")->size(100)->backgroundColor(32, 135, 131, 1)->merge("logo.png", .3, true)->generate("https://manager.perfect-erp.com/v1/repertory/$id/retrieve", "qrcodes/" . $qrcode);
-        QrCode::format("png")->size(100)->generate("https://manager.perfect-erp.com/v1/repertory/$id/show", "qrcodes/" . $qrcode);
-
+        QrCode::format("png")->size(200)->generate("https://manager.perfect-erp.com/repertory/$id/show", "qrcodes/" . $qrcode);
 
         $repertory->qr_code = asset("qrcodes/" . $qrcode);
         $repertory->save();
@@ -175,15 +174,15 @@ class REPERTORY_HELPER extends BASE_HELPER
         if (!$repertory->qr_code) {
             return self::sendError("Ce contact ne dispose pas de code Qr! Vous ne pouvez donc pas lui générer un badge", 505);
         }
-
         ###___
-        // $reference = Custom_Timestamp();
+        $reference = Custom_Timestamp();
         // $badge = PDF::loadView('badge', compact(["repertory"]));
-        // $badge->save(public_path("badges/repertory_$id.pdf"));
+        // $badge->save(public_path("badges/badge_repertory_$id.pdf"));
+        // return "gogo";
         ###____
 
-        // $repertory->badge = asset("badges/repertory_$id.pdf");
-        // $repertory->save();
+        $repertory->badge = asset("badges/badge_repertory_$id.pdf");
+        $repertory->save();
         $repertory["htmlbadge_url"] = env("APP_URL") . "/$id/badge";
         ##___
         return self::sendResponse($repertory, "Badge generé avec succès!!");
