@@ -77,13 +77,13 @@ class REPERTORY_HELPER extends BASE_HELPER
 
     static function retrieveRepertory($id)
     {
-        $user = request()->user();
-        $repertory = null;
-        if ($user->is_super_admin) {
-            $repertory = Repertory::with(["owner"])->find($id);
-        } else {
-            $repertory = Repertory::with(["owner"])->where(["owner" => $user->id])->find($id);
-        }
+        // $user = request()->user();
+        // $repertory = null;
+        // if ($user->is_super_admin) {
+        //     $repertory = Repertory::with(["owner"])->find($id);
+        // } else {
+        $repertory = Repertory::with(["owner"])->find($id);
+        // }
 
         return self::sendResponse($repertory, "Repertoire récupéré avec succès:!!");
     }
@@ -154,7 +154,9 @@ class REPERTORY_HELPER extends BASE_HELPER
         ###___
 
         $qrcode = "repertory_" . $id . ".png";
-        QrCode::format("png")->size(100)->backgroundColor(32, 135, 131, 1)->merge("logo.png", .3, true)->generate("https://manager.perfect-erp.com/v1/repertory/$id/retrieve", "qrcodes/" . $qrcode);
+        // QrCode::format("png")->size(100)->backgroundColor(32, 135, 131, 1)->merge("logo.png", .3, true)->generate("https://manager.perfect-erp.com/v1/repertory/$id/retrieve", "qrcodes/" . $qrcode);
+        QrCode::format("png")->size(100)->generate("https://manager.perfect-erp.com/v1/repertory/$id/show", "qrcodes/" . $qrcode);
+
 
         $repertory->qr_code = asset("qrcodes/" . $qrcode);
         $repertory->save();
@@ -182,7 +184,7 @@ class REPERTORY_HELPER extends BASE_HELPER
 
         // $repertory->badge = asset("badges/repertory_$id.pdf");
         // $repertory->save();
-        $repertory["htmlbadge_url"] = env("APP_URL")."/$id/badge";
+        $repertory["htmlbadge_url"] = env("APP_URL") . "/$id/badge";
         ##___
         return self::sendResponse($repertory, "Badge generé avec succès!!");
     }
