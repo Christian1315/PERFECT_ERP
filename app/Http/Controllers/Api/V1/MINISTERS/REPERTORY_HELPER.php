@@ -56,7 +56,6 @@ class REPERTORY_HELPER extends BASE_HELPER
         $user = request()->user();
         ##__
         $formData["owner"] = $user->id;
-        // return $formData;
         $repertory = Repertory::create($formData);
 
         ##__

@@ -15,7 +15,8 @@ class Card extends Model
         "mandate",
         "card_img",
         "reference",
-        "company"
+        "company",
+        "card_img"
     ];
 
     function consular(): BelongsTo

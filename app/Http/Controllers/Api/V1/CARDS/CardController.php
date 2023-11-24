@@ -9,7 +9,11 @@ class CardController extends CARD_HELPER
     #VERIFIONS SI LE USER EST AUTHENTIFIE
     public function __construct()
     {
-        $this->middleware(['auth:api', 'scope:api-access']);
+        $this->middleware(['auth:api', 'scope:api-access'])->except([
+            "_GenerateHtmlCard",
+        ]);
+
+        // set_time_limit(0);
     }
 
     #GENERER UNE CARTE
@@ -80,5 +84,16 @@ class CardController extends CARD_HELPER
         };
 
         return $this->cardDelete($id);
+    }
+
+    function _GenerateHtmlCard(Request $request, $id)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "GET") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS Card_HELPER
+            return $this->sendError("La méthode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+
+        return $this->generateHtmlCard($id);
     }
 }

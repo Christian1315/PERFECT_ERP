@@ -1,8 +1,15 @@
 <?php
 
+use App\Http\Controllers\Api\V1\CARDS\CardController;
 use App\Http\Controllers\Api\V1\MINISTERS\RepertoryController;
 use App\Http\Controllers\PdfController;
+use App\Models\Card;
+use App\Models\Company;
+use App\Models\CompanyConsular;
 use App\Models\ElectedConsular;
+use App\Models\Fonction;
+use App\Models\Mandate;
+use App\Models\Poste;
 use App\Models\User;
 use App\Notifications\SendNotification;
 use Illuminate\Support\Facades\Notification;
@@ -27,11 +34,6 @@ Route::get('/', function () {
 Route::get('/documentation', function () {
     return view('documentation');
 });
-Route::get("user/{id?}", function ($id = null) {
-    return 'User ' . $id;
-});
-
-Route::get('pdf', [PdfController::class, 'getPostPdf']);
 
 Route::get('send-mail', function () {
     $data = [
@@ -40,14 +42,11 @@ Route::get('send-mail', function () {
     ];
 
     Notification::send(User::find(1), new SendNotification($data));
-
     dd("Notification envoyée avec succès!");
 });
 
-Route::get("card", function () {
-    $consular = ElectedConsular::find(1);
-    // dd($consular);
-    return view("card-exemple", compact(["consular"]));
-});
+// RECUPERATION DES CARTES VIA LE FORMAT HTML
+Route::get("{id}/card", [CardController::class, "_GenerateHtmlCard"]);
 
-Route::get("{id}/badge",[RepertoryController::class,"_GenerateRepertoryBadgeViaHtml"]);
+// RECUPERATION DES BADGE VIA LE FORMAT HTML
+Route::get("{id}/badge", [RepertoryController::class, "_GenerateRepertoryBadgeViaHtml"]);

@@ -232,69 +232,13 @@ class CONSULAR_HELPER extends BASE_HELPER
         return self::sendResponse($consular, 'Cet Elu consulaire a été supprimée avec succès!');
     }
 
-    ###___AFFECTER UN ELU CONSULAIRE A UNE ENTREPRISE
-    function _affect_to_company($request, $id)
-    {
-        $formData = $request->all();
-        $user = request()->user();
-
-        ##___
-        $electedConsular = ElectedConsular::where(["visible" => 1])->find($id);
-        if (!$electedConsular) {
-            return self::sendError("Cet elu consulaire n'existe pas!", 404);
-        }
-
-        $company = Company::where(["visible" => 1])->find($formData["company_id"]);
-        if (!$company) {
-            return self::sendError("Cette entreprise n'existe pas!", 404);
-        }
-
-        $mandate = Mandate::where(["visible" => 1])->find($formData["mandate_id"]);
-        if (!$mandate) {
-            return self::sendError("Cette mandature n'existe pas!", 404);
-        }
-
-        $fonction = Fonction::find($formData["fonction_id"]);
-        if (!$fonction) {
-            return self::sendError("Cette fonction n'existe pas!", 404);
-        }
-
-        ###___VERIFIONS SI CETTE ELU CONSULAIRE APPARTIENT A CE MANDAT
-        $is_this_consular_belong_to_this_mandate = ConsularPoste::where([
-            "elected_consular" => $id,
-            "mandate_id" => $formData["mandate_id"],
-            // "poste_id" => $formData["poste_id"],
-        ])->first();
-
-        if (!$is_this_consular_belong_to_this_mandate) {
-            return self::sendError("Ce elu consulaire n'appartient pas à cette mandature! Veuillez bien l'affecter à une mandature bien en précisant le poste qu'il y occupe!", 505);
-        }
-
-        // return $is_this_consular_belong_to_this_mandate;
-
-        $is_this_affectation_existe = CompanyConsular::where([
-            "elected_consular" => $id,
-            "company_id" => $formData["company_id"],
-            "fonction_id" => $formData["fonction_id"],
-            "mandate_id" => $formData["mandate_id"],
-        ])->first();
-
-        if ($is_this_affectation_existe) {
-            return self::sendError("Cette affectation existe déjà", 505);
-        }
-
-        ##___AFFECTATION
-        $formData["elected_consular"] = $id;
-        $affectation = CompanyConsular::create($formData);
-
-        return self::sendResponse($affectation, "Affectation effectuée avec succès!");
-    }
 
     ###___AFFECTER UN ELU CONSULAIRE A UN POSTE
     function _affect_to_poste($request, $id)
     {
         $formData = $request->all();
         $user = request()->user();
+
         ##____
         $electedConsular = ElectedConsular::where(["visible" => 1])->find($id);
         if (!$electedConsular) {
@@ -323,9 +267,76 @@ class CONSULAR_HELPER extends BASE_HELPER
             return self::sendError("Cette affectation existe déjà", 505);
         }
 
+        ###___VERIFIONS SI CET ELU CONSULAIRE OCCUPE DEJA UN POSTE DANS CE MANDAT
+        $is_this_electedConsular_has_a_post_in_this_mandate = ConsularPoste::where([
+            "elected_consular" => $id,
+            "mandate_id" => $formData["mandate_id"],
+        ])->first();
+
+        if ($is_this_electedConsular_has_a_post_in_this_mandate) {
+            return self::sendError("Impossible d'affecter encore un poste à cet elu consulaire dans cette mandature! Il occupe déjà un poste dans cette mandature!", 505);
+        }
+
         ##___AFFECTATION
         $formData["elected_consular"] = $id;
         $affectation = ConsularPoste::create($formData);
+
+        return self::sendResponse($affectation, "Affectation effectuée avec succès!");
+    }
+
+    ###___AFFECTER UN ELU CONSULAIRE A UNE ENTREPRISE
+    function _affect_to_company($request, $id)
+    {
+        $formData = $request->all();
+        $user = request()->user();
+
+        ##___
+        $electedConsular = ElectedConsular::where(["visible" => 1])->find($id);
+        if (!$electedConsular) {
+            return self::sendError("Cet elu consulaire n'existe pas!", 404);
+        }
+
+        $company = Company::where(["visible" => 1])->find($formData["company_id"]);
+        if (!$company) {
+            return self::sendError("Cette entreprise n'existe pas!", 404);
+        }
+
+        $mandate = Mandate::where(["visible" => 1])->find($formData["mandate_id"]);
+        if (!$mandate) {
+            return self::sendError("Cette mandature n'existe pas!", 404);
+        }
+
+        $fonction = Fonction::find($formData["fonction_id"]);
+        if (!$fonction) {
+            return self::sendError("Cette fonction n'existe pas!", 404);
+        }
+
+        // return $is_this_consular_belong_to_this_mandate;
+
+        $is_this_affectation_existe = CompanyConsular::where([
+            "elected_consular" => $id,
+            "company_id" => $formData["company_id"],
+            "fonction_id" => $formData["fonction_id"],
+            "mandate_id" => $formData["mandate_id"],
+        ])->first();
+
+        if ($is_this_affectation_existe) {
+            return self::sendError("Cette affectation existe déjà", 505);
+        }
+
+        ###___VERIFIONS SI CET ELU CONSULAIRE APPARTIENT A CE MANDAT
+        $is_this_consular_belong_to_this_mandate = ConsularPoste::where([
+            "elected_consular" => $id,
+            "mandate_id" => $formData["mandate_id"],
+        ])->first();
+
+        if (!$is_this_consular_belong_to_this_mandate) {
+            return self::sendError("Cet elu consulaire n'appartient pas à cette mandature! Veuillez bien lui attribuer un poste dans cette mandature d'abord!", 505);
+        }
+
+        ##___AFFECTATION
+        $formData["elected_consular"] = $id;
+        $affectation = CompanyConsular::create($formData);
 
         return self::sendResponse($affectation, "Affectation effectuée avec succès!");
     }

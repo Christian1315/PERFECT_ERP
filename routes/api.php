@@ -314,7 +314,7 @@ Route::prefix('v1')->group(function () {
                 Route::any('{id}/update', '_UpdateCompany');
                 Route::any('{id}/delete', 'DeleteCompany');
             });
-
+            
             // LES FONCTIONS DANS UNE ENTREPRISE
             Route::prefix("fonction")->group(function () {
                 Route::controller(FonctionController::class)->group(function () {
@@ -341,7 +341,7 @@ Route::prefix('v1')->group(function () {
         ###___GESTION DES CARTES PROPREMENT DITES
         Route::prefix("manage_card")->group(function () {
             Route::controller(CardController::class)->group(function () {
-                Route::any('{consular}/generate', 'GenerateCard');
+                Route::any('elected_consular/{consular}/generate-card', 'GenerateCard');
                 Route::any('all', 'Cards');
                 Route::any('{id}/retrieve', 'RetrieveCard');
                 Route::any('{id}/update', 'UpdateCard');

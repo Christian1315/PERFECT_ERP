@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Api\V1\CARDS;
 
 use App\Http\Controllers\Api\V1\BASE_HELPER;
+use App\Models\Company;
+use App\Models\CompanyConsular;
+use App\Models\ConsularPoste;
+use App\Models\ElectedConsular;
 use App\Models\Fonction;
+use App\Models\Mandate;
 
 class FONCTION_HELPER extends BASE_HELPER
 {

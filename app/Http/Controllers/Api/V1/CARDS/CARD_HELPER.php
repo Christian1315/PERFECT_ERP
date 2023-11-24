@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Api\V1\CARDS;
 use App\Http\Controllers\Api\V1\BASE_HELPER;
 use App\Models\Card;
 use App\Models\Company;
+use App\Models\CompanyConsular;
 use App\Models\ElectedConsular;
 use App\Models\Mandate;
-use App\Models\Product;
+use App\Models\Poste;
 use Illuminate\Support\Facades\Validator;
 use PDF;
 
@@ -52,6 +53,7 @@ class CARD_HELPER extends BASE_HELPER
         $formData = $request->all();
         $user = request()->user();
 
+        ##__
         $mandate = Mandate::where(["visible" => 1])->find($formData["mandate"]);
         if (!$mandate) {
             return self::sendError("Cette mandature n'existe pas!", 404);
@@ -67,52 +69,101 @@ class CARD_HELPER extends BASE_HELPER
             return self::sendError("Cet élu consulaire n'existe pas!", 404);
         }
 
+        ###___VERIFIONS SI CET ELU CONSULAIRE DISPOSE DEJA DE CETTE CARTE DANS CETTE ENTREPRISE ET PRECISEMENT DANS CETTE MANDATURE
+        $is_this_card_existe = Card::where([
+            "consular" => $consular,
+            "company" => $formData["company"],
+            "mandate" => $formData["mandate"],
+        ])->first();
+
+        if ($is_this_card_existe) {
+            return self::sendError("Cet Elu consulaire dispose déjà de cette carte dans cette entreprise, pour cette mandature là!", 505);
+        }
+
+        ###__VERIFIONS SI CE ELU APPARTIENT A CETTE ENTREPRISE OU PAS
+        $is_this_electedConsular_belongTo_this_company = false;
         // return $_consular->company_fonction_mandate;
-
-        #CETTE VARIABLE PERMET DE SAVOIR SI CE ELU APPARTIENT A CETTYE MANDATURE OU PAS
-        $is_this_electedConsular_has_this_mandate = false;
-        foreach ($_consular->company_fonction_mandate as $company_fonction_mandate) {
-            $mandate = $company_fonction_mandate->mandate;
-            // return $mandate;
-            if ($mandate->id == $formData["mandate"]) {
-                $is_this_electedConsular_has_this_mandate = true;
-            }
-        }
-
-        if (!$is_this_electedConsular_has_this_mandate) {
-            return self::sendError("Ce élu consulaire n'appartient pas à cette mandature", 505);
-        }
-
-        // return $is_this_electedConsular_has_this_mandate;
-        #CETTE VARIABLE PERMET DE SAVOIR SI CE ELU APPARTIENT A CETTE ENTREPRISE OU PAS
-        $is_this_electedConsular_has_this_company = false;
         foreach ($_consular->company_fonction_mandate as $company_fonction_mandate) {
             $company = $company_fonction_mandate->company;
             if ($company->id == $formData["company"]) {
-                $is_this_electedConsular_has_this_company = true;
+                $is_this_electedConsular_belongTo_this_company = true;
             }
         }
 
-        if (!$is_this_electedConsular_has_this_company) {
-            return self::sendError("Ce élu consulaire n'appartient pas à cette entreprise", 505);
+        if (!$is_this_electedConsular_belongTo_this_company) {
+            return self::sendError("Cet élu consulaire n'appartient pas à cette entreprise dans cette mandature précisement", 505);
+        }
+
+
+        ##__VERIFIONS SI CET ELU APPARTIENT A CETTE MANDATURE OU PAS
+        $is_this_electedConsular_belongTo_this_mandate = false;
+        foreach ($_consular->company_fonction_mandate as $company_fonction_mandate) {
+            $mandate = $company_fonction_mandate->mandate;
+            if ($mandate->id == $formData["mandate"]) {
+                $is_this_electedConsular_belongTo_this_mandate = true;
+            }
+        }
+
+        if (!$is_this_electedConsular_belongTo_this_mandate) {
+            return self::sendError("Cet élu consulaire n'appartient pas à cette mandature", 505);
         }
 
         ##__
         $reference = Get_Username($user, "CCIB_");
-        // $pdf = PDF::loadView('card', compact(["consular", "reference"]));
-        // $pdf->save(public_path("cards/" . $reference . ".pdf"));
-        // ###____
 
-        // $card_img = asset("cards/" . $reference . ".pdf");
-        // return $consular->company_fonction_mandate;
         ##__
         $formData["reference"] = $reference;
         $formData["consular"] = $consular;
-        // $formData["company"] = $consular->company_fonction_mandate;
 
-        #GENERATION DE LA CARTE DANS LA DB
-        $card = Card::create($formData);
-        return self::sendResponse($card, "Carte générée avec succès!!");
+        #ENREGISTREMENT DE LA CARTE DANS LA DB
+        $cretedCard = Card::create($formData);
+
+
+        // #########################################################################
+        // ##########____GENERATION DE LA CARTE EN FORMAT PDF_________######
+        // $card = Card::with(["consular", "mandate", "company"])->find($cretedCard->id);
+        // if (!$card) {
+        //     return "Cette carte n'existe pas!";
+        // }
+
+        // return $card;
+        // ##__CARTE INFOS
+        // $card_mandate = Mandate::find($card->mandate);
+        // $card_company = Company::find($card->company);
+
+        // ##__ELECTED CONSULAR INFOS
+        // $consular = ElectedConsular::with(["owner", "company_fonction_mandate", "postes"])->find($card->consular);
+
+        // ##__ELECTED CONSULAR, FONCTION & POSTE
+        // $company_fonction_mandate = CompanyConsular::where([
+        //     "elected_consular" => $consular->id,
+        //     "company_id" => $card_company->id,
+        //     "mandate_id" => $card_company->id,
+        // ])->first();
+
+        // return $company_fonction_mandate;
+
+        // ##__FONCTION DE L'ELU CONSULAIRE DANS L'ENTREPRISE
+        // $fonction = $company_fonction_mandate->fonction;
+
+        // ##__POSTE OCCUPE PAR L'ELU CONSULAIRE DANS CETTE MANDATURE
+        // $poste = $company_fonction_mandate->mandate->poste->poste;
+
+        // ###__TRAITEMENT VRAI DU PDF
+        // $pdf = PDF::loadView('card', compact(["card", "consular", "card_mandate", "card_company", "fonction", "poste"]));
+        // $pdf->save(public_path("cards/" . $cretedCard->reference . ".pdf"));
+
+        // ###########################################################################
+
+
+        // $card_img = asset("cards/" . $cretedCard->reference . ".pdf");
+        // $cretedCard->card_img = $card_img;
+        // $cretedCard->save();
+        ##_
+
+        $cretedCard["card_Html_Url"] = env("APP_URL") . "/$cretedCard->id/card";
+
+        return self::sendResponse($cretedCard, "Carte générée avec succès!!");
     }
 
     static function getCartes()
@@ -169,5 +220,42 @@ class CARD_HELPER extends BASE_HELPER
         $card->delete_at = now();
         $card->save();
         return self::sendResponse($card, 'Ce Produit a été supprimé avec succès!');
+    }
+
+    ###__RECUPERATION DES CARTES EN  FORMAT HTML
+    function generateHtmlCard($id)
+    {
+        $card = Card::with(["consular", "mandate", "company"])->find($id);
+        if (!$card) {
+            return "Cette carte n'existe pas!";
+        }
+
+        ##__CARTE INFOS
+        $card_mandate = Mandate::find($card->mandate);
+        $card_company = Company::find($card->company);
+
+        ##__ELECTED CONSULAR INFOS
+        $consular = ElectedConsular::with(["owner", "company_fonction_mandate", "postes"])->find($card->consular);
+        // dd($consular->postes);
+
+        ##__ELECTED CONSULAR, FONCTION & POSTE
+        $company_fonction_mandate = CompanyConsular::where([
+            "elected_consular" => $consular->id,
+            "company_id" => $card_company->id,
+            "mandate_id" => $card_mandate->id,
+        ])->first();
+
+        ##__FONCTION DE L'ELU CONSULAIRE DANS L'ENTREPRISE
+
+        $fonction = $company_fonction_mandate->fonction;
+
+        ##__POSTE OCCUPE PAR L'ELU CONSULAIRE DANS CETTE MANDATURE
+        $poste =  null;
+        foreach ($consular->postes as $poste) {
+            if ($poste->mandate_id == $card_mandate->id && $poste->elected_consular == $consular->id) {
+                $poste = Poste::find($poste->id);
+            }
+        }
+        return view("card-exemple", compact(["card", "consular", "card_mandate", "card_company", "fonction", "poste"]));
     }
 }

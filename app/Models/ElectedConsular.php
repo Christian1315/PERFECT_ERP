@@ -35,7 +35,7 @@ class ElectedConsular extends Model
 
     function company_fonction_mandate(): HasMany
     {
-        return $this->hasMany(CompanyConsular::class, "company_id")->with(["company", "fonction", "mandate"]);
+        return $this->hasMany(CompanyConsular::class, "elected_consular")->with(["company", "fonction", "mandate"]);
     }
 
     function postes(): HasMany
