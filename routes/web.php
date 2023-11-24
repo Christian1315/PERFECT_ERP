@@ -48,5 +48,10 @@ Route::get('send-mail', function () {
 // RECUPERATION DES CARTES VIA LE FORMAT HTML
 Route::get("{id}/card", [CardController::class, "_GenerateHtmlCard"]);
 
+Route::get("/card", function () {
+    return view("card");
+});
+
+
 // RECUPERATION DES BADGE VIA LE FORMAT HTML
 Route::get("{id}/badge", [RepertoryController::class, "_GenerateRepertoryBadgeViaHtml"]);

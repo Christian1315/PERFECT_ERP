@@ -99,7 +99,7 @@ class ADMIN_HELPER extends BASE_HELPER
         $admin->save();
 
         #=====ENVOIE D'SMS =======~####
-        $message = "Votre compte admin a été crée avec succès sur ERP_FINANFA. Voici ci-dessous vos identifiants de connexion: Username::" . $username . "; Password:: " . $username;
+        $message = "Votre compte admin a été crée avec succès sur PERFECT_ERP. Voici ci-dessous vos identifiants de connexion: Username::" . $username . "; Password:: " . $username;
 
         try {
             Send_SMS(
@@ -109,7 +109,7 @@ class ADMIN_HELPER extends BASE_HELPER
 
             Send_Notification(
                 $user,
-                "CREATION DE COMPTE ADMIN SUR ERP FINANFA",
+                "CREATION DE COMPTE ADMIN SUR PERFECT_ERP",
                 $message
             );
         } catch (\Throwable $th) {

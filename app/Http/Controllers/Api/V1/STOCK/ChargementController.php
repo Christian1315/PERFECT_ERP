@@ -1,94 +1,93 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\STOCK;
 
 use Illuminate\Http\Request;
 
-class ChargeOrderController extends CHARG_ORDER_HELPER
+class ChargementController extends CHARGEMENT_HELPER
 {
     #VERIFIONS SI LE USER EST AUTHENTIFIE
     public function __construct()
     {
         $this->middleware(['auth:api', 'scope:api-access']);
-        $this->middleware("CheckIfUserIsMarketeur")->only([
-            "AddOrderCharg",
-            "_UpdateChargOrder",
-            "DeleteChargOrder",
+        $this->middleware("CheckIfUserIsAdminOrLogistique")->only([
+            "AddChargement",
+            "_UpdateChargement",
+            "DeleteChargement",
         ]);
     }
 
-    #AJOUT D'UN ORDRE DE CHARGEMENT
-    function AddOrderCharg(Request $request)
+    #AJOUT D'UNE Chargement
+    function AddChargement(Request $request)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "POST") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR EXPLOITATION_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR CHARGEMENT_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR EXPLOITATION_HELPER
-        $validator = $this->Order_Charg_Validator($request->all());
+        #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR CHARGEMENT_HELPER
+        $validator = $this->Chargement_Validator($request->all());
 
         if ($validator->fails()) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR EXPLOITATION_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR CHARGEMENT_HELPER
             return $this->sendError($validator->errors(), 404);
         }
 
-        #ENREGISTREMENT DANS LA DB VIA **createOrderCharg** DE LA CLASS BASE_HELPER HERITEE PAR EXPLOITATION_HELPER
-        return $this->createOrderCharg($request);
+        #ENREGISTREMENT DANS LA DB VIA **createChargement** DE LA CLASS BASE_HELPER HERITEE PAR CHARGEMENT_HELPER
+        return $this->createChargement($request);
     }
 
-    #GET ALL CHARG ORDER
-    function _GetChargOrders(Request $request)
+    #GET ALL Chargement
+    function Chargements(Request $request)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "GET") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR EXPLOITATION_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR CHARGEMENT_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION DE TOUT LES ORDRES DE RECHARGEMENT
-        return $this->getChargOrders();
+        #RECUPERATION DE TOUT LES ChargementS
+        return $this->getChargements();
     }
 
-    #GET A CHARG ORDER
-    function _RetrieveChargOrder(Request $request, $id)
+    #GET A Chargement
+    function _RetrieveChargement(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "GET") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR EXPLOITATION_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR CHARGEMENT_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
-
-        #RECUPERATION D'UN ORDRE DE RECHARGEMENT
-        return $this->retrieveChargOrder($id);
+        #RECUPERATION DU Chargement
+        return $this->retrieveChargement($request, $id);
     }
 
-    function _UpdateChargOrder(Request $request, $id)
+    #RECUPERER UN Chargement
+    function _UpdateChargement(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "POST") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR EXPLOITATION_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR CHARGEMENT_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
-
-        #RECUPERATION D'UN ORDRE DE RECHARGEMENT VIA SON **id**
-        return $this->updateChargOrder($request, $id);
+        #RECUPERATION D'UN Chargement VIA SON **id**
+        return $this->updateChargement($request, $id);
     }
 
-    function DeleteChargOrder(Request $request, $id)
+    function DeleteChargement(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "DELETE") == False) {
-            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS EXPLOITATION_HELPER
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS CHARGEMENT_HELPER
             return $this->sendError("La méthode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        return $this->ChargOrderDelete($id);
+        return $this->ChargementDelete($id);
     }
 
-    ###GENERATION D'UNE LISTE D'ORDRE DE CHARGEMENT
-    function GenerateOderList(Request $request)
+    ###GENERATION D'UNE LISTE DE CHARGEMENT
+    function _GenerateChargementList(Request $request)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "POST") == False) {
@@ -97,13 +96,13 @@ class ChargeOrderController extends CHARG_ORDER_HELPER
         };
 
         #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR EXPLOITATION_HELPER
-        $validator = $this->Order_list_Validator($request->all());
+        $validator = $this->Chargement_list_Validator($request->all());
 
         if ($validator->fails()) {
             #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR EXPLOITATION_HELPER
             return $this->sendError($validator->errors(), 404);
         }
 
-        return $this->generateOrderList($request);
+        return $this->generateChargementList($request);
     }
 }

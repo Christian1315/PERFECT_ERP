@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string("residence");
             $table->string("commune");
             $table->string("contact");
-            $table->string("qr_code")->nullable();
+            $table->text("qr_code")->nullable();
             $table->text("badge")->nullable();
             $table->boolean('present')->default(false);
             $table->string("invited_by")->nullable();

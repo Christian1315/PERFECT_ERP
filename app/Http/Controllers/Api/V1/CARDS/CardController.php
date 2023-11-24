@@ -13,7 +13,7 @@ class CardController extends CARD_HELPER
             "_GenerateHtmlCard",
         ]);
 
-        // set_time_limit(0);
+        set_time_limit(0);
     }
 
     #GENERER UNE CARTE

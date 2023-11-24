@@ -45,7 +45,6 @@
         #body {
             background-repeat: no-repeat;
             background-position: center;
-            /* height: 300px !important; */
         }
 
 
@@ -67,7 +66,13 @@
 
         #card-body,
         #card-body2 {
-            padding-top: 10px;
+            /* padding-top: 10px; */
+            height: 350px !important;
+        }
+
+        #card-body2 {
+            /* padding-block: 80px; */
+            /* height: 350px!important; */
         }
 
         #card-body2 p {
@@ -84,7 +89,7 @@
 
         #card-body .avatar {
             width: 100%;
-            height: 250px;
+            height: 260px;
             border-radius: 10px;
             border: solid 5px rgb(24, 95, 44);
         }
@@ -104,6 +109,8 @@
             color: #fff !important;
             margin-top: 20px;
             border-radius: 0px 0px 10px 10px;
+            /* position:absolute; */
+            /* bottom: 0px!important; */
         }
 
         #card {
@@ -127,6 +134,11 @@
 
         .block-title {
             margin-bottom: -10px !important;
+        }
+
+        .qr_code{
+            width: 80px;
+            margin-block: 10px;
         }
     </style>
 </head>
@@ -225,6 +237,20 @@
         </div>
 
         <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+
         <!-- LE DERRIERE DE LA CARTE -->
         <div class="row" id="body">
             <div class="col-2"></div>
@@ -232,18 +258,18 @@
                 <div class="row px-0" id="header">
                     <div class="col-12">
                         <div class="row">
-                            <div class="col-4">
+                            
+                            <div class="col-12 text-center mb-2">
+                                <img src="{{asset('logo-card.png')}}" style="width: 100px; height: auto;" alt="">
                             </div>
-                            <div class="col-2 text-center">
-                                <img src="{{asset('logo-card.png')}}" style="width: 100; height: 100px;" alt="">
-                            </div>
-                            <div class="col-4">
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
                 <div class="row" id="card-body2">
-                    <div class="col-12">
+                    <div class="col-12 text-center">
+                        <img src="{{$card->qr_code}}" class="qr_code shadow-lg" alt="CODE QR" srcset="">
+
                         <p class="text-center">
                             <strong>NB:</strong>
                             Cette Carte est strictement personnelle. En cas de perte,

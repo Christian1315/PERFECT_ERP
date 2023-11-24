@@ -11,6 +11,8 @@ use App\Models\Mandate;
 use App\Models\Poste;
 use Illuminate\Support\Facades\Validator;
 use PDF;
+use QrCode;
+
 
 
 class CARD_HELPER extends BASE_HELPER
@@ -159,7 +161,15 @@ class CARD_HELPER extends BASE_HELPER
         // $card_img = asset("cards/" . $cretedCard->reference . ".pdf");
         // $cretedCard->card_img = $card_img;
         // $cretedCard->save();
-        ##_
+        ##__
+
+        ###_______GENERATION DU CODE QR DE CETTE CARTE
+        $qrcode = "card_qrCode_" . $cretedCard->id . ".png";
+        // QrCode::format("png")->size(100)->backgroundColor(32, 135, 131, 1)->merge("logo.png", .3, true)->generate("https://manager.perfect-erp.com/v1/repertory/$id/retrieve", "qrcodes/" . $qrcode);
+        QrCode::format("png")->size(200)->generate("https://manager.perfect-erp.com/card/$cretedCard->id/show", "cardqrcodes/" . $qrcode);
+
+        $cretedCard->qr_code = asset("cardqrcodes/" . $qrcode);
+        $cretedCard->save();
 
         $cretedCard["card_Html_Url"] = env("APP_URL") . "/$cretedCard->id/card";
 

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\STOCK;
 
+use App\Http\Controllers\Api\V1\STOCK\STOCK\PRODUCT_ETIQUETTE_HELPER;
 use Illuminate\Http\Request;
 
 class EtiquetteController extends PRODUCT_ETIQUETTE_HELPER

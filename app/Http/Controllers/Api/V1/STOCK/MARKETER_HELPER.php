@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\STOCK;
 
+use App\Http\Controllers\Api\V1\BASE_HELPER;
 use App\Models\Marketeur;
-use App\Models\Member;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
@@ -90,7 +90,7 @@ class MARKETER_HELPER extends BASE_HELPER
         $marketer->save();
 
         #=====~~ENVOIE D'SMS =======~####
-        $message = "Vous avez été ajouté.e à l'ERP FINANFA entant que marketeur sur ERP_FINANFA. Veuillez contacter l'administrateur pour avoir les détails de votre compte";
+        $message = "Vous avez été ajouté.e à PERFECT_ERP entant que marketeur sur PERFECT_ERP. Veuillez contacter l'administrateur pour avoir les détails de votre compte";
 
         try {
             // Send_SMS(
@@ -101,7 +101,7 @@ class MARKETER_HELPER extends BASE_HELPER
             ###___
             Send_Notification(
                 $user,
-                "AJOUTE.e ENTANT QUE MARKETEUR SUR ERP FINANFA",
+                "AJOUTE.e ENTANT QUE MARKETEUR SUR PERFECT_ERP",
                 $message
             );
         } catch (\Throwable $th) {

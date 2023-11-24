@@ -105,7 +105,7 @@ class MEMBER_HELPER extends BASE_HELPER
         $member->save();
 
         #=====ENVOIE D'SMS =======~####
-        $message = "Vous avez été ajouté.e à " . $organisation . " entant que membre sur ERP_FINANFA. Voici ci-dessous vos identifiants de connexion: Username:: " . $username . "; Password:: " . $username;
+        $message = "Vous avez été ajouté.e à " . $organisation . " entant que membre sur PERFECT_ERP. Voici ci-dessous vos identifiants de connexion: Username:: " . $username . "; Password:: " . $username;
 
         try {
             Send_SMS(

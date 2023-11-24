@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\STOCK;
 
+use App\Http\Controllers\Api\V1\BASE_HELPER;
 use App\Models\ProductCategory;
-use App\Models\StoreCategory;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class PRODUCT_CATEGORY_HELPER extends BASE_HELPER
 {

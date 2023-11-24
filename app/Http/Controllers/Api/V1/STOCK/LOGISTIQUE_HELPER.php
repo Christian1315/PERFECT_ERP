@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\STOCK;
 
-use App\Models\Exploitation;
+use App\Http\Controllers\Api\V1\BASE_HELPER;
 use App\Models\Logistique;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class EXPLOITATION_HELPER extends BASE_HELPER
+class LOGISTIQUE_HELPER extends BASE_HELPER
 {
-    ##======== EXPLOITATION VALIDATION =======##
-    static function exploitation_rules(): array
+    ##======== logistique VALIDATION =======##
+    static function logistique_rules(): array
     {
         return [
             'name' => ['required'],
@@ -22,7 +22,7 @@ class EXPLOITATION_HELPER extends BASE_HELPER
         ];
     }
 
-    static function exploitation_messages(): array
+    static function logistique_messages(): array
     {
         return [
             'name.required' => 'Le name est réquis!',
@@ -35,22 +35,22 @@ class EXPLOITATION_HELPER extends BASE_HELPER
         ];
     }
 
-    static function Exploitation_Validator($formDatas)
+    static function Logistique_Validator($formDatas)
     {
-        $rules = self::exploitation_rules();
-        $messages = self::exploitation_messages();
+        $rules = self::logistique_rules();
+        $messages = self::logistique_messages();
 
         $validator = Validator::make($formDatas, $rules, $messages);
         return $validator;
     }
 
-    static function createExploitation($request)
+    static function createLogistique($request)
     {
         $formData = $request->all();
 
         #SON ENREGISTREMENT EN TANT QU'UN USER
         $user = request()->user();
-        $type = "EXPL_";
+        $type = "LOGI_";
 
         $username =  Get_Username($user, $type); ##Get_Username est un helper qui genère le **number** 
 
@@ -80,18 +80,18 @@ class EXPLOITATION_HELPER extends BASE_HELPER
         $user = User::create($userData);
 
         ###__AFFECTONS A CE USER LE ROLE LOGISTIQUE
-        $role = Role::find(2);
+        $role = Role::find(3);
         $user->roles()->attach($role);
 
         ###___
         $formData["username"] = $username;
-        $exploitation = Exploitation::create($formData);
-        $exploitation->as_user = $user->id;
-        $exploitation->owner = request()->user()->id;
-        $exploitation->save();
+        $logistique = Logistique::create($formData);
+        $logistique->as_user = $user->id;
+        $logistique->owner = request()->user()->id;
+        $logistique->save();
 
         #=====~~ENVOIE D'SMS =======~####
-        $message = "Vous avez été ajouté.e à l'ERP FINANFA entant qu'un exploitateur sur ERP_FINANFA. Veuillez contacter l'administrateur pour avoir les détails de votre compte";
+        $message = "Vous avez été ajouté.e à PERFECT_ERP entant qu'une logistique sur PERFECT_ERP. Veuillez contacter l'administrateur pour avoir les détails de votre compte";
 
         try {
             Send_SMS(
@@ -102,31 +102,30 @@ class EXPLOITATION_HELPER extends BASE_HELPER
             ###___
             Send_Notification(
                 $user,
-                "AJOUTE.e ENTANT QU'EXPLOITATEUR SUR ERP FINANFA",
+                "AJOUTE.e ENTANT QUE LOGISTIQUE SUR PERFECT_ERP",
                 $message
             );
         } catch (\Throwable $th) {
             //throw $th;
         }
-
-        return self::sendResponse($exploitation, 'Exploitation créee avec succès!!');
+        return self::sendResponse($logistique, 'Logistique créee avec succès!!');
     }
 
-    static function getExploitations()
+    static function getLogistiques()
     {
         $user = request()->user();
-        $exploitations =  Exploitation::with(["owner", "as_user"])->where(["owner" => $user->id])->orderBy("id", "desc")->get();
-        return self::sendResponse($exploitations, 'Toutes les exploitations récupérées avec succès!!');
+        $logistiques =  Logistique::with(["owner", "as_user", "chargOrders"])->where(["owner" => $user->id])->orderBy("id", "desc")->get();
+        return self::sendResponse($logistiques, 'Toutes les logistiques récupérées avec succès!!');
     }
 
-    static function retrieveExploitation($id)
+    static function retrieveLogistique($id)
     {
         $user = request()->user();
-        $exploitation = Exploitation::with(["owner", "as_user"])->where(["owner" => $user->id])->find($id);
-        if (!$exploitation) {
-            return self::sendError("Cette exploitation n'existe pas!", 404);
+        $logistique = Logistique::with(["owner", "as_user", "chargOrders"])->where(["owner" => $user->id])->find($id);
+        if (!$logistique) {
+            return self::sendError("Cette logistique n'existe pas!", 404);
         }
-        return self::sendResponse($exploitation, "Exploitation récupérée avec succès:!!");
+        return self::sendResponse($logistique, "Logistique récupérée avec succès:!!");
     }
 
     // static function updateMarketer($request, $id)
@@ -147,24 +146,24 @@ class EXPLOITATION_HELPER extends BASE_HELPER
     //     return self::sendResponse($marketeur, "Marketeur récupéré avec succès:!!");
     // }
 
-    static function exploitationDelete($id)
+    static function logistiqueDelete($id)
     {
         $user = request()->user();
-        $exploitation = Logistique::find($id);
+        $logistique = Logistique::find($id);
 
-        if (!$exploitation) {
-            return self::sendError("Cette exploitation n'existe pas!", 404);
+        if (!$logistique) {
+            return self::sendError("Cette logistique n'existe pas!", 404);
         }
 
-        if ($exploitation->owner != $user->id) {
-            return self::sendError("Cette exploitation ne vous appartient pas!", 404);
+        if ($logistique->owner != $user->id) {
+            return self::sendError("Cette logistique ne vous appartient pas!", 404);
         }
-        $exploitation->delete();
+        $logistique->delete();
 
         #DELETE DU USER CORRESPONDANT
-        $userId = $exploitation->as_user;
+        $userId = $logistique->as_user;
         $user = User::find($userId);
         $user->delete();
-        return self::sendResponse($exploitation, 'Cette logistique a été supprimée avec succès!');
+        return self::sendResponse($logistique, 'Cette logistique a été supprimée avec succès!');
     }
 }

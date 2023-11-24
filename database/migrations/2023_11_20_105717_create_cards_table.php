@@ -31,6 +31,8 @@ return new class extends Migration
 
             $table->text("card_img")->nullable();
             $table->text("reference")->nullable();
+
+            $table->text("qr_code")->nullable();
             $table->timestamps();
         });
     }

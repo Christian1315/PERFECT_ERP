@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\STOCK;
 
+use App\Http\Controllers\Api\V1\BASE_HELPER;
 use App\Models\ProductType;
 
 class PRODUCT_TYPE_HELPER extends BASE_HELPER
