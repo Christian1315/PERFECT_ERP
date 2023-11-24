@@ -19,13 +19,13 @@
         }
 
         .info_block {
-            border: 1px solid #000;
-            margin-block: 10px;
+            padding-top: 40px;
+            /* align-items: center!important; */
         }
 
         .logo {
-            height: 60px;
-            width: 100%;
+            height: 80px;
+            width: 80px;
             margin-top: 20px;
         }
 
@@ -43,8 +43,7 @@
         }
 
         #body {
-            background-repeat: no-repeat;
-            background-position: center;
+            background-repeat: repeat;
         }
 
 
@@ -66,13 +65,7 @@
 
         #card-body,
         #card-body2 {
-            /* padding-top: 10px; */
             height: 350px !important;
-        }
-
-        #card-body2 {
-            /* padding-block: 80px; */
-            /* height: 350px!important; */
         }
 
         #card-body2 p {
@@ -95,12 +88,8 @@
         }
 
         ul li {
-            /* list-style-type: none; */
-        }
-
-        ul.second li {
             list-style-type: none;
-            font-size: 16px;
+            font-size: 18px;
             margin-block: 1px;
         }
 
@@ -108,20 +97,19 @@
             background-color: #e4540c !important;
             color: #fff !important;
             margin-top: 20px;
-            border-radius: 0px 0px 10px 10px;
-            /* position:absolute; */
-            /* bottom: 0px!important; */
+            /* border-radius: 0px 0px 10px 10px; */
         }
 
         #card {
             /* border: #000 solid 2px; */
-            border-radius: 10px;
+            /* border-radius: 10px; */
             background-image: url("{{asset('bg-card.png')}}");
         }
 
         .block-title span {
             color: #fff;
             padding: 5px 15px;
+            display: none !important;
         }
 
         .block-title .span2 {
@@ -133,10 +121,10 @@
         }
 
         .block-title {
-            margin-bottom: -10px !important;
+            /* margin-bottom: -10px !important; */
         }
 
-        .qr_code{
+        .qr_code {
             width: 80px;
             margin-block: 10px;
         }
@@ -172,11 +160,6 @@
                         <img src="{{$consular->photo}}" class="avatar shadow-lg" alt="avatar" srcset="">
                     </div>
                     <div class="col-8">
-
-                        <!-- INFO ELU CONSULAIRE -->
-                        <div class="text-center block-title">
-                            <span class="span1">Informations personnelles de l'Elu consulaire</span>
-                        </div>
                         <div class="row info_block" id="consular_info">
                             <div class="col-6">
                                 <ul class="first">
@@ -184,8 +167,11 @@
                                     <li>Prénom(s) /Surname</li>
                                     <li>Télephone /Phone</li>
                                     <li>Email /Email</li>
-                                    <li>Poste Occupé /Position :</li>
-                                    <li>Mandature /Mandate:</li>
+                                    <li>Titre /Title :</li>
+                                    <li>Dénomination /Denomination</li>
+                                    <li>Forme Juridique /Status</li>
+                                    <li>Secteur d'activité /Area</li>
+                                    <li>Fonction /Function</li>
                                 </ul>
                             </div>
                             <div class="col-6">
@@ -195,36 +181,13 @@
                                     <li> <strong>{{$consular->phone}} </strong></li>
                                     <li> <strong>{{$consular->email}}</strong></li>
                                     <li> <strong>{{$poste->label}} </strong></li>
-                                    <li> <strong>{{$card_mandate->designation}} </strong></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- INFO ENTREPRISE -->
-                        <div class="text-center block-title">
-                            <span class="span2">Informations de l'entreprise representée</span>
-                        </div>
-                        <div class="row info_block" id="company_info">
-                            <div class="col-6">
-                                <ul class="first">
-                                    <li>Dénomination /Denomination</li>
-                                    <li>Forme Juridique /Legal status</li>
-                                    <li>Secteur d'activité /Area</li>
-                                    <!-- <li>Activité Principale /Main</li> -->
-                                    <li>Fonction /Function</li>
-                                </ul>
-                            </div>
-                            <div class="col-6">
-                                <ul class="second">
                                     <li> <strong>{{$card_company->denomination}} </strong></li>
                                     <li> <strong>{{$card_company->form_juridique}} </strong></li>
                                     <li> <strong>{{$card_company->departement}} </strong></li>
-                                    <!-- <li> <strong>Comptabilité</strong></li> -->
                                     <li> <strong>{{$fonction->label}} </strong></li>
                                 </ul>
                             </div>
                         </div>
-                        <!--  -->
                     </div>
                 </div>
                 <div class="row" id="footer">
@@ -258,11 +221,11 @@
                 <div class="row px-0" id="header">
                     <div class="col-12">
                         <div class="row">
-                            
+
                             <div class="col-12 text-center mb-2">
                                 <img src="{{asset('logo-card.png')}}" style="width: 100px; height: auto;" alt="">
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
