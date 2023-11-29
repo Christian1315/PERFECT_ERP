@@ -53,5 +53,9 @@ Route::get("/card", function () {
 });
 
 
-// RECUPERATION DES BADGE VIA LE FORMAT HTML
+###__EXPORTATION DES REPERTOIRES___#####
+Route::any('repertory/export', [RepertoryController::class, 'ExportRepertorys']); #EXPORTER DES REPERTOIRES
+
+
+####___RECUPERATION DES BADGE VIA LE FORMAT HTML
 Route::get("{id}/badge", [RepertoryController::class, "_GenerateRepertoryBadgeViaHtml"]);

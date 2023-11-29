@@ -286,6 +286,8 @@ Route::prefix('v1')->group(function () {
     Route::prefix('repertory')->group(function () {
         Route::controller(RepertoryController::class)->group(function () {
             Route::any('add', 'AddRepertory');
+            Route::any('import', 'ImportRepertorys'); #IMPORTER DES REPERTOIRES
+            Route::any('export', 'ExportRepertorys'); #EXPORTER DES REPERTOIRES
             Route::any('all', 'Repertories');
             Route::any('{id}/retrieve', '_RetrieveRepertory');
             Route::any('{id}/update', '_UpdateRepertory');

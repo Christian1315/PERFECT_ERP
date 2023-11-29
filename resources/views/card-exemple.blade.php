@@ -20,7 +20,6 @@
 
         .info_block {
             padding-top: 40px;
-            /* align-items: center!important; */
         }
 
         .logo {

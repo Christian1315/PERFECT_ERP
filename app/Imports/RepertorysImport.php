@@ -2,14 +2,12 @@
 
 namespace App\Imports;
 
-use App\Models\Contact;
+use App\Models\Repertory;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-
-class ContactsImport implements ToModel,WithHeadingRow,WithChunkReading
+class RepertorysImport implements ToModel, WithHeadingRow, WithChunkReading
 {
     /**
      * @param array $row
@@ -18,11 +16,15 @@ class ContactsImport implements ToModel,WithHeadingRow,WithChunkReading
      */
     public function model(array $contact)
     {
-        return Contact::create([
+        return Repertory::create([
             'firstname'    => $contact['firstname'],
             'lastname'     => $contact['lastname'],
-            'phone'    => $contact['phone'],
-            'detail'    => $contact['detail'],
+            'contact'    => $contact['contact'],
+            'ministry'    => $contact['ministry'],
+            'denomination'    => $contact['denomination'],
+            'residence'    => $contact['residence'],
+            'commune'    => $contact['commune'],
+            'owner'    => request()->user()->id,
         ]);
     }
 
