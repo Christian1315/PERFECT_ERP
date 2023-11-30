@@ -177,15 +177,15 @@ Route::prefix('v1')->group(function () {
     Route::prefix("stock")->group(function () {
         Route::prefix('products')->group(function () {
             ###========== PRODUCT TYPE ROUTINGS ========###
-            Route::controller(ProductTypeController::class)->group(function () {
-                Route::prefix('type')->group(function () {
+            Route::prefix('type')->group(function () {
+                Route::controller(ProductTypeController::class)->group(function () {
                     Route::any('all', 'ProductTypes'); #RECUPERATION DE TOUT LES TYPES DE PRODUIT
                     Route::any('{id}/retrieve', 'RetrieveProductType'); #RECUPERATION D'UN TYPE DE PRODUIT
                 });
             });
             ###========== PRODUCT CATEGORY ROUTINGS ========###
-            Route::controller(ProductCategoryController::class)->group(function () {
-                Route::prefix('category')->group(function () {
+            Route::prefix('category')->group(function () {
+                Route::controller(ProductCategoryController::class)->group(function () {
                     // Route::any('add', 'CreateProductCategory'); #AJOUT D'UNE CATEGORIE DE PRODUIT
                     Route::any('all', 'ProductCategories'); #GET ALL CATEGORY DE PRDUIT
                     Route::any('{id}/retrieve', 'RetrieveProductCategory'); #RECUPERATION D'UNE CATEGORY DE PRDUIT

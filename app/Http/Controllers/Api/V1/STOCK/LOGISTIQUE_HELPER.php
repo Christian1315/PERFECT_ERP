@@ -31,6 +31,8 @@ class LOGISTIQUE_HELPER extends BASE_HELPER
             'phone.numeric' => 'Le phone doit être de format numéric!',
             'email.required' => 'Le champ email est réquis!',
             'email.email' => 'Ce champ doit être un mail!',
+            'email.unique' => 'Ce mail existe déjà!',
+
             'description.required' => "La description du logistiaque est réquise!",
         ];
     }

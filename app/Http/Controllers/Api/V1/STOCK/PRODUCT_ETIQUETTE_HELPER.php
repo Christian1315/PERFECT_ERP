@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\STOCK\STOCK;
+namespace App\Http\Controllers\Api\V1\STOCK;
 
 use App\Http\Controllers\Api\V1\BASE_HELPER;
 use App\Models\Etiquette;

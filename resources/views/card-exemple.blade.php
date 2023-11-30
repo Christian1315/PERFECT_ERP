@@ -198,6 +198,10 @@
             <div class="col-2"></div>
         </div>
 
+        <br>
+        <br>
+
+        <!-- <br><br><br><br>
         <br><br><br><br><br>
         <br><br><br><br><br>
         <br><br><br><br><br>
@@ -210,8 +214,7 @@
         <br><br><br><br><br>
         <br><br><br><br><br>
         <br><br><br><br><br>
-        <br><br><br><br><br>
-        <br><br><br><br><br>
+        <br><br><br><br><br> -->
 
         <!-- LE DERRIERE DE LA CARTE -->
         <div class="row" id="body">
