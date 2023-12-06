@@ -20,8 +20,6 @@ class PRODUCT_HELPER extends BASE_HELPER
             'price' => ['required', "numeric"],
             'sale_price' => ['required', "numeric"],
             'sale_tax' => ['required', "numeric"],
-            // 'inner_reference' => ['required'],
-            // 'bar_code' => ['required'],
             'description' => ['required'],
 
             'can_be_sale' => ['required', "boolean"],
@@ -120,7 +118,6 @@ class PRODUCT_HELPER extends BASE_HELPER
         ##GESTION DE L'IMAGE
         $prod_img = $request->file('img');
         $prod_img_name = $prod_img->getClientOriginalName();
-
         $request->file('img')->move("products", $prod_img_name);
 
         //REFORMATION DU $formData AVANT SON ENREGISTREMENT DANS LA TABLE **STORE PRODUCTS**
@@ -128,7 +125,6 @@ class PRODUCT_HELPER extends BASE_HELPER
         $formData["owner"] = $user->id;
 
         $product = Product::create($formData); #ENREGISTREMENT DU PRODUIT DANS LA DB
-
         return self::sendResponse($product, 'Produit crée avec succès!!');
     }
 

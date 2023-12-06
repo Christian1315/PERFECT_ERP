@@ -12,6 +12,7 @@ class Card extends Model
 
     protected $fillable = [
         "consular",
+        "consular_new",
         "mandate",
         "card_img",
         "reference",
@@ -21,7 +22,7 @@ class Card extends Model
 
     function consular(): BelongsTo
     {
-        return $this->belongsTo(ElectedConsular::class, "consular");
+        return $this->belongsTo(ElectedConsular::class, "consular_new");
     }
 
     function mandate(): BelongsTo

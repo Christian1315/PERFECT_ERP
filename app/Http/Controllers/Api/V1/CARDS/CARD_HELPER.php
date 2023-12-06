@@ -115,7 +115,7 @@ class CARD_HELPER extends BASE_HELPER
 
         ##__
         $formData["reference"] = $reference;
-        $formData["consular"] = $consular;
+        $formData["consular_new"] = $consular;
 
         #ENREGISTREMENT DE LA CARTE DANS LA DB
         $cretedCard = Card::create($formData);

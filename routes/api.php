@@ -250,7 +250,6 @@ Route::prefix('v1')->group(function () {
                 Route::any('add', 'AddExploitation');
                 Route::any('all', 'Exploitations');
                 Route::any('{id}/retrieve', '_RetrieveExploitation');
-                // Route::any('{id}/update', '_UpdateMarketer');
                 Route::any('{id}/delete', 'DeleteExploitation');
             });
         });
@@ -363,4 +362,5 @@ Route::prefix('v1')->group(function () {
         });
     });
     ######################## FIN MODULE CARTES CONSULAIRES ##############################
+    
 });
