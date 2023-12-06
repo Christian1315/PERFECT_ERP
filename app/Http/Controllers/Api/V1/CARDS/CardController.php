@@ -11,6 +11,7 @@ class CardController extends CARD_HELPER
     {
         $this->middleware(['auth:api', 'scope:api-access'])->except([
             "_GenerateHtmlCard",
+            "RetrieveCard"
         ]);
 
         set_time_limit(0);
