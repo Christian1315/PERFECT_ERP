@@ -245,7 +245,7 @@ class CARD_HELPER extends BASE_HELPER
         $card_company = Company::find($card->company);
 
         ##__ELECTED CONSULAR INFOS
-        $consular = ElectedConsular::with(["owner", "company_fonction_mandate", "postes"])->find($card->consular);
+        $consular = ElectedConsular::with(["owner", "company_fonction_mandate", "postes"])->find($card->consular_new);
         // dd($consular->postes);
 
         ##__ELECTED CONSULAR, FONCTION & POSTE
