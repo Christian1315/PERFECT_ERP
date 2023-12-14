@@ -19,8 +19,10 @@ return new class extends Migration
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
             $table->string("ifu");
-            $table->string("denomination");
+            $table->longText("denomination");
             $table->string("form_juridique");
+            $table->text("principal_activity");
+            $table->string("activity_area");
             $table->string("creation_date");
             $table->string("phone");
             $table->string("email");

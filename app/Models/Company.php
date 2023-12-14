@@ -21,7 +21,9 @@ class Company extends Model
         "email",
         "departement",
         "adresse",
-        "rccm"
+        "rccm",
+        "principal_activity",
+        "activity_area"
     ];
 
     function owner(): BelongsTo

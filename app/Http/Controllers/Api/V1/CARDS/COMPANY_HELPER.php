@@ -15,12 +15,14 @@ class COMPANY_HELPER extends BASE_HELPER
             'ifu' => ['required'],
             'denomination' => ['required'],
             'form_juridique' => ['required'],
+            'principal_activity' => ['required'],
+            'activity_area' => ['required'],
             'creation_date' => ['required', 'date'],
             'phone' => ['required', 'numeric'],
             'email' => ['required', 'email'],
             'departement' => ["required"],
             'adresse' => ["required"],
-            'rccm' => ["required", "file"],
+            'rccm' => ["required"],
         ];
     }
 
@@ -30,6 +32,9 @@ class COMPANY_HELPER extends BASE_HELPER
             'ifu.required' => "L'ifu est réquis!",
             'denomination.required' => 'La denomination est réquise!',
             'form_juridique.required' => 'Veuillez préciser la forme juridique!',
+
+            'principal_activity.required' => 'Veuillez préciser l\'activité principale!',
+            'activity_area.required' => 'Veuillez préciser le secteur d\'activité!',
 
             'creation_date.required' => 'Veuillez préciser la date de création!',
             'creation_date.date' => "La date de création doit être de format date",
@@ -44,7 +49,6 @@ class COMPANY_HELPER extends BASE_HELPER
             'adresse.required' => 'L\'adresse est réquis!',
 
             'rccm.required' => 'Le rccm est réquis!',
-            'rccm.file' => 'Le rccm doit être un fichier!',
         ];
     }
 
@@ -56,7 +60,6 @@ class COMPANY_HELPER extends BASE_HELPER
         $validator = Validator::make($formDatas, $rules, $messages);
         return $validator;
     }
-
     ###_____
 
     static function createCompany($request)
@@ -67,11 +70,11 @@ class COMPANY_HELPER extends BASE_HELPER
         $formData["owner"] = $user->id;
 
         ####___TRAITEMENT DE L'IMAGE
-        $rccm = $request->file("rccm");
-        $rccm_name = $rccm->getClientOriginalName();
+        // $rccm = $request->file("rccm");
+        // $rccm_name = $rccm->getClientOriginalName();
 
-        $rccm->move("rccms", $rccm_name);
-        $formData["rccm"] = asset("rccms/" . $rccm_name);
+        // $rccm->move("rccms", $rccm_name);
+        // $formData["rccm"] = asset("rccms/" . $rccm_name);
 
         ###____
         $company = Company::create($formData);

@@ -19,14 +19,14 @@ return new class extends Migration
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
             $table->string("ifu");
-            $table->string("npi");
+            $table->string("npi")->nullable();
             $table->string("firstname");
             $table->string("lastname");
             $table->string("sexe");
             $table->string("photo");
             $table->string("phone");
             $table->string("email");
-            $table->string("validated_date");
+            // $table->string("validated_date");
             $table->string("birth_date");
             $table->string("place_of_birth");
             $table->string("country_of_birth");

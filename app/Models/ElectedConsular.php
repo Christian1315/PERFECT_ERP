@@ -19,7 +19,7 @@ class ElectedConsular extends Model
         "lastname",
         "sexe",
         "photo",
-        "validated_date",
+        // "validated_date",
         "birth_date",
         "place_of_birth",
         "country_of_birth",

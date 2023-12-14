@@ -19,7 +19,7 @@ class CONSULAR_HELPER extends BASE_HELPER
     {
         return [
             'ifu' => ['required'],
-            'npi' => ['required'],
+            // 'npi' => ['required'],
             'firstname' => ['required'],
             'lastname' => ['required'],
 
@@ -33,7 +33,7 @@ class CONSULAR_HELPER extends BASE_HELPER
 
             'sexe' => ['required'],
             'photo' => ['required', "file"],
-            'validated_date' => ["required", "date"],
+            // 'validated_date' => ["required", "date"],
         ];
     }
 
@@ -41,7 +41,7 @@ class CONSULAR_HELPER extends BASE_HELPER
     {
         return [
             'ifu.required' => "L'ifu est réquis!",
-            'npi.required' => "L'npi est réquis!",
+            // 'npi.required' => "L'npi est réquis!",
             'firstname.required' => 'Votre prénom est réquis!',
             'lastname.required' => 'Votre nom est réquis!',
 
@@ -50,8 +50,8 @@ class CONSULAR_HELPER extends BASE_HELPER
             'photo.required' => 'Veuillez choisir une photo',
             'photo.file' => 'Ce champ doit être du format fichier',
 
-            'validated_date.required' => "La date de validation est réquise!",
-            'validated_date.date' => "La date de création doit être de format date",
+            // 'validated_date.required' => "La date de validation est réquise!",
+            // 'validated_date.date' => "La date de création doit être de format date",
 
             'phone.required' => 'Le phone est réquis!',
             'phone.numeric' => 'Le phone doit être de format numéric!',
