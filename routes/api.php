@@ -326,6 +326,9 @@ Route::prefix('v1')->group(function () {
                 Route::any('{id}/retrieve', '_RetrieveCompany');
                 Route::any('{id}/update', '_UpdateCompany');
                 Route::any('{id}/delete', 'DeleteCompany');
+
+                Route::any('import', 'ImportCompanies'); #IMPORTER DES ENTREPRISES
+                Route::any('export', 'ExportCompanies'); #EXPORTER DES ENTREPRISES
             });
 
             // LES FONCTIONS DANS UNE ENTREPRISE
@@ -347,6 +350,9 @@ Route::prefix('v1')->group(function () {
                 Route::any('{id}/delete', 'DeleteConsular');
                 Route::any('{id}/affect-to-company', 'AffectToCompany');
                 Route::any('{id}/affect-to-poste', 'AffectToPoste');
+
+                Route::any('import', 'ImportElectedConsulars'); #IMPORTER DES ELUS ELUS CONSULAIRES
+                Route::any('export', 'ExportElectedConsulars'); #EXPORTER DES ELUS ELUS CONSULAIRES
             });
         });
 
@@ -362,5 +368,5 @@ Route::prefix('v1')->group(function () {
         });
     });
     ######################## FIN MODULE CARTES CONSULAIRES ##############################
-    
+
 });

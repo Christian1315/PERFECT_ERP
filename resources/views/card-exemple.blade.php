@@ -167,10 +167,10 @@
                                     <li>Télephone /Phone</li>
                                     <li>Email /Email</li>
                                     <li>Titre /Title :</li>
-                                    <li>Dénomination /Denomination</li>
                                     <li>Forme Juridique /Status</li>
                                     <li>Secteur d'activité /Area</li>
-                                    <li>Fonction /Function</li>
+                                    <!-- <li>Fonction /Function</li> -->
+                                    <li>Dénomination</li>
                                 </ul>
                             </div>
                             <div class="col-6">
@@ -180,10 +180,11 @@
                                     <li> <strong>{{$consular->phone}} </strong></li>
                                     <li> <strong>{{$consular->email}}</strong></li>
                                     <li> <strong>{{$poste->label}} </strong></li>
-                                    <li> <strong>{{$card_company->denomination}} </strong></li>
                                     <li> <strong>{{$card_company->form_juridique}} </strong></li>
-                                    <li> <strong>{{$card_company->departement}} </strong></li>
-                                    <li> <strong>{{$fonction->label}} </strong></li>
+                                    <li> <strong>{{$card_company->form_juridique}} </strong></li>
+                                    <li> <strong>{{$card_company->activity_area}} </strong></li>
+                                    <li> <strong>{{$card_company->denomination}} </strong></li>
+                                    <!-- <li> <strong>{{$fonction->label}} </strong></li> -->
                                 </ul>
                             </div>
                         </div>

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string("firstname");
             $table->string("lastname");
             $table->string("sexe");
-            $table->string("photo");
+            $table->string("photo")->nullable();
             $table->string("phone");
             $table->string("email");
             // $table->string("validated_date");

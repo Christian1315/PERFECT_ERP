@@ -1,15 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\V1\CARDS\CardController;
+use App\Http\Controllers\Api\V1\CARDS\ElectedConsularController;
 use App\Http\Controllers\Api\V1\MINISTERS\RepertoryController;
-use App\Http\Controllers\PdfController;
-use App\Models\Card;
-use App\Models\Company;
-use App\Models\CompanyConsular;
-use App\Models\ElectedConsular;
-use App\Models\Fonction;
-use App\Models\Mandate;
-use App\Models\Poste;
+
 use App\Models\User;
 use App\Notifications\SendNotification;
 use Illuminate\Support\Facades\Notification;
@@ -56,6 +50,8 @@ Route::get("/card", function () {
 ###__EXPORTATION DES REPERTOIRES___#####
 Route::any('repertory/export', [RepertoryController::class, 'ExportRepertorys']); #EXPORTER DES REPERTOIRES
 
+###__EXPORTATION DES ELUS CONSULAIRES___#####
+Route::any('/card/elected_consular/export', [ElectedConsularController::class, 'ExportElectedConsulars']); #EXPORTER DES REPERTOIRES
 
 ####___RECUPERATION DES BADGE VIA LE FORMAT HTML
 Route::get("{id}/badge", [RepertoryController::class, "_GenerateRepertoryBadgeViaHtml"]);
