@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Validator;
 use PDF;
 use QrCode;
 
-
-
 class CARD_HELPER extends BASE_HELPER
 {
     ##======== CARD VALIDATION =======##
@@ -31,7 +29,6 @@ class CARD_HELPER extends BASE_HELPER
     static function card_messages(): array
     {
         return [
-            // 'consular.required' => "Veuillez choisir une image!",
             'mandate.required' => 'Veuillez précisez la mandature de l\'elu consulaire!',
             'company.required' => 'Veuillez précisez l\'entreprise de l\'elu consulaire!',
 
@@ -120,7 +117,6 @@ class CARD_HELPER extends BASE_HELPER
         #ENREGISTREMENT DE LA CARTE DANS LA DB
         $cretedCard = Card::create($formData);
 
-
         // #########################################################################
         // ##########____GENERATION DE LA CARTE EN FORMAT PDF_________######
         // $card = Card::with(["consular", "mandate", "company"])->find($cretedCard->id);
@@ -172,7 +168,6 @@ class CARD_HELPER extends BASE_HELPER
         $cretedCard->save();
 
         $cretedCard["card_Html_Url"] = env("APP_URL") . "/$cretedCard->id/card";
-
         return self::sendResponse($cretedCard, "Carte générée avec succès!!");
     }
 
@@ -246,7 +241,6 @@ class CARD_HELPER extends BASE_HELPER
 
         ##__ELECTED CONSULAR INFOS
         $consular = ElectedConsular::with(["owner", "company_fonction_mandate", "postes"])->find($card->consular_new);
-        // dd($consular->postes);
 
         ##__ELECTED CONSULAR, FONCTION & POSTE
         $company_fonction_mandate = CompanyConsular::where([

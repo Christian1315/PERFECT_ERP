@@ -98,12 +98,7 @@ class COMPANY_HELPER extends BASE_HELPER
     static function retrieveCompany($id)
     {
         $user = request()->user();
-        $company = null;
-        if ($user->is_super_admin) {
-            $company = Company::with(["owner", "consulars"])->find($id);
-        } else {
-            $company = Company::with(["owner", "consulars"])->where(["owner" => $user->id, "visible" => 1])->find($id);
-        }
+        $company = Company::with(["owner", "consulars"])->where(["owner" => $user->id, "visible" => 1])->find($id);
 
         return self::sendResponse($company, "Entreprise récupérée avec succès:!!");
     }

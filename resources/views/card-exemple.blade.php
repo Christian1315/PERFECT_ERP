@@ -181,7 +181,6 @@
                                     <li> <strong>{{$consular->email}}</strong></li>
                                     <li> <strong>{{$poste->label}} </strong></li>
                                     <li> <strong>{{$card_company->form_juridique}} </strong></li>
-                                    <li> <strong>{{$card_company->form_juridique}} </strong></li>
                                     <li> <strong>{{$card_company->activity_area}} </strong></li>
                                     <li> <strong>{{$card_company->denomination}} </strong></li>
                                     <!-- <li> <strong>{{$fonction->label}} </strong></li> -->
@@ -224,11 +223,9 @@
                 <div class="row px-0" id="header">
                     <div class="col-12">
                         <div class="row">
-
                             <div class="col-12 text-center mb-2">
                                 <img src="{{asset('logo-card.png')}}" style="width: 100px; height: auto;" alt="">
                             </div>
-
                         </div>
                     </div>
                 </div>

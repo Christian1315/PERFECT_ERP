@@ -10,6 +10,9 @@ use App\Http\Controllers\Api\V1\CARDS\MandateController;
 use App\Http\Controllers\Api\V1\CARDS\PosteController;
 use App\Http\Controllers\Api\V1\CARDS\CardController;
 use App\Http\Controllers\Api\V1\ChargeOrderController;
+use App\Http\Controllers\Api\V1\IMMO\ActivityDomainController;
+use App\Http\Controllers\Api\V1\IMMO\CityController;
+use App\Http\Controllers\Api\V1\IMMO\CountryController;
 use App\Http\Controllers\Api\V1\MemberController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\OrganisationController;
@@ -46,7 +49,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('v1')->group(function () {
-
     ###========== PROFILS ROUTINGS ========###
     Route::controller(ProfilController::class)->group(function () {
         Route::prefix('profil')->group(function () {
@@ -172,7 +174,6 @@ Route::prefix('v1')->group(function () {
     });
     ######################## FIN MODULE TICKETING ##############################
 
-
     ######################## MODULE STOCK ##############################
     Route::prefix("stock")->group(function () {
         Route::prefix('products')->group(function () {
@@ -280,7 +281,6 @@ Route::prefix('v1')->group(function () {
     });
     ######################## FIN MODULE STOCK ##############################
 
-
     ######################## MODULE REPERTOIRE ##############################
     Route::prefix('repertory')->group(function () {
         Route::controller(RepertoryController::class)->group(function () {
@@ -369,4 +369,31 @@ Route::prefix('v1')->group(function () {
     });
     ######################## FIN MODULE CARTES CONSULAIRES ##############################
 
+    ######################## MODULE IMMO ##############################
+    Route::prefix('immo')->group(function () {
+        ###========== COUNTRY ========###
+        Route::prefix("country")->group(function () {
+            Route::controller(CountryController::class)->group(function () {
+                Route::any('all', 'Countries'); #RECUPERATION DE TOUT LES PAYS
+                Route::any('{id}/retrieve', 'RetrieveCountrie'); #RECUPERATION D'UN PAYS
+            });
+        });
+
+        ###========== DOMAIN ACTIVITY ========###
+        Route::prefix("activity_domain")->group(function () {
+            Route::controller(ActivityDomainController::class)->group(function () {
+                Route::any('all', 'ActivityDomains'); #RECUPERATION DE TOUT LES DOMAINES D'ACTIVITE
+                Route::any('{id}/retrieve', 'RetrieveActivityDomain'); #RECUPERATION D'UN DOMAINE D'ACTIVITE
+            });
+        });
+
+        ###========== CITY ========###
+        Route::prefix("city")->group(function () {
+            Route::controller(CityController::class)->group(function () {
+                Route::any('all', 'Cities'); #RECUPERATION DE TOUTES LES VILLES
+                Route::any('{id}/retrieve', '_RetrieveCity'); #RECUPERATION D'UNE VILLE
+            });
+        });
+    });
+    ######################## FIN MODULE IMMO ##############################
 });
