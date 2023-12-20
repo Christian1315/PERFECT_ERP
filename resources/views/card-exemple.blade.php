@@ -166,15 +166,15 @@
                         <div class="row info_block" id="consular_info">
                             <div class="col-6">
                                 <ul class="first">
-                                    <li style="font-weight: 900px">Nom /Name</li>
-                                    <li style="font-weight: 900px">Prénom(s) /Surname</li>
-                                    <li style="font-weight: 900px">Télephone /Phone</li>
-                                    <li style="font-weight: 900px">Email /Email</li>
-                                    <li style="font-weight: 900px">Titre /Title :</li>
-                                    <li style="font-weight: 900px">Forme Juridique /Status</li>
-                                    <li style="font-weight: 900px">Secteur d'activité /Area</li>
+                                    <li> <strong> Nom /Name</strong> </li>
+                                    <li> <strong> Prénom(s) /Surname</strong> </li>
+                                    <li> <strong> Télephone /Phone</strong> </li>
+                                    <li> <strong> Email /Email</strong> </li>
+                                    <li> <strong> Titre /Title :</strong> </li>
+                                    <li> <strong> Forme Juridique /Status</strong> </li>
+                                    <li> <strong> Secteur d'activité /Area</strong> </li>
                                     <!-- <li>Fonction /Function</li> -->
-                                    <li style="font-weight: 900px">Dénomination</li>
+                                    <li> <strong> Dénomination</strong> </li>
                                 </ul>
                             </div>
                             <div class="col-6">
