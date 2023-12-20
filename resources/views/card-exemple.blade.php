@@ -166,14 +166,14 @@
                         <div class="row info_block" id="consular_info">
                             <div class="col-6">
                                 <ul class="first">
-                                    <li style="font-size: 15px; margin-block:5px"> <strong> Nom /Name</strong> </li>
-                                    <li style="font-size: 15px; margin-block:5px"> <strong> Prénom(s) /Surname</strong> </li>
-                                    <li style="font-size: 15px; margin-block:5px"> <strong> Télephone /Phone</strong> </li>
-                                    <li style="font-size: 15px; margin-block:5px"> <strong> Email /Email</strong> </li>
-                                    <li style="font-size: 15px; margin-block:5px"> <strong> Titre /Title :</strong> </li>
-                                    <li style="font-size: 15px; margin-block:5px"> <strong> Forme Juridique /Status</strong> </li>
-                                    <li style="font-size: 15px; margin-block:5px"> <strong> Secteur d'activité /Area</strong> </li>
-                                    <li style="font-size: 15px; margin-block:5px"> <strong> Dénomination</strong> </li>
+                                    <li style="font-size: 20px; margin-block:5px"> <strong> Nom /Name</strong> </li>
+                                    <li style="font-size: 20px; margin-block:5px"> <strong> Prénom(s) /Surname</strong> </li>
+                                    <li style="font-size: 20px; margin-block:5px"> <strong> Télephone /Phone</strong> </li>
+                                    <li style="font-size: 20px; margin-block:5px"> <strong> Email /Email</strong> </li>
+                                    <li style="font-size: 20px; margin-block:5px"> <strong> Titre /Title :</strong> </li>
+                                    <li style="font-size: 20px; margin-block:5px"> <strong> Forme Juridique /Status</strong> </li>
+                                    <li style="font-size: 20px; margin-block:5px"> <strong> Secteur d'activité /Area</strong> </li>
+                                    <li style="font-size: 20px; margin-block:5px"> <strong> Dénomination</strong> </li>
                                 </ul>
                             </div>
                             <div class="col-6">
