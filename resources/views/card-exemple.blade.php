@@ -18,6 +18,10 @@
             font-family: "Poppins";
         }
 
+        .first li{
+            font-weight: 700px!important;
+        }
+
         .info_block {
             padding-top: 40px;
         }
