@@ -18,9 +18,9 @@
             font-family: "Poppins";
         }
 
-        /* .first>li {
+        .first li {
             font-weight: 900px !important;
-        } */
+        }
 
         .info_block {
             padding-top: 40px;
@@ -166,13 +166,13 @@
                         <div class="row info_block" id="consular_info">
                             <div class="col-6">
                                 <ul class="first">
-                                    <li style="font-size: 15px;"> <strong> Nom /Name</strong> </li>
-                                    <li style="font-size: 15px;"> <strong> Prénom(s) /Surname</strong> </li>
-                                    <li style="font-size: 15px;"> <strong> Télephone /Phone</strong> </li>
-                                    <li style="font-size: 15px;"> <strong> Email /Email</strong> </li>
-                                    <li style="font-size: 15px;"> <strong> Titre /Title :</strong> </li>
-                                    <li style="font-size: 15px;"> <strong> Forme Juridique /Status</strong> </li>
-                                    <li style="font-size: 15px;"> <strong> Secteur d'activité /Area</strong> </li>
+                                    <li style="font-size: 15px; margin-block:10px"> <strong> Nom /Name</strong> </li>
+                                    <li style="font-size: 15px; margin-block:10px"> <strong> Prénom(s) /Surname</strong> </li>
+                                    <li style="font-size: 15px; margin-block:10px"> <strong> Télephone /Phone</strong> </li>
+                                    <li style="font-size: 15px; margin-block:10px"> <strong> Email /Email</strong> </li>
+                                    <li style="font-size: 15px; margin-block:10px"> <strong> Titre /Title :</strong> </li>
+                                    <li style="font-size: 15px; margin-block:10px"> <strong> Forme Juridique /Status</strong> </li>
+                                    <li style="font-size: 15px; margin-block:10px"> <strong> Secteur d'activité /Area</strong> </li>
                                     <!-- <li>Fonction /Function</li> -->
                                     <li> <strong> Dénomination</strong> </li>
                                 </ul>
