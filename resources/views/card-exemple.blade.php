@@ -24,7 +24,7 @@
 
         .logo {
             height: 80px;
-            width: 80px;
+            width: auto;
             margin-top: 20px;
         }
 
@@ -139,7 +139,7 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-2">
-                                <img src="{{asset('logo-card.png')}}" class="logo" alt="">
+                                <img src="{{asset('logo-card.png')}}" class="logo img-fluid" alt="">
                             </div>
                             <div class="col-8 text-center">
                                 <p class="sub-title">République du Bénin</p>
@@ -147,7 +147,7 @@
                                 <p class="mandate-title">Mandature <em class=""> <?php echo date("Y", strtotime($card_mandate->start_date)) ?> </em> - <em class=""> <?php echo date("Y", strtotime($card_mandate->end_date)) ?></em></p>
                             </div>
                             <div class="col-2">
-                                <img src="{{asset('drapeau.png')}}" class="logo" alt="">
+                                <img src="{{asset('drapeau.png')}}" class="logo img-fluid" alt="">
                             </div>
                         </div>
                     </div>
