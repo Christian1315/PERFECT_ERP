@@ -18,9 +18,9 @@
             font-family: "Poppins";
         }
 
-        .first>li {
+        /* .first>li {
             font-weight: 900px !important;
-        }
+        } */
 
         .info_block {
             padding-top: 40px;
@@ -166,15 +166,15 @@
                         <div class="row info_block" id="consular_info">
                             <div class="col-6">
                                 <ul class="first">
-                                    <li>Nom /Name</li>
-                                    <li>Prénom(s) /Surname</li>
-                                    <li>Télephone /Phone</li>
-                                    <li>Email /Email</li>
-                                    <li>Titre /Title :</li>
-                                    <li>Forme Juridique /Status</li>
-                                    <li>Secteur d'activité /Area</li>
+                                    <li style="font-weight: 900px">Nom /Name</li>
+                                    <li style="font-weight: 900px">Prénom(s) /Surname</li>
+                                    <li style="font-weight: 900px">Télephone /Phone</li>
+                                    <li style="font-weight: 900px">Email /Email</li>
+                                    <li style="font-weight: 900px">Titre /Title :</li>
+                                    <li style="font-weight: 900px">Forme Juridique /Status</li>
+                                    <li style="font-weight: 900px">Secteur d'activité /Area</li>
                                     <!-- <li>Fonction /Function</li> -->
-                                    <li>Dénomination</li>
+                                    <li style="font-weight: 900px">Dénomination</li>
                                 </ul>
                             </div>
                             <div class="col-6">
