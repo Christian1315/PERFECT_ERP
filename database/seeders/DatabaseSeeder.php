@@ -1471,16 +1471,26 @@ class DatabaseSeeder extends Seeder
                 'username' => 'admin',
                 'email' => 'admin@gmail.com',
                 'password' => '$2y$10$CI5P59ICr/HOihqlnYUrLeKwCajgMKd34HB66.JsJBrIOQY9fazrG', #admin
+                "rang_id" => \App\Models\Rang::find(1),
+                "profil_id" => \App\Models\Profil::find(9),
                 'is_super_admin' => true,
                 'phone' => "22961765591",
+
+                'is_admin' => true,
+                'compte_actif' => true,
             ],
             [
                 'name' => 'Joel PPJ',
                 'username' => 'ppjjoel',
                 'email' => 'ppjjoel@gmail.com',
                 'password' => '$2y$10$ZT2msbcfYEUWGUucpnrHwekWMBDe1H0zGrvB.pzQGpepF8zoaGIMC', #ppjjoel
+                "rang_id" => \App\Models\Rang::find(1),
+                "profil_id" => \App\Models\Profil::find(9),
                 'is_super_admin' => true,
                 'phone' => "22961765592",
+
+                'is_admin' => true,
+                'compte_actif' => true,
             ]
         ];
 
@@ -1584,13 +1594,16 @@ class DatabaseSeeder extends Seeder
         ##======== CREATION DES ROLES PAR DEFAUT ============####
         $roles = [
             [
-                'label' => 'is_marketer'
+                'label' => 'is_marketer',
+                'description' => 'Le rôle d\'un marketeur'
             ],
             [
-                'label' => 'is_exploitation'
+                'label' => 'is_exploitation',
+                'description' => 'Le rôle d\'une exploitation'
             ],
             [
-                'label' => 'is_logistique'
+                'label' => 'is_supervisor',
+                'description' => 'Le rôle d\'un superviseur'
             ]
         ];
         foreach ($roles as $role) {
@@ -3152,6 +3165,7 @@ class DatabaseSeeder extends Seeder
 
         ##======== CREATION DES CITIES ============####
         $cities = [
+
             [
                 "name" => "Kandi",
                 "country" => 4,
@@ -4013,7 +4027,7 @@ class DatabaseSeeder extends Seeder
                 "name" => "Bamako",
                 "country" => 30,
             ],
-[
+            [
                 "name" => "Sikasso",
                 "country" => 30,
             ],
@@ -4215,9 +4229,9 @@ class DatabaseSeeder extends Seeder
                 "name" => "Ziguinchor",
                 "country" => 42,
             ],
-            
-            
-            
+
+
+
             [
                 "name" => "Antananarive",
                 "country" => 28,
@@ -4586,11 +4600,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Tsémbehou",
                 "country" => 11,
-            ]
-
-
-
-            ,
+            ],
             [
                 "name" => "Bujumbura",
                 "country" => 7,
@@ -4622,12 +4632,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Rumonge",
                 "country" => 7,
-            ]
-            
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Gaborone",
                 "country" => 5,
@@ -4647,10 +4652,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Maun",
                 "country" => 5,
-            ]
-
-
-            ,
+            ],
             [
                 "name" => "Djibouti",
                 "country" => 14,
@@ -4670,12 +4672,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Dikhil",
                 "country" => 14,
-            ]
-            
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Monrovia",
                 "country" => 26,
@@ -4695,9 +4692,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Kakata",
                 "country" => 26,
-            ]
-            
-            ,
+            ],
             [
                 "name" => "Victoria",
                 "country" => 43,
@@ -4749,11 +4744,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "La Réunion",
                 "country" => 43,
-            ]
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Cape Town",
                 "country" => 1,
@@ -4825,11 +4816,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Mohale's Hoek",
                 "country" => 25,
-            ]
-
-
-
-            ,
+            ],
             [
                 "name" => "Manzini",
                 "country" => 48,
@@ -4893,10 +4880,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Mendefera",
                 "country" => 16,
-            ]
-            
-            
-            ,
+            ],
             [
                 "name" => "Praia",
                 "country" => 9,
@@ -4928,12 +4912,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Tarrafal",
                 "country" => 9,
-            ]
-
-
-
-
-            ,
+            ],
             [
                 "name" => "Alger",
                 "country" => 2,
@@ -4993,12 +4972,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Béjaïa",
                 "country" => 2,
-            ]
-            
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Bissau",
                 "country" => 22,
@@ -5014,12 +4988,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Bolama",
                 "country" => 22,
-            ]
-            
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Mogadiscio",
                 "country" => 45,
@@ -5039,13 +5008,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Kismaayo",
                 "country" => 45,
-            ]
-            
-            
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Nouakchott",
                 "country" => 33,
@@ -5073,12 +5036,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Kaédi",
                 "country" => 33,
-            ]
-
-
-
-
-            ,
+            ],
             [
                 "name" => "Freetown",
                 "country" => 44,
@@ -5094,10 +5052,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Makeni",
                 "country" => 44,
-            ]
-            
-            
-            ,
+            ],
             [
                 "name" => "Malabo",
                 "country" => 23,
@@ -5109,11 +5064,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Ebebiyín",
                 "country" => 23,
-            ]
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Tunis",
                 "country" => 52,
@@ -5145,12 +5096,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Ariana",
                 "country" => 52,
-            ]
-            
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Luanda",
                 "country" => 3,
@@ -5182,12 +5128,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Malanje",
                 "country" => 3,
-            ]
-            
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Mwanza",
                 "country" => 49,
@@ -5223,12 +5164,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Moshi",
                 "country" => 49,
-            ]
-            
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Le Caire",
                 "country" => 15,
@@ -5312,12 +5248,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Conakry",
                 "country" => 21,
-            ]
-
-
-
-
-            ,
+            ],
             [
                 "name" => "Nzérékoré",
                 "country" => 21,
@@ -5341,11 +5272,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Kamsar",
                 "country" => 21,
-            ]
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Tripoli",
                 "country" => 27,
@@ -5405,12 +5332,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Zliten",
                 "country" => 27,
-            ]
-            
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Lilongwe",
                 "country" => 29,
@@ -5442,11 +5364,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Matola",
                 "country" => 34,
-            ]
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Beira",
                 "country" => 34,
@@ -5544,14 +5462,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Njeru",
                 "country" => 38,
-            ]
-
-
-
-
-
-
-            ,
+            ],
             [
                 "name" => "Khartoum",
                 "country" => 46,
@@ -5598,8 +5509,6 @@ class DatabaseSeeder extends Seeder
 
 
 
-
-
             [
                 "name" => "Djouba",
                 "country" => 47,
@@ -5623,15 +5532,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Yambio",
                 "country" => 47,
-            ]
-
-
-
-
-
-
-
-            ,
+            ],
             [
                 "name" => "Lusaka",
                 "country" => 53,
@@ -5663,12 +5564,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Luanshya",
                 "country" => 53,
-            ]
-            
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Harare",
                 "country" => 54,
@@ -5700,14 +5596,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Redcliffe",
                 "country" => 54,
-            ]
-            
-            
-            
-            
-            
-            
-            ,
+            ],
             [
                 "name" => "Lomé",
                 "country" => 51,
@@ -5751,10 +5640,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Dori",
                 "country" => 6,
-            ]
-
-
-            ,
+            ],
             [
                 "name" => "Macenta",
                 "country" => 21,
@@ -5778,11 +5664,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Teyateyaneng",
                 "country" => 25,
-            ]
-
-
-
-            ,
+            ],
             [
                 "name" => "Otjiwarongo",
                 "country" => 35,
@@ -5806,10 +5688,7 @@ class DatabaseSeeder extends Seeder
             [
                 "name" => "Okahandja",
                 "country" => 35,
-            ]
-
-
-            ,
+            ],
             [
                 "name" => "Dosso",
                 "country" => 36,
@@ -5827,8 +5706,4253 @@ class DatabaseSeeder extends Seeder
                 "country" => 49,
             ]
         ];
+
         foreach ($cities as $city) {
             \App\Models\City::factory()->create($city);
+        };
+
+        ##======== CREATION DES AREAS ============####
+        $areas = [
+            [
+                "name" => "Akoïtchaou",
+            ],
+            [
+                "name" => "Alfakoara",
+            ],
+            [
+                "name" => "Angaradébou",
+            ],
+            [
+                "name" => "Dogban",
+            ],
+            [
+                "name" => "Fafa",
+            ],
+            [
+                "name" => "Fouet",
+            ],
+            [
+                "name" => "Kpalolo",
+            ],
+            [
+                "name" => "Sékalé",
+            ],
+            [
+                "name" => "Sondo",
+            ],
+            [
+                "name" => "Soundou",
+            ],
+            [
+                "name" => "Tchoka",
+            ],
+            [
+                "name" => "Thuy",
+            ],
+            [
+                "name" => "Thya",
+            ],
+            [
+                "name" => "Bensékou",
+            ],
+            [
+                "name" => "Gogbêdé",
+            ],
+            [
+                "name" => "Koutakroukou",
+            ],
+            [
+                "name" => "Dinin",
+            ],
+            [
+                "name" => "Dinin Peulh",
+            ],
+            [
+                "name" => "Donwari",
+            ],
+            [
+                "name" => "Donwari-Peulh",
+            ],
+            [
+                "name" => "Gambanè",
+            ],
+            [
+                "name" => "Gambanè-Peulh",
+            ],
+            [
+                "name" => "Kpéssarou",
+            ],
+            [
+                "name" => "Mongo",
+            ],
+            [
+                "name" => "Mongo-Peulh",
+            ],
+            [
+                "name" => "Sidérou",
+            ],
+            [
+                "name" => "Tissarou",
+            ],
+            [
+                "name" => "Tissarou-Peulh",
+            ],
+            [
+                "name" => "Touko",
+            ],
+            [
+                "name" => "Damadi",
+            ],
+            [
+                "name" => "Dodopanin",
+            ],
+            [
+                "name" => "Gando-Kossikana",
+            ],
+            [
+                "name" => "Gansosso-Gbiga",
+            ],
+            [
+                "name" => "Gansosso-Yiroussé",
+            ],
+            [
+                "name" => "Kadjèrè",
+            ],
+            [
+                "name" => "Kéféri-Hinkanté",
+            ],
+            [
+                "name" => "Kéféri-Sinté",
+            ],
+            [
+                "name" => "Pédé",
+            ],
+            [
+                "name" => "Al Barika",
+            ],
+            [
+                "name" => "Alékparé",
+            ],
+            [
+                "name" => "Banigourou",
+            ],
+            [
+                "name" => "Baobab",
+            ],
+            [
+                "name" => "Kossarou",
+            ],
+            [
+                "name" => "Madina",
+            ],
+            [
+                "name" => "Zerman-Kouré",
+            ],
+            [
+                "name" => "Bakpara",
+            ],
+            [
+                "name" => "Héboumey",
+            ],
+            [
+                "name" => "Kandi-Fô",
+            ],
+            [
+                "name" => "Kandi-Fô-Peulh",
+            ],
+            [
+                "name" => "Lafiarou",
+            ],
+            [
+                "name" => "Podo",
+            ],
+            [
+                "name" => "Sinikoussou-Béri",
+            ],
+            [
+                "name" => "Firi",
+            ],
+            [
+                "name" => "Gbokoukou",
+            ],
+            [
+                "name" => "Gogoré",
+            ],
+            [
+                "name" => "Kassakou",
+            ],
+            [
+                "name" => "Padé",
+            ],
+            [
+                "name" => "Padé-Peulh",
+            ],
+            [
+                "name" => "Pégon",
+            ],
+            [
+                "name" => "Banikani",
+            ],
+            [
+                "name" => "Fouré",
+            ],
+            [
+                "name" => "Lolo",
+            ],
+            [
+                "name" => "Saah",
+            ],
+            [
+                "name" => "Bikongou",
+            ],
+            [
+                "name" => "Bodérou",
+            ],
+            [
+                "name" => "Bodérou-Peulh",
+            ],
+            [
+                "name" => "Gbindarou",
+            ],
+            [
+                "name" => "Sakatoussa",
+            ],
+            [
+                "name" => "Sam",
+            ],
+            [
+                "name" => "Sam-Gokirou",
+            ],
+            [
+                "name" => "Sam-Peulh",
+            ],
+            [
+                "name" => "Tankongou",
+            ],
+            [
+                "name" => "Téri",
+            ],
+            [
+                "name" => "Wonga",
+            ],
+            [
+                "name" => "Alibori-Yankin",
+            ],
+            [
+                "name" => "Pédigui",
+            ],
+            [
+                "name" => "Sinawongourou",
+            ],
+            [
+                "name" => "Sinawongourou-Peulh",
+            ],
+            [
+                "name" => "Sonsoro",
+            ],
+            [
+                "name" => "Sonsoro-Peulh",
+            ],
+            [
+                "name" => "Djindégabi-Tounga",
+            ],
+            [
+                "name" => "Gaabo",
+            ],
+            [
+                "name" => "Garou-Béri",
+            ],
+            [
+                "name" => "Garou-Tédji-Gorobani",
+            ],
+            [
+                "name" => "Garou-Tédji",
+            ],
+            [
+                "name" => "Garou- Wénou-Kannin",
+            ],
+            [
+                "name" => "Kambouwo-Tounga",
+            ],
+            [
+                "name" => "Monkassa",
+            ],
+            [
+                "name" => "Tounga-Tédji",
+            ],
+            [
+                "name" => "Wanda",
+            ],
+            [
+                "name" => "Bangou",
+            ],
+            [
+                "name" => "Banitè-Koubéri",
+            ],
+            [
+                "name" => "Banitè-Fèrè Kirè ",
+            ],
+            [
+                "name" => "Boïffo",
+            ],
+            [
+                "name" => "Fiafounfoun",
+            ],
+            [
+                "name" => "Goun-Goun",
+            ],
+            [
+                "name" => "Guéné-Guidigo",
+            ],
+            [
+                "name" => "Guéné-Zermé",
+            ],
+            [
+                "name" => "Isséné",
+            ],
+            [
+                "name" => "Kantoro",
+            ],
+            [
+                "name" => "Koara-Tédji",
+            ],
+            [
+                "name" => "Lakali-Kaney",
+            ],
+            [
+                "name" => "Mokollé",
+            ],
+            [
+                "name" => "Sounbey-Gorou",
+            ],
+            [
+                "name" => "Tondi-Banda",
+            ],
+            [
+                "name" => "Toro-Zougou",
+            ],
+            [
+                "name" => "Godjékoara",
+            ],
+            [
+                "name" => "Goroussoundougou",
+            ],
+            [
+                "name" => "Illoua",
+            ],
+            [
+                "name" => "Kassa",
+            ],
+            [
+                "name" => "Koualérou",
+            ],
+            [
+                "name" => "Kouara-tédji",
+            ],
+            [
+                "name" => "Madécali",
+            ],
+            [
+                "name" => "Madécali-Zongo",
+            ],
+            [
+                "name" => "Mélayakouara",
+            ],
+            [
+                "name" => "Sendé",
+            ],
+            [
+                "name" => "Bodjécali",
+            ],
+            [
+                "name" => "Bodjécali-Château",
+            ],
+            [
+                "name" => "Galiel",
+            ],
+            [
+                "name" => "Golobanda",
+            ],
+            [
+                "name" => "Kotchi",
+            ],
+            [
+                "name" => "Tassi-Djindé",
+            ],
+            [
+                "name" => "Tassi-tédji",
+            ],
+            [
+                "name" => "Tassi-Tédji-Banizounbou",
+            ],
+            [
+                "name" => "Tassi-Zénon",
+            ],
+            [
+                "name" => "Wollo",
+            ],
+            [
+                "name" => "Wollo-Château",
+            ],
+            [
+                "name" => "Wouro-Yesso",
+            ],
+            [
+                "name" => "Baniloua",
+            ],
+            [
+                "name" => "Dèguè-Dègué",
+            ],
+            [
+                "name" => "Gorou-Djindé",
+            ],
+            [
+                "name" => "Molla",
+            ],
+            [
+                "name" => "Sakawan-Tédji",
+            ],
+            [
+                "name" => "Sakawan-Zénon",
+            ],
+            [
+                "name" => "Santché",
+            ],
+            [
+                "name" => "Toumboutou",
+            ],
+            [
+                "name" => "Wanzam-Koara",
+            ],
+            [
+                "name" => "Birni Lafia",
+            ],
+            [
+                "name" => "Fadama",
+            ],
+            [
+                "name" => "Goroukambou",
+            ],
+            [
+                "name" => "Kangara-Peulh",
+            ],
+            [
+                "name" => "Karigui",
+            ],
+            [
+                "name" => "Missira",
+            ],
+            [
+                "name" => "Saboula",
+            ],
+            [
+                "name" => "Tondikoaria",
+            ],
+            [
+                "name" => "Tondoobon",
+            ],
+            [
+                "name" => "Banikani",
+            ],
+            [
+                "name" => "Bogo-Bogo",
+            ],
+            [
+                "name" => "Koaratédji",
+            ],
+            [
+                "name" => "Kofounou",
+            ],
+            [
+                "name" => "Mamassy-Gourma",
+            ],
+            [
+                "name" => "Torioh",
+            ],
+            [
+                "name" => "Toura",
+            ],
+            [
+                "name" => "Bello-Tounga",
+            ],
+            [
+                "name" => "Fakara",
+            ],
+            [
+                "name" => "Gourou Béri",
+            ],
+            [
+                "name" => "Karimama-Batouma-Béri",
+            ],
+            [
+                "name" => "Karimama-Dendi-Kouré",
+            ],
+            [
+                "name" => "Mamassy-Peulh",
+            ],
+            [
+                "name" => "Banizoumbou",
+            ],
+            [
+                "name" => "Dangazori",
+            ],
+            [
+                "name" => "Garbey-Koara",
+            ],
+            [
+                "name" => "Goungou-Béri",
+            ],
+            [
+                "name" => "Kéné-Tounga",
+            ],
+            [
+                "name" => "Kompa",
+            ],
+            [
+                "name" => "Kompanti",
+            ],
+            [
+                "name" => "Bako-Maka",
+            ],
+            [
+                "name" => "Bongnami",
+            ],
+            [
+                "name" => "Fandou",
+            ],
+            [
+                "name" => "Goumbitchigoura",
+            ],
+            [
+                "name" => "Loumbou-Loumbou",
+            ],
+            [
+                "name" => "Machayan-Marché",
+            ],
+            [
+                "name" => "Monsey",
+            ],
+            [
+                "name" => "Pétchinga",
+            ],
+            [
+                "name" => "Arbonga",
+            ],
+            [
+                "name" => "Aviation",
+            ],
+            [
+                "name" => "Batran",
+            ],
+            [
+                "name" => "Demanou",
+            ],
+            [
+                "name" => "Dérou Garou",
+            ],
+            [
+                "name" => "Glégbabi",
+            ],
+            [
+                "name" => "Guiguiri",
+            ],
+            [
+                "name" => "Kingarou",
+            ],
+            [
+                "name" => "Kokiré",
+            ],
+            [
+                "name" => "Kommon",
+            ],
+            [
+                "name" => "Kori Guiguiri",
+            ],
+            [
+                "name" => "Kpagaguèdou",
+            ],
+            [
+                "name" => "Orou Gnonrou",
+            ],
+            [
+                "name" => "Samanga",
+            ],
+            [
+                "name" => "Tokey-Banta",
+            ],
+            [
+                "name" => "Wagou",
+            ],
+            [
+                "name" => "Wétérou",
+            ],
+            [
+                "name" => "Yadikparou",
+            ],
+            [
+                "name" => "Bofounou",
+            ],
+            [
+                "name" => "Founougo-Boutèra",
+            ],
+            [
+                "name" => "Founougo-Gorobani",
+            ],
+            [
+                "name" => "Founougo-Gah",
+            ],
+            [
+                "name" => "Gama",
+            ],
+            [
+                "name" => "Gaméré-Zongo",
+            ],
+            [
+                "name" => "Gougnirou",
+            ],
+            [
+                "name" => "Gougnirou-Gah",
+            ],
+            [
+                "name" => "Iboto",
+            ],
+            [
+                "name" => "Igrigou",
+            ],
+            [
+                "name" => "Kandérou",
+            ],
+            [
+                "name" => "Kandérou-Kotchera",
+            ],
+            [
+                "name" => "Koney",
+            ],
+            [
+                "name" => "Kpako-Gbabi",
+            ],
+            [
+                "name" => "Pogoussorou",
+            ],
+            [
+                "name" => "Sampèto",
+            ],
+            [
+                "name" => "Sissianganrou",
+            ],
+            [
+                "name" => "Yanguéri",
+            ],
+            [
+                "name" => "Yinyinpogou",
+            ],
+            [
+                "name" => "Bonhanrou",
+            ],
+            [
+                "name" => "Gnambanou",
+            ],
+            [
+                "name" => "Gomparou-Gokpadou",
+            ],
+            [
+                "name" => "Gomparou-Goussinrou",
+            ],
+            [
+                "name" => "Gomparou",
+            ],
+            [
+                "name" => "Gourè-Edé",
+            ],
+            [
+                "name" => "Kali",
+            ],
+            [
+                "name" => "Kpessanrou",
+            ],
+            [
+                "name" => "Niékoubanta",
+            ],
+            [
+                "name" => "Pampime",
+            ],
+            [
+                "name" => "Sionkpékoka",
+            ],
+            [
+                "name" => "Tiganson",
+            ],
+            [
+                "name" => "Yossinandé",
+            ],
+            [
+                "name" => "Bonni",
+            ],
+            [
+                "name" => "Bontè",
+            ],
+            [
+                "name" => "Dombouré",
+            ],
+            [
+                "name" => "Dombouré-Gah",
+            ],
+            [
+                "name" => "Dondagou",
+            ],
+            [
+                "name" => "Gbassa",
+            ],
+            [
+                "name" => "Ggangbanga",
+            ],
+            [
+                "name" => "Goumori-Gbissarou",
+            ],
+            [
+                "name" => "Goumori-Bayèdou",
+            ],
+            [
+                "name" => "Goumori-Gah",
+            ],
+            [
+                "name" => "Mondoukoka",
+            ],
+            [
+                "name" => "Mondoukoka-Gah",
+            ],
+            [
+                "name" => "Sakassinnou",
+            ],
+            [
+                "name" => "Satouba",
+            ],
+            [
+                "name" => "Tihourè",
+            ],
+            [
+                "name" => "Gamarou",
+            ],
+            [
+                "name" => "Kokey-Sinakparou",
+            ],
+            [
+                "name" => "Kokey-Filo",
+            ],
+            [
+                "name" => "Nimbéré",
+            ],
+            [
+                "name" => "Piguiré",
+            ],
+            [
+                "name" => "Sonwari",
+            ],
+            [
+                "name" => "Yambérou",
+            ],
+            [
+                "name" => "Bonkéré",
+            ],
+            [
+                "name" => "Kokiborou",
+            ],
+            [
+                "name" => "Sounsoun",
+            ],
+            [
+                "name" => "Guinningou-Gah",
+            ],
+            [
+                "name" => "Sirikou",
+            ],
+            [
+                "name" => "Boniki",
+            ],
+            [
+                "name" => "Kihouhou",
+            ],
+            [
+                "name" => "Kpéborogou",
+            ],
+            [
+                "name" => "Ounet-Sinakparou",
+            ],
+            [
+                "name" => "Ounet-Sékogbaourou",
+            ],
+            [
+                "name" => "Ounet-Gah",
+            ],
+            [
+                "name" => "Sonnou",
+            ],
+            [
+                "name" => "Sonnou-Gah",
+            ],
+            [
+                "name" => "Bonyangou",
+            ],
+            [
+                "name" => "Bourin",
+            ],
+            [
+                "name" => "Gnandarou",
+            ],
+            [
+                "name" => "Kégamorou",
+            ],
+            [
+                "name" => "Poto",
+            ],
+            [
+                "name" => "Poto-Gah",
+            ],
+            [
+                "name" => "Simpérou",
+            ],
+            [
+                "name" => "Simpérou-Gah",
+            ],
+            [
+                "name" => "Sompéroukou-Gbessara",
+            ],
+            [
+                "name" => "Sompéroukou-Yorounon",
+            ],
+            [
+                "name" => "Sompéroukou-Gah",
+            ],
+            [
+                "name" => "Gbéniki",
+            ],
+            [
+                "name" => "Mékrou",
+            ],
+            [
+                "name" => "Soroko Yorounon",
+            ],
+            [
+                "name" => "Soroko",
+            ],
+            [
+                "name" => "Soroko Gah",
+            ],
+            [
+                "name" => "Soudou",
+            ],
+            [
+                "name" => "Atabénou",
+            ],
+            [
+                "name" => "Gnambourankorou",
+            ],
+            [
+                "name" => "Guimbagou",
+            ],
+            [
+                "name" => "Kakourogou",
+            ],
+            [
+                "name" => "Siwougourou",
+            ],
+            [
+                "name" => "Tintinmou",
+            ],
+            [
+                "name" => "Tintinmou-Gah",
+            ],
+            [
+                "name" => "Toura-Bio N’Worou",
+            ],
+            [
+                "name" => "Toura-Yokparou",
+            ],
+            [
+                "name" => "Toura Gah",
+            ],
+            [
+                "name" => "Badou",
+            ],
+            [
+                "name" => "Kérou-Bagou",
+            ],
+            [
+                "name" => "Bagou-Sinkparou",
+            ],
+            [
+                "name" => "Bagou-Yagbo",
+            ],
+            [
+                "name" => "Banigouré",
+            ],
+            [
+                "name" => "Bépororo",
+            ],
+            [
+                "name" => "Bouyagourou",
+            ],
+            [
+                "name" => "Diadia",
+            ],
+            [
+                "name" => "Gandobou",
+            ],
+            [
+                "name" => "Garagoro",
+            ],
+            [
+                "name" => "Kali",
+            ],
+            [
+                "name" => "Kangnan",
+            ],
+            [
+                "name" => "Kassirou",
+            ],
+            [
+                "name" => "Kpakaguèrè",
+            ],
+            [
+                "name" => "Nafarou",
+            ],
+            [
+                "name" => "Orou-Bédou",
+            ],
+            [
+                "name" => "Taïti",
+            ],
+            [
+                "name" => "Yankpannou",
+            ],
+            [
+                "name" => "Djinmélé",
+            ],
+            [
+                "name" => "Gogounou-Gbanin",
+            ],
+            [
+                "name" => "Gogounou-Nassabara",
+            ],
+            [
+                "name" => "Goubéra",
+            ],
+            [
+                "name" => "Konsénin",
+            ],
+            [
+                "name" => "Ouèrè-Bani",
+            ],
+            [
+                "name" => "Ouèrè-Sonkérou",
+            ],
+            [
+                "name" => "Sonkorou",
+            ],
+            [
+                "name" => "Sorou",
+            ],
+            [
+                "name" => "Bantansoué",
+            ],
+            [
+                "name" => "Boro",
+            ],
+            [
+                "name" => "Borodarou",
+            ],
+            [
+                "name" => "Dagourou",
+            ],
+            [
+                "name" => "Diguisson",
+            ],
+            [
+                "name" => "Gounarou",
+            ],
+            [
+                "name" => "Lafiarou",
+            ],
+            [
+                "name" => "Pariki",
+            ],
+            [
+                "name" => "Dimdimnou",
+            ],
+            [
+                "name" => "Donwari",
+            ],
+            [
+                "name" => "Gamagou",
+            ],
+            [
+                "name" => "Gasso",
+            ],
+            [
+                "name" => "Gbemoussou",
+            ],
+            [
+                "name" => "Gnindarou",
+            ],
+            [
+                "name" => "Gouré Dantcha",
+            ],
+            [
+                "name" => "Kantakpara-Wokparou",
+            ],
+            [
+                "name" => "Kpigourou",
+            ],
+            [
+                "name" => "Ouessènè-Worou",
+            ],
+            [
+                "name" => "Petit-Paris",
+            ],
+            [
+                "name" => "Sori-Boro Wanrou",
+            ],
+            [
+                "name" => "Sori-Kpankpanou",
+            ],
+            [
+                "name" => "Sori-Peulh",
+            ],
+            [
+                "name" => "Tawali",
+            ],
+            [
+                "name" => "Tchoupounga",
+            ],
+            [
+                "name" => "Binga",
+            ],
+            [
+                "name" => "Gando-Dari",
+            ],
+            [
+                "name" => "Dougoulaye",
+            ],
+            [
+                "name" => "Fanan",
+            ],
+            [
+                "name" => "Gbessa",
+            ],
+            [
+                "name" => "Sougou-Gourou",
+            ],
+            [
+                "name" => "Sougou-Kpantrossi",
+            ],
+            [
+                "name" => "Dassari",
+            ],
+            [
+                "name" => "Dougou",
+            ],
+            [
+                "name" => "Kalé",
+            ],
+            [
+                "name" => "Soukarou",
+            ],
+            [
+                "name" => "Wara",
+            ],
+            [
+                "name" => "Wara-Gbidogo",
+            ],
+            [
+                "name" => "Wara-Gah",
+            ],
+            [
+                "name" => "Bobéna",
+            ],
+            [
+                "name" => "Diapéou",
+            ],
+            [
+                "name" => "Goungbè",
+            ],
+            [
+                "name" => "Kouté",
+            ],
+            [
+                "name" => "Libantè",
+            ],
+            [
+                "name" => "Saonzi",
+            ],
+            [
+                "name" => "Gbéssaka",
+            ],
+            [
+                "name" => "Kambara",
+            ],
+            [
+                "name" => "Lété",
+            ],
+            [
+                "name" => "Liboussou",
+            ],
+            [
+                "name" => "Tounga-Issa",
+            ],
+            [
+                "name" => "Waranzi",
+            ],
+            [
+                "name" => "Boumoussou",
+            ],
+            [
+                "name" => "Gandoloukassa",
+            ],
+            [
+                "name" => "Gbassè",
+            ],
+            [
+                "name" => "Gbèkakarou",
+            ],
+            [
+                "name" => "Guénélaga",
+            ],
+            [
+                "name" => "Kamanan",
+            ],
+            [
+                "name" => "Lougou",
+            ],
+            [
+                "name" => "Niambara",
+            ],
+            [
+                "name" => "Sinwan",
+            ],
+            [
+                "name" => "Zonzi",
+            ],
+            [
+                "name" => "Batazi",
+            ],
+            [
+                "name" => "Fondo",
+            ],
+            [
+                "name" => "Gbessarè",
+            ],
+            [
+                "name" => "Guéné Kouzi",
+            ],
+            [
+                "name" => "Korowi",
+            ],
+            [
+                "name" => "Kpassana",
+            ],
+            [
+                "name" => "Limafrani",
+            ],
+            [
+                "name" => "Mafouta-Waassarè",
+            ],
+            [
+                "name" => "Piami",
+            ],
+            [
+                "name" => "Samtimbara",
+            ],
+            [
+                "name" => "Bèdafou",
+            ],
+            [
+                "name" => "Gbarana",
+            ],
+            [
+                "name" => "Morou",
+            ],
+            [
+                "name" => "Poéla",
+            ],
+            [
+                "name" => "Sèrèbani",
+            ],
+            [
+                "name" => "Sèrèkibè",
+            ],
+            [
+                "name" => "Sokotindji",
+            ],
+            [
+                "name" => "Tchakama",
+            ],
+            [
+                "name" => "Ikounga",
+            ],
+            [
+                "name" => "Kototougou",
+            ],
+            [
+                "name" => "Koudahongou",
+            ],
+            [
+                "name" => "Koukouangou-Boukoumbé",
+            ],
+            [
+                "name" => "Koukouatchiengou",
+            ],
+            [
+                "name" => "Koumaagou",
+            ],
+            [
+                "name" => "Koumontchirgou",
+            ],
+            [
+                "name" => "Koumatié",
+            ],
+            [
+                "name" => "Kounadogou",
+            ],
+            [
+                "name" => "Kountchougou",
+            ],
+            [
+                "name" => "Koupagou",
+            ],
+            [
+                "name" => "Koussayagou",
+            ],
+            [
+                "name" => "Koussocoingou",
+            ],
+            [
+                "name" => "Koutagou",
+            ],
+            [
+                "name" => "Koutchata",
+            ],
+            [
+                "name" => "Koutchatahongou",
+            ],
+            [
+                "name" => "Tatouta",
+            ],
+            [
+                "name" => "Zongo",
+            ],
+            [
+                "name" => "Ditchendia",
+            ],
+            [
+                "name" => "Koutatiégou",
+            ],
+            [
+                "name" => "Dikoumini",
+            ],
+            [
+                "name" => "Dimansouri",
+            ],
+            [
+                "name" => "Dipoli",
+            ],
+            [
+                "name" => "Dissapoli",
+            ],
+            [
+                "name" => "Kpérinkpé",
+            ],
+            [
+                "name" => "Mantchari",
+            ],
+            [
+                "name" => "Natchénté",
+            ],
+            [
+                "name" => "Otanongou",
+            ],
+            [
+                "name" => "Oukounsérihoun",
+            ],
+            [
+                "name" => "Agbontê",
+            ],
+            [
+                "name" => "Kêyordakê",
+            ],
+            [
+                "name" => "Koucongou",
+            ],
+            [
+                "name" => "Koupagou-Korontière",
+            ],
+            [
+                "name" => "Koutchatié",
+            ],
+            [
+                "name" => "Kouya",
+            ],
+            [
+                "name" => "Natiéni",
+            ],
+            [
+                "name" => "Okouaro",
+            ],
+            [
+                "name" => "Tadowonta",
+            ],
+            [
+                "name" => "Tassayota",
+            ],
+            [
+                "name" => "Didompê",
+            ],
+            [
+                "name" => "Kougnangou",
+            ],
+            [
+                "name" => "Koukouankpangou",
+            ],
+            [
+                "name" => "Koussoucoingou",
+            ],
+            [
+                "name" => "Koussounoungou",
+            ],
+            [
+                "name" => "Koutayagou",
+            ],
+            [
+                "name" => "Kouwetakouangou",
+            ],
+            [
+                "name" => "Takpanta",
+            ],
+            [
+                "name" => "Tchapéta",
+            ],
+            [
+                "name" => "Tipaoti",
+            ],
+            [
+                "name" => "Dikon Hein",
+            ],
+            [
+                "name" => "Dikouténi",
+            ],
+            [
+                "name" => "Dimatadoni",
+            ],
+            [
+                "name" => "Dimatima",
+            ],
+            [
+                "name" => "Dipokor",
+            ],
+            [
+                "name" => "Dipokor-Tchaaba",
+            ],
+            [
+                "name" => "Kouhingou",
+            ],
+            [
+                "name" => "Koukouakoumagou",
+            ],
+            [
+                "name" => "Koukouangou",
+            ],
+            [
+                "name" => "Koumadogou",
+            ],
+            [
+                "name" => "Kounatchatiégou",
+            ],
+            [
+                "name" => "Koutangou-Manta",
+            ],
+            [
+                "name" => "Koutchantié",
+            ],
+            [
+                "name" => "Takotiéta",
+            ],
+            [
+                "name" => "Tatchadiéta",
+            ],
+            [
+                "name" => "DipokorFontri",
+            ],
+            [
+                "name" => "Koudogou",
+            ],
+            [
+                "name" => "Koukoua",
+            ],
+            [
+                "name" => "Koukpintiegou",
+            ],
+            [
+                "name" => "Koutcha-Koumagou",
+            ],
+            [
+                "name" => "Kounagnigou",
+            ],
+            [
+                "name" => "Kounakogou",
+            ],
+            [
+                "name" => "Kouporgou",
+            ],
+            [
+                "name" => "Koussakou",
+            ],
+            [
+                "name" => "Koutangou",
+            ],
+            [
+                "name" => "Koutoutougou",
+            ],
+            [
+                "name" => "Kouwonatougou",
+            ],
+            [
+                "name" => "Kouwotchirgou",
+            ],
+            [
+                "name" => "Dikouani",
+            ],
+            [
+                "name" => "Dimatékor",
+            ],
+            [
+                "name" => "Dipintakouani",
+            ],
+            [
+                "name" => "Katchagniga",
+            ],
+            [
+                "name" => "Koubêgou",
+            ],
+            [
+                "name" => "Koubentiégou",
+            ],
+            [
+                "name" => "Koucogou",
+            ],
+            [
+                "name" => "Koudadagou",
+            ],
+            [
+                "name" => "Koukouatougou",
+            ],
+            [
+                "name" => "Koukpêtihagou",
+            ],
+            [
+                "name" => "Tabota",
+            ],
+            [
+                "name" => "Takotchienta",
+            ],
+            [
+                "name" => "Tatouta",
+            ],
+            [
+                "name" => "Yatié",
+            ],
+            [
+                "name" => "Bagapodi",
+            ],
+            [
+                "name" => "Cobly",
+            ],
+            [
+                "name" => "Kanadékè",
+            ],
+            [
+                "name" => "Koukontouga",
+            ],
+            [
+                "name" => "Kpétiénou",
+            ],
+            [
+                "name" => "Nouangou",
+            ],
+            [
+                "name" => "Oukodoo",
+            ],
+            [
+                "name" => "Ouorou",
+            ],
+            [
+                "name" => "Ouyérihoun",
+            ],
+            [
+                "name" => "Tchokita",
+            ],
+            [
+                "name" => "Touga",
+            ],
+            [
+                "name" => "Yimpissiri",
+            ],
+            [
+                "name" => "Gnangou",
+            ],
+            [
+                "name" => "Kolgou",
+            ],
+            [
+                "name" => "Pentinga",
+            ],
+            [
+                "name" => "Siénou",
+            ],
+            [
+                "name" => "Zanniouri",
+            ],
+            [
+                "name" => "Datori",
+            ],
+            [
+                "name" => "Kadiéni",
+            ],
+            [
+                "name" => "Matalè",
+            ],
+            [
+                "name" => "Nagnandé",
+            ],
+            [
+                "name" => "Namatiénou",
+            ],
+            [
+                "name" => "Tchamonga",
+            ],
+            [
+                "name" => "Tokibi",
+            ],
+            [
+                "name" => "Kountori",
+            ],
+            [
+                "name" => "Kpetissohoun",
+            ],
+            [
+                "name" => "Namoutchaga",
+            ],
+            [
+                "name" => "Oroukouaré",
+            ],
+            [
+                "name" => "Oukpètouhoun",
+            ],
+            [
+                "name" => "Oukpintihoun",
+            ],
+            [
+                "name" => "Outanonhoun",
+            ],
+            [
+                "name" => "Serhounguè",
+            ],
+            [
+                "name" => "Sinni",
+            ],
+            [
+                "name" => "Tarpingou",
+            ],
+            [
+                "name" => "Coupiani",
+            ],
+            [
+                "name" => "Dassari",
+            ],
+            [
+                "name" => "Firihoun",
+            ],
+            [
+                "name" => "Koundri",
+            ],
+            [
+                "name" => "Kourou-Koualou",
+            ],
+            [
+                "name" => "Nagassega",
+            ],
+            [
+                "name" => "Niéhoun-Laloga",
+            ],
+            [
+                "name" => "Nouari",
+            ],
+            [
+                "name" => "Ouriyori",
+            ],
+            [
+                "name" => "Porga",
+            ],
+            [
+                "name" => "Pouri",
+            ],
+            [
+                "name" => "Sétchindika",
+            ],
+            [
+                "name" => "Tankouari",
+            ],
+            [
+                "name" => "Tankouayokouhoun",
+            ],
+            [
+                "name" => "Tétonga",
+            ],
+            [
+                "name" => "Tigninga",
+            ],
+            [
+                "name" => "Tihoun",
+            ],
+            [
+                "name" => "Tinwéga",
+            ],
+            [
+                "name" => "Bahoun",
+            ],
+            [
+                "name" => "Doga",
+            ],
+            [
+                "name" => "Gouandé",
+            ],
+            [
+                "name" => "Kandeguehoun",
+            ],
+            [
+                "name" => "Kouantiéni",
+            ],
+            [
+                "name" => "Kouforpissiga",
+            ],
+            [
+                "name" => "Sindori-Toni",
+            ],
+            [
+                "name" => "Tassahoun",
+            ],
+            [
+                "name" => "Tcharikouanga",
+            ],
+            [
+                "name" => "Tchassaga",
+            ],
+            [
+                "name" => "Tiari",
+            ],
+            [
+                "name" => "Toubougnini",
+            ],
+            [
+                "name" => "Bourporga",
+            ],
+            [
+                "name" => "Boutouhounpingou",
+            ],
+            [
+                "name" => "Kankini-Séri",
+            ],
+            [
+                "name" => "Matéri",
+            ],
+            [
+                "name" => "Merhoun",
+            ],
+            [
+                "name" => "Mihihoun",
+            ],
+            [
+                "name" => "Nagassega-Kani",
+            ],
+            [
+                "name" => "Pingou",
+            ],
+            [
+                "name" => "Sèkanou",
+            ],
+            [
+                "name" => "Souomou",
+            ],
+            [
+                "name" => "Tampinti-Yerou",
+            ],
+            [
+                "name" => "Tantouri",
+            ],
+            [
+                "name" => "Tintonsi",
+            ],
+            [
+                "name" => "Toussari",
+            ],
+            [
+                "name" => "Yondisseri",
+            ],
+            [
+                "name" => "Yopiaka",
+            ],
+            [
+                "name" => "Borifiéri",
+            ],
+            [
+                "name" => "Holli",
+            ],
+            [
+                "name" => "Kotari",
+            ],
+            [
+                "name" => "Kouarhoun",
+            ],
+            [
+                "name" => "Kpéréhoun",
+            ],
+            [
+                "name" => "Mahontika",
+            ],
+            [
+                "name" => "N’ Tchiéga",
+            ],
+            [
+                "name" => "Nodi",
+            ],
+            [
+                "name" => "Tampouré-Pogué",
+            ],
+            [
+                "name" => "Yédékahoun",
+            ],
+            [
+                "name" => "Bampora",
+            ],
+            [
+                "name" => "Bogodori",
+            ],
+            [
+                "name" => "Dabogohoun",
+            ],
+            [
+                "name" => "Kandjo",
+            ],
+            [
+                "name" => "Konéandri",
+            ],
+            [
+                "name" => "Kousséga",
+            ],
+            [
+                "name" => "Madoga",
+            ],
+            [
+                "name" => "Nambouli",
+            ],
+            [
+                "name" => "Pourniari",
+            ],
+            [
+                "name" => "Tambogou-Kondri",
+            ],
+            [
+                "name" => "Tampanga",
+            ],
+            [
+                "name" => "Tanhoun",
+            ],
+            [
+                "name" => "Tantega",
+            ],
+            [
+                "name" => "Tébiwogou",
+            ],
+            [
+                "name" => "Féhoun",
+            ],
+            [
+                "name" => "Fékérou",
+            ],
+            [
+                "name" => "Koutoukondiga",
+            ],
+            [
+                "name" => "Sakonou",
+            ],
+            [
+                "name" => "Tchanhouncossi",
+            ],
+            [
+                "name" => "Yanga",
+            ],
+            [
+                "name" => "Yansaga",
+            ],
+            [
+                "name" => "Bounta",
+            ],
+            [
+                "name" => "Coroncoré",
+            ],
+            [
+                "name" => "Cotiakou",
+            ],
+            [
+                "name" => "Daguimagninni",
+            ],
+            [
+                "name" => "Manougou",
+            ],
+            [
+                "name" => "Nowêrèrè",
+            ],
+            [
+                "name" => "Parabou",
+            ],
+            [
+                "name" => "Pémombou",
+            ],
+            [
+                "name" => "Penitingou",
+            ],
+            [
+                "name" => "Tanféré",
+            ],
+            [
+                "name" => "Toriconconé",
+            ],
+            [
+                "name" => "Tora",
+            ],
+            [
+                "name" => "Dondongou",
+            ],
+            [
+                "name" => "Kougnieri",
+            ],
+            [
+                "name" => "N’Dahonta",
+            ],
+            [
+                "name" => "Natagata",
+            ],
+            [
+                "name" => "Nignèri",
+            ],
+            [
+                "name" => "Sammongou",
+            ],
+            [
+                "name" => "Sonta",
+            ],
+            [
+                "name" => "Tahinkou",
+            ],
+            [
+                "name" => "Tapèkou",
+            ],
+            [
+                "name" => "Tchaéta",
+            ],
+            [
+                "name" => "Bongou",
+            ],
+            [
+                "name" => "Douani",
+            ],
+            [
+                "name" => "Finta",
+            ],
+            [
+                "name" => "Hantèkou",
+            ],
+            [
+                "name" => "Kogniga",
+            ],
+            [
+                "name" => "Kotchekongou",
+            ],
+            [
+                "name" => "Kouayoti",
+            ],
+            [
+                "name" => "Koutchoutchougou",
+            ],
+            [
+                "name" => "Matanrgui",
+            ],
+            [
+                "name" => "Nafayoti",
+            ],
+            [
+                "name" => "Nontingou",
+            ],
+            [
+                "name" => "Ouankou",
+            ],
+            [
+                "name" => "Tahongou",
+            ],
+            [
+                "name" => "Taïacou",
+            ],
+            [
+                "name" => "Yehongou",
+            ],
+            [
+                "name" => "Yéyédi",
+            ],
+            [
+                "name" => "Youakou",
+            ],
+            [
+                "name" => "Biacou",
+            ],
+            [
+                "name" => "Bourgniéssou",
+            ],
+            [
+                "name" => "Djidjiré-Beri",
+            ],
+            [
+                "name" => "Goro-bani",
+            ],
+            [
+                "name" => "Mamoussa",
+            ],
+            [
+                "name" => "Nanébou",
+            ],
+            [
+                "name" => "Porhoum",
+            ],
+            [
+                "name" => "Porka",
+            ],
+            [
+                "name" => "Sépounga",
+            ],
+            [
+                "name" => "Tchoutchoubou",
+            ],
+            [
+                "name" => "Tiélé",
+            ],
+            [
+                "name" => "Yarka",
+            ],
+            [
+                "name" => "Batia",
+            ],
+            [
+                "name" => "Kayarika",
+            ],
+            [
+                "name" => "Sangou",
+            ],
+            [
+                "name" => "Tanongou",
+            ],
+            [
+                "name" => "Tchafarga",
+            ],
+            [
+                "name" => "Tchatingou",
+            ],
+            [
+                "name" => "Tchawassaka",
+            ],
+            [
+                "name" => "Yangou",
+            ],
+            [
+                "name" => "Bagoubagou",
+            ],
+            [
+                "name" => "Bambaba",
+            ],
+            [
+                "name" => "Bassini",
+            ],
+            [
+                "name" => "Bérékossou",
+            ],
+            [
+                "name" => "Brignamaro",
+            ],
+            [
+                "name" => "Gando baka",
+            ],
+            [
+                "name" => "Kongourou",
+            ],
+            [
+                "name" => "Kossou",
+            ],
+            [
+                "name" => "Kossou-Ouinra",
+            ],
+            [
+                "name" => "Tchoukagnin",
+            ],
+            [
+                "name" => "Yakrigorou",
+            ],
+            [
+                "name" => "Baténin",
+            ],
+            [
+                "name" => "Djoléni",
+            ],
+            [
+                "name" => "Gori",
+            ],
+            [
+                "name" => "Gorobani",
+            ],
+            [
+                "name" => "Kabongourou",
+            ],
+            [
+                "name" => "Sokoungourou",
+            ],
+            [
+                "name" => "Yiroubara",
+            ],
+            [
+                "name" => "Gnampoli",
+            ],
+            [
+                "name" => "Gnampoli",
+            ],
+            [
+                "name" => "Kaobagou",
+            ],
+            [
+                "name" => "Yinsiga",
+            ],
+            [
+                "name" => "Bakoussarou",
+            ],
+            [
+                "name" => "Bipotoko",
+            ],
+            [
+                "name" => "Boukoubourou",
+            ],
+            [
+                "name" => "Fêtêkou",
+            ],
+            [
+                "name" => "Fêtêkou -Alaga",
+            ],
+            [
+                "name" => "Gamboré",
+            ],
+            [
+                "name" => "Gantodo",
+            ],
+            [
+                "name" => "Gnangnanou",
+            ],
+            [
+                "name" => "Gougninnou",
+            ],
+            [
+                "name" => "Karigourou",
+            ],
+            [
+                "name" => "Kédarou",
+            ],
+            [
+                "name" => "Kérou Wirou",
+            ],
+            [
+                "name" => "Kokokou",
+            ],
+            [
+                "name" => "Kparatégui",
+            ],
+            [
+                "name" => "Manou",
+            ],
+            [
+                "name" => "Ouoré",
+            ],
+            [
+                "name" => "Pikiré-Adaga",
+            ],
+            [
+                "name" => "Pikiré",
+            ],
+            [
+                "name" => "Sinagourou",
+            ],
+            [
+                "name" => "Toudakou Banyirou",
+            ],
+            [
+                "name" => "Warou N’Gourou",
+            ],
+            [
+                "name" => "Yakin-Motoko",
+            ],
+            [
+                "name" => "Birni Maro",
+            ],
+            [
+                "name" => "Birni-Kankoulka",
+            ],
+            [
+                "name" => "Birni-Kpébirou",
+            ],
+            [
+                "name" => "Gorgoba",
+            ],
+            [
+                "name" => "Goufanrou",
+            ],
+            [
+                "name" => "Hongon",
+            ],
+            [
+                "name" => "Kouboro",
+            ],
+            [
+                "name" => "Tamandé",
+            ],
+            [
+                "name" => "Tassigourou",
+            ],
+            [
+                "name" => "Yakabissi",
+            ],
+            [
+                "name" => "Chabi Couma",
+            ],
+            [
+                "name" => "Gantiéco",
+            ],
+            [
+                "name" => "Gbéniki",
+            ],
+            [
+                "name" => "Papatia",
+            ],
+            [
+                "name" => "Sakasson-Ditamari",
+            ],
+            [
+                "name" => "Sakasson-Dompago",
+            ],
+            [
+                "name" => "Wémè",
+            ],
+            [
+                "name" => "Boroyindé",
+            ],
+            [
+                "name" => "Danri",
+            ],
+            [
+                "name" => "Foo",
+            ],
+            [
+                "name" => "Kabaré",
+            ],
+            [
+                "name" => "Maka",
+            ],
+            [
+                "name" => "Orouboussoukou",
+            ],
+            [
+                "name" => "Tancé",
+            ],
+            [
+                "name" => "Tikou",
+            ],
+            [
+                "name" => "Boro",
+            ],
+            [
+                "name" => "Damouti",
+            ],
+            [
+                "name" => "Foo-mama",
+            ],
+            [
+                "name" => "Gora -Peulh",
+            ],
+            [
+                "name" => "Goutéré",
+            ],
+            [
+                "name" => "Guilmaro-Bounkossorou",
+            ],
+            [
+                "name" => "Guilmaro-Garkousson",
+            ],
+            [
+                "name" => "Guilmaro-Sinakpagourou",
+            ],
+            [
+                "name" => "Kèdékou",
+            ],
+            [
+                "name" => "Kpakou-Tankonga",
+            ],
+            [
+                "name" => "Kpikiré  koka",
+            ],
+            [
+                "name" => "Nassoukou",
+            ],
+            [
+                "name" => "Ouroufina",
+            ],
+            [
+                "name" => "Séri",
+            ],
+            [
+                "name" => "Sonnougobérou",
+            ],
+            [
+                "name" => "Bassilou",
+            ],
+            [
+                "name" => "Becket-Bouramè",
+            ],
+            [
+                "name" => "Becket-Peulh",
+            ],
+            [
+                "name" => "Boré",
+            ],
+            [
+                "name" => "Darou-Wirou",
+            ],
+            [
+                "name" => "Kpessinin",
+            ],
+            [
+                "name" => "Makrou-Gourou",
+            ],
+            [
+                "name" => "Maro",
+            ],
+            [
+                "name" => "Mary",
+            ],
+            [
+                "name" => "Sakabou",
+            ],
+            [
+                "name" => "Sékogourou",
+            ],
+            [
+                "name" => "Sékogourou-Baïla",
+            ],
+            [
+                "name" => "Sinakpaworou",
+            ],
+            [
+                "name" => "Sowa",
+            ],
+            [
+                "name" => "Tokoro",
+            ],
+            [
+                "name" => "Zongo",
+            ],
+            [
+                "name" => "Boroukou-Peulh",
+            ],
+            [
+                "name" => "Dèkèrou",
+            ],
+            [
+                "name" => "Ganikpérou",
+            ],
+            [
+                "name" => "Poupouré",
+            ],
+            [
+                "name" => "Niarissinra",
+            ],
+            [
+                "name" => "Niaro-Gninon",
+            ],
+            [
+                "name" => "Orougbéni",
+            ],
+            [
+                "name" => "Niarosson",
+            ],
+            [
+                "name" => "Kètéré",
+            ],
+            [
+                "name" => "Nièkènè-Bansou",
+            ],
+            [
+                "name" => "Somboko",
+            ],
+            [
+                "name" => "Kpankpankou",
+            ],
+            [
+                "name" => "Oroukayo",
+            ],
+            [
+                "name" => "Yinkènè",
+            ],
+            [
+                "name" => "Pélima",
+            ],
+            [
+                "name" => "Kpéssourou",
+            ],
+            [
+                "name" => "Dikouan",
+            ],
+            [
+                "name" => "Katanginka",
+            ],
+            [
+                "name" => "Kouaba",
+            ],
+            [
+                "name" => "Koukouabirgou",
+            ],
+            [
+                "name" => "Kounitchangou",
+            ],
+            [
+                "name" => "Koutanongou",
+            ],
+            [
+                "name" => "Kouwanwangou",
+            ],
+            [
+                "name" => "Moussansamou",
+            ],
+            [
+                "name" => "Tagahei",
+            ],
+            [
+                "name" => "Tedonté",
+            ],
+            [
+                "name" => "Tipéti",
+            ],
+            [
+                "name" => "Kouandata",
+            ],
+            [
+                "name" => "Kouatidabirgou",
+            ],
+            [
+                "name" => "Kounadorgou",
+            ],
+            [
+                "name" => "Koutie",
+            ],
+            [
+                "name" => "Tigninti",
+            ],
+            [
+                "name" => "Bangrétamou",
+            ],
+            [
+                "name" => "Dokondé",
+            ],
+            [
+                "name" => "Fayouré",
+            ],
+            [
+                "name" => "Kampouya",
+            ],
+            [
+                "name" => "Kota-Monnongou",
+            ],
+            [
+                "name" => "Kotopounga",
+            ],
+            [
+                "name" => "Onsikoto",
+            ],
+            [
+                "name" => "Pouya",
+            ],
+            [
+                "name" => "Souroukou",
+            ],
+            [
+                "name" => "Tampèdèma",
+            ],
+            [
+                "name" => "Tchantangou",
+            ],
+            [
+                "name" => "Wètipounga",
+            ],
+            [
+                "name" => "Yakpangoutingou",
+            ],
+            [
+                "name" => "Yarikou",
+            ],
+            [
+                "name" => "Ditawan",
+            ],
+            [
+                "name" => "Doyakou",
+            ],
+            [
+                "name" => "Koudengou",
+            ],
+            [
+                "name" => "Péporiyakou",
+            ],
+            [
+                "name" => "Tétanté",
+            ],
+            [
+                "name" => "Tikouani",
+            ],
+            [
+                "name" => "Toroubou",
+            ],
+            [
+                "name" => "Gnagnammou",
+            ],
+            [
+                "name" => "Koka",
+            ],
+            [
+                "name" => "Koubirgou",
+            ],
+            [
+                "name" => "Kouètèna",
+            ],
+            [
+                "name" => "Kounapèigou",
+            ],
+            [
+                "name" => "Koupéico",
+            ],
+            [
+                "name" => "Koussigou",
+            ],
+            [
+                "name" => "Pam-pam",
+            ],
+            [
+                "name" => "Perma Centre",
+            ],
+            [
+                "name" => "Sinaïciré",
+            ],
+            [
+                "name" => "Tènounkontè",
+            ],
+            [
+                "name" => "Tèpéntè",
+            ],
+            [
+                "name" => "Tignanpéti",
+            ],
+            [
+                "name" => "Bagri",
+            ],
+            [
+                "name" => "Djindjiré-béri",
+            ],
+            [
+                "name" => "Kantchagoutamou",
+            ],
+            [
+                "name" => "Sountchirantikou",
+            ],
+            [
+                "name" => "Tchirimina",
+            ],
+            [
+                "name" => "Yokossi",
+            ],
+            [
+                "name" => "Bokoro",
+            ],
+            [
+                "name" => "Boriyouré",
+            ],
+            [
+                "name" => "Dassakaté",
+            ],
+            [
+                "name" => "Ouroubonna",
+            ],
+            [
+                "name" => "Ourkparbou",
+            ],
+            [
+                "name" => "Santa",
+            ],
+            [
+                "name" => "Bérécingou",
+            ],
+            [
+                "name" => "Didapoumbor",
+            ],
+            [
+                "name" => "Kantaborifa",
+            ],
+            [
+                "name" => "Koussantikou",
+            ],
+            [
+                "name" => "Ourbouga",
+            ],
+            [
+                "name" => "Winkè",
+            ],
+            [
+                "name" => "Yétapo",
+            ],
+            [
+                "name" => "Yimporima",
+            ],
+            [
+                "name" => "Koutié Tchatido",
+            ],
+            [
+                "name" => "Kouwa n’pongou",
+            ],
+            [
+                "name" => "Moupémou",
+            ],
+
+
+            [
+                "name" => "Takonta",
+            ],
+            [
+                "name" => "Tchoumi-tchoumi",
+            ],
+            [
+                "name" => "Wimmou",
+            ],
+            [
+                "name" => "Bonigourou",
+            ],
+            [
+                "name" => "Dôh",
+            ],
+            [
+                "name" => "Gnémasson",
+            ],
+            [
+                "name" => "Gnémasson-Gando",
+            ],
+            [
+                "name" => "Sayakrou",
+            ],
+            [
+                "name" => "Sayakrou – Gah",
+            ],
+            [
+                "name" => "Bêket",
+            ]
+        ];
+        foreach ($areas as $area) {
+            \App\Models\Area::factory()->create($area);
+        };
+
+        ##======== CREATION DES TYPES DE MAISONS ============####
+        $houseTypes = [
+            [
+                "name" => "MNDCCom",
+                "description" => "Maison non dallée cours communne",
+            ],
+            [
+                "name" => "R1",
+                "description" => "Maison R+1",
+            ],
+            [
+                "name" => "R2",
+                "description" => "Maison R+2",
+            ],
+            [
+                "name" => "MEUBLEE",
+                "description" => "Meublée",
+            ],
+        ];
+
+        foreach ($houseTypes as $houseType) {
+            \App\Models\HouseType::factory()->create($houseType);
+        };
+
+        ##======== CREATION DES TYPES DE COMPTEUR ============####
+        $counterTypes = [
+            [
+                "name" => "Elestronique",
+                "description" => "compteurs électroniques",
+            ],
+            [
+                "name" => "Electromagnetiques",
+                "description" => "compteurs électromécaniques",
+            ]
+        ];
+
+        foreach ($counterTypes as $counterType) {
+            \App\Models\CounterType::factory()->create($counterType);
+        };
+
+        ##======== CREATION DES CURRENCIES ============####
+        $currencies = [
+            [
+                "name" => "(South) Korean Won",
+                "iso" => "KRW",
+            ],
+            [
+                "name" => "Afghanistan Afghani",
+                "iso" => "AFA",
+            ],
+            [
+                "name" => "Albanian Lek",
+                "iso" => "ALL",
+            ],
+            [
+                "name" => "Algerian Dinar",
+                "iso" => "DZD",
+            ],
+            [
+                "name" => "Andorran Peseta",
+                "iso" => "ADP",
+            ],
+            [
+                "name" => "Angolan Kwanza",
+                "iso" => "AOK",
+            ],
+            [
+                "name" => "Argentine Peso",
+                "iso" => "ARS",
+            ],
+            [
+                "name" => "Armenian Dram",
+                "iso" => "AMD",
+            ],
+            [
+                "name" => "Aruban Florin",
+                "iso" => "AWG",
+            ],
+            [
+                "name" => "Australian Dollar",
+                "iso" => "AUD",
+            ],
+            [
+                "name" => "Bahamian Dollar",
+                "iso" => "BSD",
+            ],
+            [
+                "name" => "Bahraini Dinar",
+                "iso" => "BHD",
+            ],
+            [
+                "name" => "Bangladeshi Taka",
+                "iso" => "BDT",
+            ],
+            [
+                "name" => "Barbados Dollar",
+                "iso" => "BBD",
+            ],
+            [
+                "name" => "Belize Dollar",
+                "iso" => "BMD",
+            ],
+            [
+                "name" => "Bhutan Ngultrum",
+                "iso" => "BTN",
+            ],
+            [
+                "name" => "Bhutan Ngultrum",
+                "iso" => "BOB",
+            ],
+            [
+                "name" => "Botswanian Pula",
+                "iso" => "BWP",
+            ],
+            [
+                "name" => "Brazilian Real",
+                "iso" => "BRL",
+            ],
+            [
+                "name" => "British Pound",
+                "iso" => "GBP",
+            ],
+            [
+                "name" => "Brunei Dollar",
+                "iso" => "BND",
+            ],
+            [
+                "name" => "Bulgarian Lev",
+                "iso" => "BGN",
+            ],
+            [
+                "name" => "Burma Kyat",
+                "iso" => "BUK",
+            ],
+            [
+                "name" => "Burundi Franc",
+                "iso" => "BIF",
+            ],
+            [
+                "name" => "Canadian Dollar",
+                "iso" => "CAD",
+            ],
+            [
+                "name" => "Cape Verde Escudo",
+                "iso" => "CVE",
+            ],
+            [
+                "name" => "Cayman Islands Dollar",
+                "iso" => "KYD",
+            ],
+            [
+                "name" => "Chilean Peso",
+                "iso" => "CLP",
+            ],
+            [
+                "name" => "Chilean Unidades de Fomento",
+                "iso" => "CLF",
+            ],
+            [
+                "name" => "Colombian Peso",
+                "iso" => "COP",
+            ],
+            [
+                "name" => "Communauté Financière Africaine BCEAO - Francs",
+                "iso" => "XOF",
+            ],
+            [
+                "name" => "Communauté Financière Africaine BEAC, Francs",
+                "iso" => "XAF",
+            ],
+            [
+                "name" => "Comoros Franc",
+                "iso" => "KMF",
+            ],
+            [
+                "name" => "Comptoirs Français du Pacifique Francs",
+                "iso" => "XPF",
+            ],
+            [
+                "name" => "Costa Rican Colon",
+                "iso" => "CRC",
+            ],
+            [
+                "name" => "Cuban Peso",
+                "iso" => "CUP",
+            ],
+            [
+                "name" => "Cyprus Pound",
+                "iso" => "CYP",
+            ],
+            [
+                "name" => "Czech Republic Koruna",
+                "iso" => "CZK",
+            ],
+            [
+                "name" => "Danish Krone",
+                "iso" => "DKK",
+            ],
+            [
+                "name" => "Democratic Yemeni Dinar",
+                "iso" => "YDD",
+            ],
+            [
+                "name" => "Dominican Peso",
+                "iso" => "DOP",
+            ],
+            [
+                "name" => "East Caribbean Dollar",
+                "iso" => "XCD",
+            ],
+            [
+                "name" => "East Timor Escudo",
+                "iso" => "TPE",
+            ],
+            [
+                "name" => "Ecuador Sucre",
+                "iso" => "ECS",
+            ],
+            [
+                "name" => "Egyptian Pound",
+                "iso" => "EGP",
+            ],
+            [
+                "name" => "El Salvador Colon",
+                "iso" => "SVC",
+            ],
+            [
+                "name" => "Estonian Kroon (EEK)",
+                "iso" => "EEK",
+            ],
+            [
+                "name" => "Ethiopian Birr",
+                "iso" => "ETB",
+            ],
+            [
+                "name" => "Euro",
+                "iso" => "EUR",
+            ],
+            [
+                "name" => "Falkland Islands Pound",
+                "iso" => "FKP",
+            ],
+            [
+                "name" => "Fiji Dollar",
+                "iso" => "FJD",
+            ],
+            [
+                "name" => "Gambian Dalasi",
+                "iso" => "GMD",
+            ],
+            [
+                "name" => "Ghanaian Cedi",
+                "iso" => "GHC",
+            ],
+            [
+                "name" => "Gibraltar Pound",
+                "iso" => "GIP",
+            ],
+            [
+                "name" => "Gold, Ounces",
+                "iso" => "XAU",
+            ],
+            [
+                "name" => "Guatemalan Quetzal",
+                "iso" => "GTQ",
+            ],
+            [
+                "name" => "Guinea Franc",
+                "iso" => "GNF",
+            ],
+            [
+                "name" => "Guinea-Bissau Peso",
+                "iso" => "GWP",
+            ],
+            [
+                "name" => "Guyanan Dollar",
+                "iso" => "GYD",
+            ],
+            [
+                "name" => "Haitian Gourde",
+                "iso" => "HTG",
+            ],
+            [
+                "name" => "Honduran Lempira",
+                "iso" => "HNL",
+            ],
+            [
+                "name" => "Hong Kong Dollar",
+                "iso" => "HKD",
+            ],
+            [
+                "name" => "Hungarian Forint",
+                "iso" => "HUF",
+            ],
+            [
+                "name" => "Indian Rupee",
+                "iso" => "INR",
+            ],
+            [
+                "name" => "Indonesian Rupiah",
+                "iso" => "IDR",
+            ],
+            [
+                "name" => "International Monetary Fund (IMF) Special Drawing Rights",
+                "iso" => "XDR",
+            ],
+            [
+                "name" => "Iranian Rial",
+                "iso" => "IRR",
+            ],
+            [
+                "name" => "Iraqi Dinar",
+                "iso" => "IQD",
+            ],
+            [
+                "name" => "Irish Punt",
+                "iso" => "IEP",
+            ],
+            [
+                "name" => "Israeli Shekel",
+                "iso" => "ILS",
+            ],
+            [
+                "name" => "Jamaican Dollar",
+                "iso" => "JMD",
+            ],
+            [
+                "name" => "Japanese Yen",
+                "iso" => "JPY",
+            ],
+            [
+                "name" => "Jordanian Dinar",
+                "iso" => "JOD",
+            ],
+            [
+                "name" => "Kampuchean (Cambodian) Riel",
+                "iso" => "KHR",
+            ],
+            [
+                "name" => "Kenyan Schilling",
+                "iso" => "KES",
+            ],
+            [
+                "name" => "Kuwaiti Dinar",
+                "iso" => "KWD",
+            ],
+            [
+                "name" => "Lao Kip",
+                "iso" => "LAK",
+            ],
+            [
+                "name" => "Lebanese Pound",
+                "iso" => "LBP",
+            ],
+            [
+                "name" => "Lesotho Loti",
+                "iso" => "LSL",
+            ],
+            [
+                "name" => "Liberian Dollar",
+                "iso" => "LRD",
+            ],
+            [
+                "name" => "Libyan Dinar",
+                "iso" => "LYD",
+            ],
+            [
+                "name" => "Macau Pataca",
+                "iso" => "MOP",
+            ],
+            [
+                "name" => "Malagasy Franc",
+                "iso" => "MGF",
+            ],
+            [
+                "name" => "Malawi Kwacha",
+                "iso" => "MWK",
+            ],
+            [
+                "name" => "Malaysian Ringgit",
+                "iso" => "MYR",
+            ],
+            [
+                "name" => "Maldive Rufiyaa",
+                "iso" => "MVR",
+            ],
+            [
+                "name" => "Maltese Lira",
+                "iso" => "MTL",
+            ],
+            [
+                "name" => "Mauritanian Ouguiya",
+                "iso" => "MRO",
+            ],
+            [
+                "name" => "Mauritius Rupee",
+                "iso" => "MUR",
+            ],
+            [
+                "name" => "Mexican Peso",
+                "iso" => "MXP",
+            ],
+            [
+                "name" => "Mongolian Tugrik",
+                "iso" => "MNT",
+            ],
+            [
+                "name" => "Moroccan Dirham",
+                "iso" => "MAD",
+            ],
+            [
+                "name" => "Mozambique Metical",
+                "iso" => "MZM",
+            ],
+            [
+                "name" => "Namibian Dollar",
+                "iso" => "NAD",
+            ],
+            [
+                "name" => "Nepalese Rupee",
+                "iso" => "NPR",
+            ],
+            [
+                "name" => "Netherlands Antillian Guilder",
+                "iso" => "ANG",
+            ],
+            [
+                "name" => "New Yugoslavia Dinar",
+                "iso" => "YUD",
+            ],
+            [
+                "name" => "New Zealand Dollar",
+                "iso" => "NZD",
+            ],
+            [
+                "name" => "Nicaraguan Cordoba",
+                "iso" => "NIO",
+            ],
+            [
+                "name" => "Nigerian Naira",
+                "iso" => "NGN",
+            ],
+            [
+                "name" => "North Korean Won",
+                "iso" => "KPW",
+            ],
+            [
+                "name" => "Norwegian Kroner",
+                "iso" => "NOK",
+            ],
+            [
+                "name" => "Omani Rial",
+                "iso" => "OMR",
+            ],
+            [
+                "name" => "Pakistan Rupee",
+                "iso" => "PKR",
+            ],
+            [
+                "name" => "Palladium Ounces",
+                "iso" => "XPD",
+            ],
+            [
+                "name" => "Panamanian Balboa",
+                "iso" => "PAB",
+            ],
+            [
+                "name" => "Papua New Guinea Kina",
+                "iso" => "PGK",
+            ],
+            [
+                "name" => "Paraguay Guarani",
+                "iso" => "PYG",
+            ],
+            [
+                "name" => "Peruvian Nuevo Sol",
+                "iso" => "PEN",
+            ],
+            [
+                "name" => "Philippine Peso",
+                "iso" => "PHP",
+            ],
+            [
+                "name" => "Platinum, Ounces",
+                "iso" => "XPT",
+            ],
+            [
+                "name" => "Polish Zloty",
+                "iso" => "PLN",
+            ],
+            [
+                "name" => "Qatari Rial",
+                "iso" => "QAR",
+            ],
+            [
+                "name" => "Romanian Leu",
+                "iso" => "RON",
+            ],
+            [
+                "name" => "Russian Ruble",
+                "iso" => "RUB",
+            ],
+            [
+                "name" => "Rwanda Franc",
+                "iso" => "RWF",
+            ],
+            [
+                "name" => "Samoan Tala",
+                "iso" => "WST",
+            ],
+            [
+                "name" => "Sao Tome and Principe Dobra",
+                "iso" => "STD",
+            ],
+            [
+                "name" => "Saudi Arabian Riyal",
+                "iso" => "SAR",
+            ],
+            [
+                "name" => "Seychelles Rupee",
+                "iso" => "SCR",
+            ],
+            [
+                "name" => "Sierra Leone Leone",
+                "iso" => "SLL",
+            ],
+            [
+                "name" => "Silver, Ounces",
+                "iso" => "XAG",
+            ],
+            [
+                "name" => "Singapore Dollar",
+                "iso" => "SGD",
+            ],
+            [
+                "name" => "Slovak Koruna",
+                "iso" => "SKK",
+            ],
+            [
+                "name" => "Solomon Islands Dollar",
+                "iso" => "SBD",
+            ],
+            [
+                "name" => "Somali Schilling",
+                "iso" => "SOS",
+            ],
+            [
+                "name" => "South African Rand",
+                "iso" => "ZAR",
+            ],
+            [
+                "name" => "Sri Lanka Rupee",
+                "iso" => "LKR",
+            ],
+            [
+                "name" => "St. Helena Pound",
+                "iso" => "SHP",
+            ],
+            [
+                "name" => "Sudanese Pound",
+                "iso" => "SDP",
+            ],
+            [
+                "name" => "Suriname Guilder",
+                "iso" => "SRG",
+            ],
+            [
+                "name" => "Swaziland Lilangeni",
+                "iso" => "SZL",
+            ],
+            [
+                "name" => "Swedish Krona",
+                "iso" => "SEK",
+            ],
+            [
+                "name" => "Swiss Franc",
+                "iso" => "CHF",
+            ],
+            [
+                "name" => "Syrian Potmd",
+                "iso" => "SYP",
+            ],
+            [
+                "name" => "Taiwan Dollar",
+                "iso" => "TWD",
+            ],
+            [
+                "name" => "Tanzanian Schilling",
+                "iso" => "TZS",
+            ],
+            [
+                "name" => "Thai Baht",
+                "iso" => "THB",
+            ],
+            [
+                "name" => "Tongan Paanga",
+                "iso" => "TOP",
+            ],
+            [
+                "name" => "Trinidad and Tobago Dollar",
+                "iso" => "TTD",
+            ],
+            [
+                "name" => "Tunisian Dinar",
+                "iso" => "TND",
+            ],
+            [
+                "name" => "Turkish Lira",
+                "iso" => "TRY",
+            ],
+            [
+                "name" => "Uganda Shilling",
+                "iso" => "UGX",
+            ],
+            [
+                "name" => "United Arab Emirates Dirham",
+                "iso" => "AED",
+            ],
+            [
+                "name" => "Uruguayan Peso",
+                "iso" => "UYU",
+            ],
+            [
+                "name" => "US Dollar",
+                "iso" => "USD",
+            ],
+            [
+                "name" => "Vanuatu Vatu",
+                "iso" => "VUV",
+            ],
+            [
+                "name" => "Venezualan Bolivar",
+                "iso" => "VEF",
+            ],
+            [
+                "name" => "Vietnamese Dong",
+                "iso" => "VND",
+            ],
+            [
+                "name" => "Yemeni Rial",
+                "iso" => "YER",
+            ],
+            [
+                "name" => "Yuan (Chinese) Renminbi",
+                "iso" => "CNY",
+            ],
+            [
+                "name" => "Zaire Zaire",
+                "iso" => "ZRZ",
+            ],
+            [
+                "name" => "Zambian Kwacha",
+                "iso" => "ZMK",
+            ],
+            [
+                "name" => "Zimbabwe Dollar",
+                "iso" => "ZWD",
+            ]
+        ];
+
+        foreach ($currencies as $currencie) {
+            \App\Models\Currency::factory()->create($currencie);
+        };
+
+        ##======== CREATION DES TYPES DE CARD ============####
+        $cardTypes = [
+            [
+                "name" => "CIN",
+            ],
+            [
+                "name" => "LEPI",
+            ],
+            [
+                "name" => "PASSPORT",
+            ]
+        ];
+
+        foreach ($cardTypes as $cardType) {
+            \App\Models\CardType::factory()->create($cardType);
+        };
+
+
+        ##======== CREATION DES DEPARTEMENTS ============####
+
+        $departements = [
+            [
+                "name" => "Ouémé",
+            ],
+            [
+                "name" => "Plateau",
+            ],
+            [
+                "name" => "Atlantique",
+            ],
+            [
+                "name" => "Littoral",
+            ],
+            [
+                "name" => "Atlantique",
+            ],
+            [
+                "name" => "Mono",
+            ],
+            [
+                "name" => "Couffo",
+            ],
+            [
+                "name" => "Zou",
+            ],
+            [
+                "name" => "Collines",
+            ],
+            [
+                "name" => "Donga",
+            ],
+            [
+                "name" => "Borgou",
+            ],
+            [
+                "name" => "Alibori",
+            ],
+            [
+                "name" => "Atacora",
+            ]
+        ];
+
+        foreach ($departements as $departement) {
+            \App\Models\Departement::factory()->create($departement);
+        };
+
+
+        ##======== CREATION DES TYPES DE CHAMBRE ============####
+        $roomTypes = [
+            [
+                "name" => "2CH1S",
+                "description" => "2 Chambres, 1 Salon",
+            ],
+            [
+                "name" => "1CH1S",
+                "description" => "1 Chambre, 1 Salon",
+            ],
+            [
+                "name" => "3CH1S",
+                "description" => "3 Chambres, 1 Salon",
+            ],
+            [
+                "name" => "MAGASIN",
+                "description" => "Magasin",
+            ],
+            [
+                "name" => "STUDIO",
+                "description" => "Studio",
+            ],
+            [
+                "name" => "BOUTIQUE",
+                "description" => "Boutique",
+            ],
+            [
+                "name" => "PARCELLE NUE",
+                "description" => "Parcelle nue",
+            ]
+        ];
+
+        foreach ($roomTypes as $roomType) {
+            \App\Models\RoomType::factory()->create($roomType);
+        };
+
+
+
+        ##======== CREATION DES NATURES DE CHAMBRE ============####
+        $roomNatures = [
+            [
+                "name" => "SANITAIRE",
+                "description" => "Sanitaire non meublée",
+            ],
+            [
+                "name" => "ORDINANIRE",
+                "description" => "Ordinaire",
+            ],
+            [
+                "name" => "SEMI",
+                "description" => "Semi Sanitaire",
+            ],
+            [
+                "name" => "SANITAIRE-MEUBLEE",
+                "description" => "Sanitaire meublée",
+            ]
+        ];
+
+        foreach ($roomNatures as $roomNature) {
+            \App\Models\RoomNature::factory()->create($roomNature);
+        };
+
+
+        ##======== CREATION DES ZONES ============####
+        $zones = [
+            [
+                "name" => "Angaradebou",
+                "city" => 1,
+            ],
+            [
+                "name" => "Bensekou",
+                "city" => 1,
+            ],
+            [
+                "name" => "Donwari",
+                "city" => 1,
+            ],
+            [
+                "name" => "Kandi 1",
+                "city" => 1,
+            ],
+            [
+                "name" => "Kandi 2",
+                "city" => 1,
+            ],
+            [
+                "name" => "Kandi 3",
+                "city" => 1,
+            ],
+            [
+                "name" => "Kassakou",
+                "city" => 1,
+            ],
+            [
+                "name" => "Saah",
+                "city" => 1,
+            ],
+            [
+                "name" => "Sam",
+                "city" => 1,
+            ],
+            [
+                "name" => "Sonsoro",
+                "city" => 1,
+            ],
+            [
+                "name" => "Garou",
+                "city" => 2,
+            ],
+            [
+                "name" => "Guéné",
+                "city" => 2,
+            ],
+            [
+                "name" => "Madécali",
+                "city" => 2,
+            ],
+            [
+                "name" => "Malanville",
+                "city" => 2,
+            ],
+            [
+                "name" => "Tomboutou",
+                "city" => 2,
+            ],
+            [
+                "name" => "Birni Lafia",
+                "city" => 3,
+            ],
+            [
+                "name" => "Bogo-Bogo",
+                "city" => 3,
+            ],
+            [
+                "name" => "Karimama",
+                "city" => 3,
+            ],
+            [
+                "name" => "Kompa",
+                "city" => 3,
+            ],
+            [
+                "name" => "Monsey",
+                "city" => 3,
+            ],
+            [
+                "name" => "Banikoara",
+                "city" => 4,
+            ],
+            [
+                "name" => "Founougo",
+                "city" => 4,
+            ],
+            [
+                "name" => "Gomparou",
+                "city" => 4,
+            ],
+            [
+                "name" => "Goumori",
+                "city" => 4,
+            ],
+            [
+                "name" => "Kokey",
+                "city" => 4,
+            ],
+            [
+                "name" => "Kokiborou",
+                "city" => 4,
+            ],
+            [
+                "name" => "Ounet",
+                "city" => 4,
+            ],
+            [
+                "name" => "Sompéroukou",
+                "city" => 4,
+            ],
+            [
+                "name" => "Soroko",
+                "city" => 4,
+            ],
+            [
+                "name" => "Toura",
+                "city" => 4,
+            ],
+
+
+
+            [
+                "name" => "Bagou",
+                "city" => 5,
+            ],
+            [
+                "name" => "Gogounou",
+                "city" => 5,
+            ],
+            [
+                "name" => "Gounarou",
+                "city" => 5,
+            ],
+            [
+                "name" => "Sori",
+                "city" => 5,
+            ],
+            [
+                "name" => "Sougou-Kpan-Trossi",
+                "city" => 5,
+            ],
+            [
+                "name" => "Wara",
+                "city" => 5,
+            ],
+            [
+                "name" => "Libante",
+                "city" => 6,
+            ],
+            [
+                "name" => "Liboussou",
+                "city" => 6,
+            ],
+            [
+                "name" => "Liboussou",
+                "city" => 6,
+            ],
+            [
+                "name" => "Lougou",
+                "city" => 6,
+            ],
+            [
+                "name" => "Ségbana",
+                "city" => 6,
+            ],
+            [
+                "name" => "Sokotindji",
+                "city" => 6,
+            ],
+            [
+                "name" => "Boukoumbé",
+                "city" => 7,
+            ],
+            [
+                "name" => "Dipoli",
+                "city" => 7,
+            ],
+            [
+                "name" => "Korontiere",
+                "city" => 7,
+            ],
+            [
+                "name" => "Koussoucoingou",
+                "city" => 7,
+            ],
+            [
+                "name" => "Manta",
+                "city" => 7,
+            ],
+            [
+                "name" => "Nata",
+                "city" => 7,
+            ],
+            [
+                "name" => "Tabota",
+                "city" => 7,
+            ],
+            [
+                "name" => "Cobly",
+                "city" => 8,
+            ],
+            [
+                "name" => "Tapoga",
+                "city" => 8,
+            ],
+            [
+                "name" => "Datori",
+                "city" => 8,
+            ],
+            [
+                "name" => "Kountori",
+                "city" => 8,
+            ],
+            [
+                "name" => "Dassari",
+                "city" => 9,
+            ],
+            [
+                "name" => "Gouandé",
+                "city" => 9,
+            ],
+            [
+                "name" => "Matéri",
+                "city" => 9,
+            ],
+            [
+                "name" => "Nodi	",
+                "city" => 9,
+            ],
+            [
+                "name" => "Tantega",
+                "city" => 9,
+            ],
+            [
+                "name" => "Tchanhouncossi",
+                "city" => 9,
+            ],
+            [
+                "name" => "Cotiakou",
+                "city" => 10,
+            ],
+            [
+                "name" => "N'Dahonta",
+                "city" => 10,
+            ],
+            [
+                "name" => "Taiacou",
+                "city" => 10,
+            ],
+            [
+                "name" => "Tanguiéta",
+                "city" => 10,
+            ],
+            [
+                "name" => "Tanongou",
+                "city" => 10,
+            ],
+            [
+                "name" => "Brignamaro",
+                "city" => 11,
+            ],
+            [
+                "name" => "Firou",
+                "city" => 11,
+            ],
+            [
+                "name" => "Kaobagou	",
+                "city" => 11,
+            ],
+            [
+                "name" => "Kérou",
+                "city" => 11,
+            ],
+            [
+                "name" => "Birni",
+                "city" => 12,
+            ],
+            [
+                "name" => "Foo-Tance",
+                "city" => 12,
+            ],
+            [
+                "name" => "Guilmaro",
+                "city" => 12,
+            ],
+            [
+                "name" => "Kouandé",
+                "city" => 12,
+            ],
+            [
+                "name" => "Oroukayo",
+                "city" => 12,
+            ],
+            [
+                "name" => "Kouaba",
+                "city" => 13,
+            ],
+            [
+                "name" => "Kouandata",
+                "city" => 13,
+            ],
+            [
+                "name" => "Kotopounga",
+                "city" => 13,
+            ],
+            [
+                "name" => "Peporiyakou",
+                "city" => 13,
+            ],
+            [
+                "name" => "Perma",
+                "city" => 13,
+            ],
+            [
+                "name" => "Natitingou 1",
+                "city" => 13,
+            ],
+            [
+                "name" => "Natitingou 2",
+                "city" => 13,
+            ],
+            [
+                "name" => "Natitingou 3",
+                "city" => 13,
+            ],
+            [
+                "name" => "Tchoumi-Tchoumi",
+                "city" => 13,
+            ],
+            [
+                "name" => "Gnemasson",
+                "city" => 14,
+            ],
+            [
+                "name" => "Pehunco",
+                "city" => 14,
+            ],
+            [
+                "name" => "Tobré",
+                "city" => 14,
+            ],
+            [
+                "name" => "Kouarfa",
+                "city" => 15,
+            ],
+            [
+                "name" => "Tampégré",
+                "city" => 15,
+            ],
+            [
+                "name" => "Toukountouna",
+                "city" => 15,
+            ],
+            [
+                "name" => "Agbanou",
+                "city" => 15,
+            ],
+            [
+                "name" => "Allada Centre",
+                "city" => 16,
+            ],
+            [
+                "name" => "Attogon",
+                "city" => 16,
+            ],
+            [
+                "name" => "Avakpa",
+                "city" => 16,
+            ],
+            [
+                "name" => "Ayou",
+                "city" => 16,
+            ],
+            [
+                "name" => "Hinvi",
+                "city" => 16,
+            ],
+            [
+                "name" => "Lissègazoun",
+                "city" => 16,
+            ],
+            [
+                "name" => "Lon-Agonmey",
+                "city" => 16,
+            ],
+            [
+                "name" => "Sékou",
+                "city" => 16,
+            ],
+            [
+                "name" => "Togoudo",
+                "city" => 16,
+            ],
+            [
+                "name" => "Tokpa",
+                "city" => 16,
+            ],
+            [
+                "name" => "Agbanto",
+                "city" => 17,
+            ],
+            [
+                "name" => "Agonkanmè",
+                "city" => 17,
+            ],
+            [
+                "name" => "Dékanmè",
+                "city" => 17,
+            ],
+            [
+                "name" => "Dédomè",
+                "city" => 17,
+            ],
+            [
+                "name" => "Kpomassè Centre",
+                "city" => 17,
+            ],
+            [
+                "name" => "Sègbèya",
+                "city" => 17,
+            ],
+            [
+                "name" => "Sègbohouè",
+                "city" => 17,
+            ],
+            [
+                "name" => "Tokpa-Domè",
+                "city" => 17,
+            ],
+            [
+                "name" => "Avlékété",
+                "city" => 18,
+            ],
+            [
+                "name" => "Djègbadji",
+                "city" => 18,
+            ],
+            [
+                "name" => "Gakpé",
+                "city" => 18,
+            ],
+            [
+                "name" => "Houakpè-Daho",
+                "city" => 18,
+            ],
+            [
+                "name" => "Pahou",
+                "city" => 18,
+            ],
+            [
+                "name" => "Ouidah 1",
+                "city" => 18,
+            ],
+            [
+                "name" => "Ouidah 2",
+                "city" => 18,
+            ],
+            [
+                "name" => "Ouidah 3",
+                "city" => 18,
+            ],
+            [
+                "name" => "Ouidah 4",
+                "city" => 18,
+            ],
+            [
+                "name" => "Savi",
+                "city" => 18,
+            ],
+            [
+                "name" => "Agué",
+                "city" => 19,
+            ],
+            [
+                "name" => "Colli",
+                "city" => 19,
+            ],
+            [
+                "name" => "Coussi",
+                "city" => 19,
+            ],
+            [
+                "name" => "Damè",
+                "city" => 19,
+            ],
+            [
+                "name" => "Djanglanmè",
+                "city" => 19,
+            ],
+            [
+                "name" => "Kpomè",
+                "city" => 19,
+            ],
+            [
+                "name" => "Houègbo",
+                "city" => 19,
+            ],
+            [
+                "name" => "Houègbo",
+                "city" => 19,
+            ],
+            [
+                "name" => "Sèhouè",
+                "city" => 19,
+            ],
+            [
+                "name" => "Sey",
+                "city" => 19,
+            ],
+            [
+                "name" => "Toffo",
+                "city" => 19,
+            ],
+            [
+                "name" => "Avamè",
+                "city" => 20,
+            ],
+            [
+                "name" => "Azohouè-Aliho",
+                "city" => 20,
+            ],
+            [
+                "name" => "Tori-Cada",
+                "city" => 20,
+            ],
+            [
+                "name" => "	Tori-Gare",
+                "city" => 20,
+            ],
+            [
+                "name" => "	Tori-Bossito",
+                "city" => 20,
+            ],
+            [
+                "name" => "Abomey-Calavi",
+                "city" => 21,
+            ],
+            [
+                "name" => "Akassato",
+                "city" => 21,
+            ],
+            [
+                "name" => "Golo-Djigbé",
+                "city" => 21,
+            ],
+            [
+                "name" => "Godomey",
+                "city" => 21,
+            ],
+            [
+                "name" => "Hèvié",
+                "city" => 21,
+            ],
+            [
+                "name" => "Kpanroun",
+                "city" => 21,
+            ],
+            [
+                "name" => "Ouèdo",
+                "city" => 21,
+            ],
+            [
+                "name" => "Togba",
+                "city" => 21,
+            ],
+            [
+                "name" => "Zinvié",
+                "city" => 21,
+            ],
+            [
+                "name" => "Ahomey-Lokpo",
+                "city" => 22,
+            ],
+            [
+                "name" => "Dékanmey",
+                "city" => 22,
+            ],
+            [
+                "name" => "Ganvié 1",
+                "city" => 22,
+            ],
+            [
+                "name" => "Ganvié 2",
+                "city" => 22,
+            ],
+            [
+                "name" => "Houedo-Aguekon",
+                "city" => 22,
+            ],
+            [
+                "name" => "Sô-Ava",
+                "city" => 22,
+            ]
+        ];
+
+        foreach ($zones as $zone) {
+            \App\Models\Zone::factory()->create($zone);
+        };
+
+
+        ##======== CREATION DES QUARTIERS ============####
+        $quartiers = [
+            [
+                "name" => "Ambatta",
+            ],
+            [
+                "name" => "Kilwiti",
+            ],
+            [
+                "name" => "14 Villas",
+            ],
+            [
+                "name" => "15 ans 1",
+            ],
+            [
+                "name" => "15 ans 2",
+            ],
+            [
+                "name" => "Abadago",
+            ],
+            [
+                "name" => "Aballa",
+            ],
+            [
+                "name" => "Abato",
+            ],
+            [
+                "name" => "Abatta",
+            ],
+            [
+                "name" => "Abayahoué",
+            ],
+            [
+                "name" => "Abba",
+            ],
+            [
+                "name" => "Abéokouta",
+            ],
+            [
+                "name" => "Abiadji-Sogoudo",
+            ],
+            [
+                "name" => "Abidomey",
+            ],
+            [
+                "name" => "Abigo",
+            ],
+            [
+                "name" => "Abikouholi",
+            ],
+            [
+                "name" => "Abintaga",
+            ],
+            [
+                "name" => "Ablodé",
+            ],
+            [
+                "name" => "Abloganmè",
+            ],
+            [
+                "name" => "Ablomey",
+            ],
+            [
+                "name" => "Abobokomè",
+            ],
+            [
+                "name" => "Abogomè",
+            ],
+            [
+                "name" => "Abogomè-Hlihouè",
+            ],
+            [
+                "name" => "Abokicodji Centre",
+            ],
+            [
+                "name" => "Abokicodji Lagune",
+            ],
+            [
+                "name" => "Abolou",
+            ],
+            [
+                "name" => "Aboloumè",
+            ],
+            [
+                "name" => "Aboti",
+            ],
+            [
+                "name" => "Abovey",
+            ],
+            [
+                "name" => "Acadjamè",
+            ],
+            [
+                "name" => "Acclohoué",
+            ],
+            [
+                "name" => "Accron-Gogankomey",
+            ],
+            [
+                "name" => "Achawayil",
+            ],
+            [
+                "name" => "Achitou",
+            ],
+            [
+                "name" => "Aclonmè",
+            ],
+            [
+                "name" => "Ada-Kpané",
+            ],
+            [
+                "name" => "Adagamè-Lisèzou",
+            ],
+            [
+                "name" => "Adahoué",
+            ],
+            [
+                "name" => "Adakplamè",
+            ],
+            [
+                "name" => "Adamè",
+            ],
+            [
+                "name" => "Adamè Adato",
+            ],
+            [
+                "name" => "Adamè Ahito",
+            ],
+            [
+                "name" => "Adamè Houeglo",
+            ],
+            [
+                "name" => "Adamou-Kpara",
+            ],
+            [
+                "name" => "Adandéhoué",
+            ],
+            [
+                "name" => "Adandopkodji",
+            ],
+            [
+                "name" => "Adandéhoué",
+            ],
+            [
+                "name" => "Adandro-Akodé",
+            ],
+            [
+                "name" => "Adanhondjigon",
+            ],
+            [
+                "name" => "Adankpé",
+            ],
+            [
+                "name" => "Adankpossi",
+            ],
+            [
+                "name" => "Adanlopké",
+            ],
+            [
+                "name" => "Adanmayi",
+            ],
+            [
+                "name" => "Adanminakougon",
+            ],
+            [
+                "name" => "Adawémè",
+            ],
+            [
+                "name" => "Adawlato",
+            ],
+            [
+                "name" => "Adédéwo",
+            ],
+            [
+                "name" => "Adétikopé",
+            ],
+            [
+                "name" => "Adhamè",
+            ],
+            [
+                "name" => "Adidevo",
+            ],
+            [
+                "name" => "Adido",
+            ],
+            [
+                "name" => "Adihinlidji",
+            ],
+            [
+                "name" => "Adikogon",
+            ],
+            [
+                "name" => "Adikogon",
+            ],
+            [
+                "name" => "Adimado",
+            ],
+            [
+                "name" => "Adimalé",
+            ],
+            [
+                "name" => "Adingnigon",
+            ],
+            [
+                "name" => "Adja",
+            ],
+            [
+                "name" => "Adjacomè",
+            ],
+            [
+                "name" => "Adjadangan",
+            ],
+            [
+                "name" => "Adjadji-Atinkousa",
+            ],
+            [
+                "name" => "Adjadji-Bata",
+            ],
+            [
+                "name" => "Adjadji-Cossoé",
+            ],
+            [
+                "name" => "Adjadji-Zoungbom",
+            ],
+            [
+                "name" => "Adjagbo",
+            ],
+            [
+                "name" => "Adjagbo-Aidjèdo",
+            ],
+            [
+                "name" => "Adjaglimey",
+            ],
+            [
+                "name" => "Adjaglo",
+            ],
+            [
+                "name" => "Adjaha",
+            ],
+            [
+                "name" => "Adjaha-Cité",
+            ],
+            [
+                "name" => "Adjahassa",
+            ],
+            [
+                "name" => "Adjaho",
+            ],
+            [
+                "name" => "Adjahonmè",
+            ],
+            [
+                "name" => "Adjahigbonou",
+            ],
+            [
+                "name" => "Adjakamè",
+            ],
+            [
+                "name" => "Adjamè",
+            ],
+            [
+                "name" => "Adjan",
+            ],
+            [
+                "name" => "Adjan-Gla",
+            ],
+            [
+                "name" => "Adjan-Houéta",
+            ],
+            [
+                "name" => "Adjantè",
+            ],
+            [
+                "name" => "Adjassagnon",
+            ],
+            [
+                "name" => "Adjassinhoun - Condji",
+            ]
+        ];
+
+        foreach ($quartiers as $quartier) {
+            \App\Models\Quarter::factory()->create($quartier);
         };
     }
 }

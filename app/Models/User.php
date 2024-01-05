@@ -49,6 +49,17 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    #ONE TO ONE/REVERSE RELATIONSHIP(UN UTILISATEUR NE PEUT QU'AVOIR UN SEUL RANG)
+    function rang(): BelongsTo
+    {
+        return $this->belongsTo(Rang::class, 'rang_id');
+    }
+
+    #ONE TO MANY/INVERSE RELATIONSHIP (UN USER PEUT APPARTENIR A PLUISIEURS PROFILS)
+    function profil(): BelongsTo
+    {
+        return $this->belongsTo(Profil::class, 'profil_id');
+    }
 
     function my_admins(): HasMany
     {
@@ -69,5 +80,16 @@ class User extends Authenticatable
     function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, "roles_users", "user_id", "role_id");
+    }
+
+    function drts(): HasMany
+    {
+        return $this->hasMany(Right::class, "user_id")->with(["action", "rang", "profil"]);
+    }
+
+    function affected_rights(): BelongsToMany
+    {
+        // return $this->belongsToMany(Right::class, "user_id")->with(["rang", "action", "profil"]);
+        return $this->belongsToMany(Right::class, "rights_users", "user_id", "right_id")->with(["rang", "action", "profil"]);
     }
 }

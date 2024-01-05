@@ -4,28 +4,28 @@ namespace App\Http\Controllers\Api\V1\IMMO;
 
 use Illuminate\Http\Request;
 
-class CountryController extends COUNTRY_HELPER
+class AreaControlller extends AREA_HELPER
 {
-    #VERIFIONS SI LE USER EST AUTHENTIFIE
+    ###__VERIFIONS SI LE USER EST AUTHENTIFIE
     public function __construct()
     {
         $this->middleware(['auth:api', 'scope:api-access']);
     }
 
-    #GET ALL COUNTRY
-    function Countries(Request $request)
+    ###__GET ALL AREAS
+    function Areas(Request $request)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "GET") == False) {
             #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR Card_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
-        #RECUPERATION DE TOUTS LES COUNTRY
-        return $this->getCountries();
+
+        return $this->getAreas();
     }
 
-    #GET A COUNTRY
-    function RetrieveCountrie(Request $request, $id)
+    ###__GET AN AREA
+    function _RetrieveArea(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "GET") == False) {
@@ -33,7 +33,6 @@ class CountryController extends COUNTRY_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION D'UN COUNTRY
-        return $this->retrieveCountry($id);
+        return $this->retrieveArea($id);
     }
 }

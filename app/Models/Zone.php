@@ -6,18 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Role extends Model
+class Zone extends Model
 {
     use HasFactory;
+    protected $table = "zones";
 
-    protected $fillable = [
-        "label",
-        "description",
-        "owner"
-    ];
 
-    function Owner(): BelongsTo
+    function City(): BelongsTo
     {
-        return $this->belongsTo(User::class, "owner");
+        return $this->belongsTo(City::class, "city")->with(["country"]);
     }
 }

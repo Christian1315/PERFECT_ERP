@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('departements', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
-            $table->text('description');
-            $table->foreignId("owner")
+            $table->string("name");
+            $table->foreignId("country")
                 ->nullable()
-                ->constrained("users", "id")
+                ->constrained("countries", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
             $table->timestamps();
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('departements');
     }
 };

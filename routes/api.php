@@ -11,9 +11,23 @@ use App\Http\Controllers\Api\V1\CARDS\PosteController;
 use App\Http\Controllers\Api\V1\CARDS\CardController;
 use App\Http\Controllers\Api\V1\ChargeOrderController;
 use App\Http\Controllers\Api\V1\IMMO\ActivityDomainController;
+use App\Http\Controllers\Api\V1\IMMO\AreaControlller;
 use App\Http\Controllers\Api\V1\IMMO\CityController;
+use App\Http\Controllers\Api\V1\IMMO\CounterStatusController;
+use App\Http\Controllers\Api\V1\IMMO\CounterTypeController;
 use App\Http\Controllers\Api\V1\IMMO\CountryController;
+use App\Http\Controllers\Api\V1\IMMO\CurrencyController;
+use App\Http\Controllers\Api\V1\IMMO\DepartementController;
+use App\Http\Controllers\Api\V1\IMMO\HouseController;
+use App\Http\Controllers\Api\V1\IMMO\HouseTypeController;
+use App\Http\Controllers\Api\V1\IMMO\ProprietorController;
+use App\Http\Controllers\Api\V1\IMMO\QuarterController;
+use App\Http\Controllers\Api\V1\IMMO\RoomController;
+use App\Http\Controllers\Api\V1\IMMO\RoomNatureController as IMMORoomNatureController;
+use App\Http\Controllers\Api\V1\IMMO\RoomTypeController;
+use App\Http\Controllers\Api\V1\IMMO\ZoneController;
 use App\Http\Controllers\Api\V1\MemberController;
+
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\OrganisationController;
 use App\Http\Controllers\Api\V1\TeamController;
@@ -34,6 +48,7 @@ use App\Http\Controllers\Api\V1\MINISTERS\RepertoryController;
 use App\Http\Controllers\Api\V1\ProfilController;
 use App\Http\Controllers\Api\V1\RangController;
 use App\Http\Controllers\Api\V1\RightController;
+use App\Http\Controllers\Api\V1\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,9 +59,7 @@ use Illuminate\Support\Facades\Route;
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
-|
 */
-
 
 Route::prefix('v1')->group(function () {
     ###========== PROFILS ROUTINGS ========###
@@ -92,6 +105,18 @@ Route::prefix('v1')->group(function () {
         });
     });
 
+    ###========== ROLES ROUTINGS ========###
+    Route::controller(RoleController::class)->group(function () {
+        Route::prefix('role')->group(function () {
+            Route::any('add', 'CreateRole'); #AJOUT D'UN ROLE'
+            Route::any('all', 'Roles'); #GET ALL ROLE
+            Route::any('{id}/retrieve', 'RetrieveRole'); #RECUPERATION D'UN ROLE
+
+            Route::any('attach-user', 'AttachRoleToUser'); #Attacher un droit au user 
+            Route::any('desattach-user', 'DesAttachRoleToUser'); #Attacher un droit au user 
+        });
+    });
+
     ###========== USERs ROUTINGS ========###
     Route::controller(UserController::class)->group(function () {
         Route::prefix("user")->group(function () {
@@ -101,6 +126,13 @@ Route::prefix('v1')->group(function () {
             Route::any('users/{id}', 'RetrieveUser');
             Route::any('{id}/password/update', 'UpdatePassword');
             Route::any('{id}/delete', 'DeleteUser');
+
+
+            Route::any('password/demand_reinitialize', 'DemandReinitializePassword');
+            Route::any('password/reinitialize', 'ReinitializePassword');
+
+            Route::any('attach-user', 'AttachRightToUser'); #Attacher un droit au user 
+            Route::any('desattach-user', 'DesAttachRightToUser'); #Attacher un droit au user 
         });
     });
 
@@ -394,6 +426,128 @@ Route::prefix('v1')->group(function () {
                 Route::any('{id}/retrieve', '_RetrieveCity'); #RECUPERATION D'UNE VILLE
             });
         });
+        ##___
+
+        ###========== AREA ========###
+        Route::prefix("area")->group(function () {
+            Route::controller(AreaControlller::class)->group(function () {
+                Route::any('all', 'Areas'); #RECUPERATION D'UN TERRITOIRE
+                Route::any('{id}/retrieve', '_RetrieveArea'); #RECUPERATION D'UN TERRITOIRE 
+            });
+        });
+        ##___
+
+
+        ###========== CURRENCY ========###
+        Route::prefix("currency")->group(function () {
+            Route::controller(CurrencyController::class)->group(function () {
+                Route::any('all', 'Currencies'); #RECUPERATION DE TOUTES LES DEVISES
+                Route::any('{id}/retrieve', '_RetrieveCurrency'); #RECUPERATION D'UNE DEVISE
+            });
+        });
+        ##___
+
+        ###========== TYPES DE COMPTEUR ========###
+        Route::prefix("counterType")->group(function () {
+            Route::controller(CounterTypeController::class)->group(function () {
+                Route::any('all', 'CounterTypes'); #RECUPERATION DE TOUT LES TYPES DE COMPTEUR
+                Route::any('{id}/retrieve', '_RetrieveCounterType'); #RECUPERATION D'UN TYPE DE COMPTEUR
+            });
+        });
+        ##___
+
+        ###========== STATUS DE COMPTEUR ======== ###
+        Route::prefix("counterStatus")->group(function () {
+            Route::controller(CounterStatusController::class)->group(function () {
+                Route::any('all', 'CounterStatus'); ## RECUPERATION DE TOUT LES STATUS DE COMPTEUR
+                Route::any('{id}/retrieve', '_RetrieveCounterStatus'); ## RECUPERATION D'UN STATUS DE COMPTEUR
+            });
+        });
+        ##___
+
+        ###========== DEPARTEMENTS ======== ###
+        Route::prefix("departement")->group(function () {
+            Route::controller(DepartementController::class)->group(function () {
+                Route::any('all', 'Departements'); ## RECUPERATION DE TOUT LES DEPARTEMENTS
+                Route::any('{id}/retrieve', '_RetrieveDepartement'); ## RECUPERATION D'UN DEPARTEMENT
+            });
+        });
+        ##___
+
+        ###========== ZONES ======== ###
+        Route::prefix("zone")->group(function () {
+            Route::controller(ZoneController::class)->group(function () {
+                Route::any('all', 'Zones'); ## RECUPERATION DE TOUTES LES ZONES
+                Route::any('{id}/retrieve', '_RetrieveZone'); ## RECUPERATION D'UNE ZONE
+            });
+        });
+        ##___
+
+
+        ###========== QUARTIERS ======== ###
+        Route::prefix("quarter")->group(function () {
+            Route::controller(QuarterController::class)->group(function () {
+                Route::any('all', 'Quarters'); ## RECUPERATION DE TOUT LES QUARTIERS
+                Route::any('{id}/retrieve', '_RetrieveQuarter'); ## RECUPERATION D'UN QUARTIER
+            });
+        });
+        ##___
+
+        ###========== PROPRIETAIRE ========###
+        Route::prefix("proprietor")->group(function () {
+            Route::controller(ProprietorController::class)->group(function () {
+                Route::any('add', '_AddProprietor'); #AJOUT D'UN PROPRIETAIRE
+                Route::any('all', 'Proprietors'); #RECUPERATION DE TOUT LES PROPRIETAIRES
+                Route::any('{id}/retrieve', 'RetrieveProprietor'); #RECUPERATION D'UN PROPRIETAIRE
+                Route::any('{id}/update', 'UpdateProprietor'); # MODIFICATION D'UN PROPRIETAIRE 
+                Route::any('{id}/delete', 'DeleteProprietor'); # SUPPRESSION D'UN PROPRIETAIRE  
+            });
+        });
+        ##___
+
+        ###========== HOUSE ========###
+        Route::prefix("house")->group(function () {
+            Route::prefix("type")->group(function () {
+                Route::controller(HouseTypeController::class)->group(function () {
+                    Route::any('all', 'HouseTypes'); #RECUPERATION DE TOUT LES TYPES DE MAISONS
+                    Route::any('{id}/retrieve', '_RetrieveHouseType'); #RECUPERATION D'UN TYPE DE MAISON
+                });
+            });
+
+            Route::controller(HouseController::class)->group(function () {
+                Route::any('add', '_AddRoom'); #AJOUT D'UNE CHAMBRE
+                Route::any('all', 'Rooms'); #RECUPERATION D'UNE CHAMBRE
+                Route::any('{id}/retrieve', 'RetrieveRoom'); #RECUPERATION D'UNE CHAMBRE
+                Route::any('{id}/update', 'UpdateRoom'); # MODIFICATION D'UNE CHAMBRE  
+                Route::any('{id}/delete', 'DeleteRoom'); # SUPPRESSION D'UNE CHAMBRE  
+            });
+        });
+        ##___
+
+        ###========== ROOM ========###
+        Route::prefix("room")->group(function () {
+            Route::prefix("type")->group(function () {
+                Route::controller(RoomTypeController::class)->group(function () {
+                    Route::any('all', 'RoomTypes'); #RECUPERATION DE TOUT LES TYPES DE CHAMBRES
+                    Route::any('{id}/retrieve', '_RetrieveRoomType'); #RECUPERATION D'UN TYPE DE CHAMBRE
+                });
+            });
+
+            Route::prefix("nature")->group(function () {
+                Route::controller(IMMORoomNatureController::class)->group(function () {
+                    Route::any('all', 'RoomNatures'); #RECUPERATION DE TOUTES LES NATURES DE CHAMBRES
+                    Route::any('{id}/retrieve', '_RetrieveRoomNature'); #RECUPERATION D'UNE NATURE DE CHAMBRE
+                });
+            });
+
+            Route::controller(RoomController::class)->group(function () {
+                Route::any('add', '_AddRoom'); #AJOUT D'UNE CHAMBRE
+                Route::any('all', 'Rooms'); #RECUPERATION D'UNE CHAMBRE
+                Route::any('{id}/retrieve', 'RetrieveRoom'); #RECUPERATION D'UNE CHAMBRE
+                Route::any('{id}/update', 'UpdateRoom'); #RECUPERATION D'UNE CHAMBRE 
+            });
+        });
+        ##___
     });
     ######################## FIN MODULE IMMO ##############################
 });

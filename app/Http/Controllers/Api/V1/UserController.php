@@ -9,7 +9,12 @@ class UserController extends USER_HELPER
     #VERIFIONS SI LE USER EST AUTHENTIFIE
     public function __construct()
     {
-        $this->middleware(['auth:api', 'scope:api-access'])->only("UpdatePassword");
+        $this->middleware(['auth:api', 'scope:api-access'])->only([
+            "UpdatePassword",
+            "Logout",
+            "AttachRightToUser",
+            "DesAttachRightToUser"
+        ]);
     }
     #GET ALL USERS
     function Users(Request $request)
@@ -87,5 +92,69 @@ class UserController extends USER_HELPER
         };
 
         return $this->userLogout($request);
+    }
+
+    function AttachRightToUser(Request $request)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "POST") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS USER_HELPER
+            return $this->sendError("La méthode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+
+        #VALIDATION DES DATAs DEPUIS LA CLASS USER_HELPER
+        $validator = $this->ATTACH_Validator($request->all());
+
+        if ($validator->fails()) {
+            #RENVOIE D'ERREURE VIA **sendResponse** DE LA CLASS USER_HELPER
+            return $this->sendError($validator->errors(), 404);
+        }
+
+        return $this->rightAttach($request->all());
+    }
+
+    function DesAttachRightToUser(Request $request)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "POST") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS USER_HELPER
+            return $this->sendError("La méthode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+
+        #VALIDATION DES DATAs DEPUIS LA CLASS USER_HELPER
+        $validator = $this->ATTACH_Validator($request->all());
+
+        if ($validator->fails()) {
+            #RENVOIE D'ERREURE VIA **sendResponse** DE LA CLASS USER_HELPER
+            return $this->sendError($validator->errors(), 404);
+        }
+        return $this->rightDesAttach($request->all());
+    }
+
+
+    #DEMANDE DE REINITIALISATION D'UN PASSWORD
+    function DemandReinitializePassword(Request $request)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "POST") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
+            return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+
+        #RECUPERATION D'UN USER VIA SON **id**
+        return $this->_demandReinitializePassword($request);
+    }
+
+    #REINITIALISER UN PASSWORD
+    function ReinitializePassword(Request $request)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "POST") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
+            return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+
+        #RECUPERATION D'UN USER VIA SON **id**
+        return $this->_reinitializePassword($request);
     }
 }

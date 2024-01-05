@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\IMMO;
 
 use Illuminate\Http\Request;
 
-class CountryController extends COUNTRY_HELPER
+class HouseTypeController extends HOUSE_TYPE_HELPER
 {
     #VERIFIONS SI LE USER EST AUTHENTIFIE
     public function __construct()
@@ -12,20 +12,20 @@ class CountryController extends COUNTRY_HELPER
         $this->middleware(['auth:api', 'scope:api-access']);
     }
 
-    #GET ALL COUNTRY
-    function Countries(Request $request)
+    #GET ALL HOUSE TYPE
+    function HouseTypes(Request $request)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "GET") == False) {
             #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR Card_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
-        #RECUPERATION DE TOUTS LES COUNTRY
-        return $this->getCountries();
+        #RECUPERATION DE TOUT LES TYPES DE MAISON
+        return $this->getHouseType();
     }
 
-    #GET A COUNTRY
-    function RetrieveCountrie(Request $request, $id)
+    #GET A HOUSE TYPE
+    function _RetrieveHouseType(Request $request, $id)
     {
         #VERIFICATION DE LA METHOD
         if ($this->methodValidation($request->method(), "GET") == False) {
@@ -33,7 +33,7 @@ class CountryController extends COUNTRY_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #RECUPERATION D'UN COUNTRY
-        return $this->retrieveCountry($id);
+        #RECUPERATION D'UN TYPE DE MAISON
+        return $this->retrieveHouseType($id);
     }
 }

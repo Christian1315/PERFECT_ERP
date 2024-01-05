@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('house_types', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
-            $table->text('description');
             $table->foreignId("owner")
                 ->nullable()
                 ->constrained("users", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
+            $table->string("name");
+            $table->text("description");
+            $table->string("deleted_at")->nullable();
+            $table->boolean("visible")->default(true);
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('house_types');
     }
 };

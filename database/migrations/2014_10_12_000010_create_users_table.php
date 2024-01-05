@@ -22,6 +22,12 @@ return new class extends Migration
             $table->boolean('is_super_admin')->default(false);
             $table->integer('organisation')->nullable();
 
+            $table->string('active_compte_code')->nullable();
+            $table->string('compte_actif')->default(false);
+
+            $table->string('pass_code')->nullable();
+            $table->string('pass_code_active')->default(true);
+
             $table->foreignId("rang_id")
                 ->nullable()
                 ->constrained('rangs', 'id')

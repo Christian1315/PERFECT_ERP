@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('areas', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
-            $table->text('description');
-            $table->foreignId("owner")
+            $table->string("name");
+            $table->foreignId("zone")
                 ->nullable()
-                ->constrained("users", "id")
-                ->onUpdate("CASCADE")
-                ->onDelete("CASCADE");
+                ->constrained('zones', 'id')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
+            $table->boolean("visible")->default(true);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('areas');
     }
 };
