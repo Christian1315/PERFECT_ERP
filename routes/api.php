@@ -515,11 +515,11 @@ Route::prefix('v1')->group(function () {
             });
 
             Route::controller(HouseController::class)->group(function () {
-                Route::any('add', '_AddRoom'); #AJOUT D'UNE CHAMBRE
-                Route::any('all', 'Rooms'); #RECUPERATION D'UNE CHAMBRE
-                Route::any('{id}/retrieve', 'RetrieveRoom'); #RECUPERATION D'UNE CHAMBRE
-                Route::any('{id}/update', 'UpdateRoom'); # MODIFICATION D'UNE CHAMBRE  
-                Route::any('{id}/delete', 'DeleteRoom'); # SUPPRESSION D'UNE CHAMBRE  
+                Route::any('add', '_AddHouse'); #AJOUT D'UNE MAISON
+                Route::any('all', 'Houses'); #RECUPERATION DES MAISONS
+                Route::any('{id}/retrieve', 'RetrieveHouse'); #RECUPERATION D'UNE MAISON
+                Route::any('{id}/update', 'UpdateHouse'); # MODIFICATION D'UNE MAISON  
+                Route::any('{id}/delete', 'DeleteHouse'); # SUPPRESSION D'UNE MAISON  
             });
         });
         ##___
@@ -545,6 +545,7 @@ Route::prefix('v1')->group(function () {
                 Route::any('all', 'Rooms'); #RECUPERATION D'UNE CHAMBRE
                 Route::any('{id}/retrieve', 'RetrieveRoom'); #RECUPERATION D'UNE CHAMBRE
                 Route::any('{id}/update', 'UpdateRoom'); #RECUPERATION D'UNE CHAMBRE 
+                Route::any('{id}/delete', 'DeleteRoom'); #SUPPRESSION D'UNE CHAMBRE 
             });
         });
         ##___

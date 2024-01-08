@@ -69,7 +69,7 @@ class HouseController extends HOUSE_HELPER
         };
 
         #RECUPERATION D'UNE MAISON VIA SON **id**
-        return $this->_updateMaison($request, $id);
+        return $this->_updateHouse($request, $id);
     }
 
     function DeleteHouse(Request $request, $id)

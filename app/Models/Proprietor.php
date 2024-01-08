@@ -25,6 +25,11 @@ class Proprietor extends Model
         "owner"
     ];
 
+    function Owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "owner");
+    }
+
     function City(): BelongsTo
     {
         return $this->belongsTo(City::class, "city");

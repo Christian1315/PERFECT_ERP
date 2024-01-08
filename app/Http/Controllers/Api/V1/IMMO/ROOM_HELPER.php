@@ -3,15 +3,10 @@
 namespace App\Http\Controllers\Api\V1\IMMO;
 
 use App\Http\Controllers\Api\V1\BASE_HELPER;
-use App\Models\City;
-use App\Models\Country;
-use App\Models\Departement;
-use App\Models\HouseType;
-use App\Models\Proprietor;
-use App\Models\Quarter;
+use App\Models\House;
 use App\Models\Room;
-use App\Models\User;
-use App\Models\Zone;
+use App\Models\RoomNature;
+use App\Models\RoomType;
 use Illuminate\Support\Facades\Validator;
 
 class ROOM_HELPER extends BASE_HELPER
@@ -21,46 +16,72 @@ class ROOM_HELPER extends BASE_HELPER
     static function room_rules(): array
     {
         return [
-            'name' => ['required'],
-            'latitude' => ['required'],
-            'longitude' => ['required'],
-            'comments' => ['required'],
+            "house" => ["required", "integer"],
+            "nature" => ["required", "integer"],
+            "type" => ["required", "integer"],
+            "loyer" => ["required"],
+            "number" => ["required"],
+            "comments" => ["required"],
 
-            'proprietor' => ['required', "integer"],
-            'type' => ['required', "integer"],
-            'city' => ['required', "integer"],
-            'country' => ['required', "integer"],
-            'departement' => ['required', "integer"],
-            'quartier' => ['required', "integer"],
-            'zone' => ['required', "integer"],
-            'supervisor' => ['required', "integer"],
+            "security" => ["required", "boolean"],
+            "rubbish" => ["required", "boolean"],
+            "vidange" => ["required", "boolean"],
+            "cleaning" => ["required", "boolean"],
+            "water_counter" => ["required", "boolean"],
+            "water_discounter" => ["required", "boolean"],
+            "electric_counter" => ["required", "boolean"],
+            "electric_discounter" => ["required", "boolean"],
+            "publish" => ["required", "boolean"],
+            "home_banner" => ["required", "boolean"],
+
+            "water_counter_text" => ["required"],
+            "water_discounter_text" => ["required"],
+            "principal_img" => ["required", "file"],
         ];
     }
 
     static function room_messages(): array
     {
         return [
-            'name.required' => 'Le nom de la chambre est réquis!',
-            'latitude.required' => "Latitude est réquise!",
-            'longitude.required' => "La longitude est réquise!",
-            'comments.required' => "Le commentaire est réquis!",
-            'proprietor.required' => "Le propriétaire est réquis",
-            'type.required' => "Le type de la chambre est réquis",
-            'city.required' => "La ville est réquise",
-            'country.required' => "La Pays est réquis",
-            'departement.required' => "Le departement est réquis",
-            'quartier.required' => "Le quartier est réquis",
-            'zone.required' => "La zone est réquise",
-            'supervisor.required' => "Le superviseur est réquis",
+            "house.required" => "Veuillez préciser la maison!",
+            "nature.required" => "Veuillez préciser la nature de la chambre!",
+            "type.required" => "Veuillez préciser le type de la chambre!",
 
-            'proprietor.integer' => 'Ce champ doit être de type entier!',
-            'type.integer' => 'Ce champ doit être de type entier!',
-            'city.integer' => 'Ce champ doit être de type entier!',
-            'country.integer' => 'Ce champ doit être de type entier!',
-            'departement.integer' => 'Ce champ doit être de type entier!',
-            'quartier.integer' => 'Ce champ doit être de type entier!',
-            'zone.integer' => 'Ce champ doit être de type entier!',
-            'supervisor.integer' => 'Ce champ doit être de type entier!',
+            "house.integer" => "Ce champ doit être de type entier!",
+            "nature.integer" => "Ce champ doit être de type entier!",
+            "type.integer" => "Ce champ doit être de type entier!",
+
+            "loyer.required" => "Ce champs est réquis",
+            "number.required" => "Ce champs est réquis",
+            "comments.required" => "Ce champs est réquis",
+
+            "security.required" => "Ce Champ est réquis!",
+            "rubbish.required" => "Ce Champ est réquis!",
+            "vidange.required" => "Ce Champ est réquis!",
+            "cleaning.required" => "Ce Champ est réquis!",
+            "water_counter.required" => "Ce Champ est réquis!",
+            "water_discounter.required" => "Ce Champ est réquis!",
+            "electric_counter.required" => "Ce Champ est réquis!",
+            "electric_discounter.required" => "Ce Champ est réquis!",
+            "publish.required" => "Ce Champ est réquis!",
+            "home_banner.required" => "Ce Champ est réquis!",
+
+            "security.boolean" => "Ce Champ est un booléen!",
+            "rubbish.boolean" => "Ce Champ est un booléen!",
+            "vidange.boolean" => "Ce Champ est un booléen!",
+            "cleaning.boolean" => "Ce Champ est un booléen!",
+            "water_counter.boolean" => "Ce Champ est un booléen!",
+            "water_discounter.boolean" => "Ce Champ est un booléen!",
+            "electric_counter.boolean" => "Ce Champ est un booléen!",
+            "electric_discounter.boolean" => "Ce Champ est un booléen!",
+            "publish.boolean" => "Ce Champ est un booléen!",
+            "home_banner.boolean" => "Ce Champ est un booléen!",
+
+            "water_counter_text.required" => "Ce Champ est réquis!",
+            "water_discounter_text.required" => "Ce Champ est réquis!",
+
+            "principal_img.required" => "Ce Champ est réquis!",
+            "principal_img.file" => "Ce Champ doit être un fichier!",
         ];
     }
 
@@ -79,67 +100,48 @@ class ROOM_HELPER extends BASE_HELPER
         $formData = $request->all();
         $user = request()->user();
 
-        ###___TRAITEMENT DES DATAS
-        $proprietor = Proprietor::find($formData["proprietor"]);
-        $type = HouseType::find($formData["type"]);
-        $city = City::find($formData["city"]);
-        $country = Country::find($formData["country"]);
-        $departement = Departement::find($formData["departement"]);
-        $quartier = Quarter::find($formData["quartier"]);
-        $zone = Zone::find($formData["zone"]);
-        $supervisor = User::find($formData["supervisor"]);
-
-
-        if (!$proprietor) {
-            return self::sendError("Ce Propriétaire n'existe pas!", 404);
+        ###____TRAITEMENT DU HOUSE
+        $house = House::where(["visible" => 1])->find($formData["house"]);
+        if (!$house) {
+            return self::sendError("Cette maison n'existe pas!", 404);
         }
 
+        ###____TRAITEMENT DU HOUSE NATURE
+        $nature = RoomNature::find($formData["nature"]);
+        if (!$nature) {
+            return self::sendError("Cette nature de chambre n'existe pas!", 404);
+        }
+
+        ###____TRAITEMENT DU HOUSE TYPE
+        $type = RoomType::find($formData["type"]);
         if (!$type) {
-            return self::sendError("Ce Type de chambre n'existe pas!", 404);
+            return self::sendError("Ce type de chambre n'existe pas!", 404);
         }
 
-        if (!$city) {
-            return self::sendError("Cette ville n'existe pas!", 404);
-        }
-
-        if (!$country) {
-            return self::sendError("Ce pays n'existe pas!", 404);
-        }
-
-        if (!$departement) {
-            return self::sendError("Ce departement n'existe pas!", 404);
-        }
-
-        if (!$quartier) {
-            return self::sendError("Ce quartier n'existe pas!", 404);
-        }
-
-        if (!$zone) {
-            return self::sendError("Cette zone n'existe pas!", 404);
-        }
-
-        if (!$supervisor) {
-            return self::sendError("Cette zone n'existe pas!", 404);
-        }
-
+        ###____TRAITEMENT DE L'IMAGE
+        $img = $request->file("principal_img");
+        $imgName = $img->getClientOriginalName();
+        $img->move("room_images", $imgName);
 
         #ENREGISTREMENT DE LA CARTE DANS LA DB
-        $room = Room::create($formData);
+        $formData["owner"] = $user->id;
+        $formData["principal_img"] = asset("room_images/" . $imgName);
 
+        $room = Room::create($formData);
         return self::sendResponse($room, "Chambre ajoutée avec succès!!");
     }
 
     static function getRooms()
     {
         $user = request()->user();
-        $rooms = Room::all();
+        $rooms = Room::with(["Owner", "House", "Nature", "Type"])->get();
         return self::sendResponse($rooms, 'Toutes les chambres récupérées avec succès!!');
     }
 
     static function _retrieveRoom($id)
     {
         $user = request()->user();
-        $room = Room::find($id);
+        $room = Room::where(["visible" => 1])->with(["Owner", "House", "Nature", "Type"])->find($id);
         if (!$room) {
             return self::sendError("Cette chambre n'existe pas!", 404);
         }
@@ -150,7 +152,7 @@ class ROOM_HELPER extends BASE_HELPER
     {
         $user = request()->user();
         $formData = $request->all();
-        $room = Room::find($id);
+        $room = Room::where(["visible" => 1])->find($id);
         if (!$room) {
             return self::sendError("Cette Chambre n'existe pas!", 404);
         };
@@ -159,6 +161,39 @@ class ROOM_HELPER extends BASE_HELPER
             return self::sendError("Cette Chambre ne vous appartient pas!", 404);
         }
 
+        ###____TRAITEMENT DU HOUSE
+        if ($request->get("house")) {
+            $house = House::where(["visible" => 1])->find($request->get("house"));
+            if (!$house) {
+                return self::sendError("Cette Chambre n'existe pas!", 404);
+            }
+        }
+
+        ###____TRAITEMENT DU HOUSE NATURE
+        if ($request->get("nature")) {
+            $nature = RoomNature::find($request->get("nature"));
+            if (!$nature) {
+                return self::sendError("Cette nature de chambre n'existe pas!", 404);
+            }
+        }
+
+        ###____TRAITEMENT DU ROOM TYPE
+        if ($request->get("type")) {
+            $type = RoomType::find($request->get("type"));
+            if (!$type) {
+                return self::sendError("Ce type de chambre n'existe pas!", 404);
+            }
+        }
+
+        ###____TRAITEMENT DE L'IMAGE
+        if ($request->file("principal_img")) {
+            $img = $request->file("principal_img");
+            $imgName = $img->getClientOriginalName();
+            $img->move("room_images", $imgName);
+            $formData["principal_img"] = asset("room_images/" . $imgName);
+        }
+
+        #ENREGISTREMENT DE LA CARTE DANS LA DB
         $room->update($formData);
         return self::sendResponse($room, 'Cette Chambre a été modifiée avec succès!');
     }
@@ -168,16 +203,18 @@ class ROOM_HELPER extends BASE_HELPER
         $user = request()->user();
         $room = Room::where(["visible" => 1])->find($id);
         if (!$room) {
-            return self::sendError("Cette Carte n'existe pas!", 404);
+            return self::sendError("Cette Chambre n'existe pas!", 404);
         };
 
-        if ($room->owner != $user->id) {
-            return self::sendError("Cette Carte ne vous appartient pas!", 404);
-        }
+        if (!Is_User_An_Admin($user->id)) {
+            if ($room->owner != $user->id) {
+                return self::sendError("Cette Chambre ne vous appartient pas!", 404);
+            }
 
-        $room->visible = 0;
-        $room->delete_at = now();
-        $room->save();
-        return self::sendResponse($room, 'Cette Chambre a été supprimée avec succès!');
+            $room->visible = 0;
+            $room->delete_at = now();
+            $room->save();
+            return self::sendResponse($room, 'Cette Chambre a été supprimée avec succès!');
+        }
     }
 }

@@ -10,7 +10,6 @@ class RoomController extends ROOM_HELPER
     public function __construct()
     {
         $this->middleware(['auth:api', 'scope:api-access']);
-
         set_time_limit(0);
     }
 

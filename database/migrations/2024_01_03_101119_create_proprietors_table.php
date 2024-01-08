@@ -46,6 +46,10 @@ return new class extends Migration
                 ->constrained("card_types", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
+
+            $table->boolean("visible")->default(true);
+            $table->text("delete_at")->nullable();
+
             $table->timestamps();
         });
     }

@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\V1\BASE_HELPER;
 use App\Models\CardType;
 use App\Models\City;
 use App\Models\Country;
-use App\Models\House;
 use App\Models\Proprietor;
 use Illuminate\Support\Facades\Validator;
 
@@ -75,8 +74,8 @@ class PROPRIETOR_HELPER extends BASE_HELPER
 
         ###___
         $city = City::find($formData["city"]);
-        $country = City::find($formData["country"]);
-        $card_type = City::find($formData["card_type"]);
+        $country = Country::find($formData["country"]);
+        $card_type = CardType::find($formData["card_type"]);
 
         if (!$city) {
             return self::sendError("Cette ville n'existe pas", 404);
@@ -104,16 +103,16 @@ class PROPRIETOR_HELPER extends BASE_HELPER
     static function getProprietor()
     {
         $user = request()->user();
-        $proprietors = Proprietor::with(["City", "Country", "TypeCard"])->get();
+        $proprietors = Proprietor::where(["visible" => 1])->with(["Owner", "City", "Country", "TypeCard"])->get();
         return self::sendResponse($proprietors, 'Tout les proprietaires récupérés avec succès!!');
     }
 
     static function _retrieveProprietor($id)
     {
         $user = request()->user();
-        $proprietor = Proprietor::with(["City", "Country", "TypeCard"])->find($id);
+        $proprietor = Proprietor::where(["visible" => 1])->with(["Owner", "City", "Country", "TypeCard"])->find($id);
         if (!$proprietor) {
-            return self::sendError("Ce proprietaire maison n'existe pas!", 404);
+            return self::sendError("Ce proprietaire de maison n'existe pas!", 404);
         }
         return self::sendResponse($proprietor, "Proprietaire récupéré avec succès:!!");
     }
@@ -122,7 +121,7 @@ class PROPRIETOR_HELPER extends BASE_HELPER
     {
         $user = request()->user();
         $formData = $request->all();
-        $proprietor = Proprietor::find($id);
+        $proprietor = Proprietor::where(["visible" => 1])->find($id);
 
         if (!$proprietor) {
             return self::sendError("Ce Proprietaire n'existe pas!", 404);
@@ -169,16 +168,20 @@ class PROPRIETOR_HELPER extends BASE_HELPER
     static function proprietorDelete($id)
     {
         $user = request()->user();
-        $proprietor = Proprietor::find($id);
+        $proprietor = Proprietor::where(["visible" => 1])->find($id);
         if (!$proprietor) {
             return self::sendError("Ce Proprietaire n'existe pas!", 404);
         };
 
-        if ($proprietor->owner != $user->id) {
-            return self::sendError("Ce Pro^prietaire ne vous appartient pas!", 404);
+        if (!Is_User_An_Admin($user->id)) {
+            if ($proprietor->owner != $user->id) {
+                return self::sendError("Ce Proprietaire ne vous appartient pas!", 404);
+            }
         }
 
-        $proprietor->delete();
+        $proprietor->visible = 0;
+        $proprietor->delete_at = now();
+        $proprietor->save();
         return self::sendResponse($proprietor, 'Ce Proprietaire a été supprimée avec succès!');
     }
 }

@@ -18,6 +18,12 @@ return new class extends Migration
             $table->string("longitude");
             $table->text("comments");
 
+            $table->foreignId("owner")
+                ->nullable()
+                ->constrained("users", "id")
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
+
             $table->foreignId("proprietor")
                 ->nullable()
                 ->constrained("proprietors", "id")
@@ -67,6 +73,9 @@ return new class extends Migration
                 ->constrained("zones", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
+
+            $table->boolean("visible")->default(true);
+            $table->text("delete_at")->nullable();
             $table->timestamps();
         });
     }
