@@ -9954,5 +9954,22 @@ class DatabaseSeeder extends Seeder
         foreach ($quartiers as $quartier) {
             \App\Models\Quarter::factory()->create($quartier);
         };
+
+
+        ##======== CREATION DES TYPES DE LOCATIONS PAR DEFAUT ============####
+        $locationTypes = [
+            [
+                "name" => "ORDINAIRE",
+                "description" => "Location simple",
+            ],
+            [
+                "name" => "BAIL",
+                "description" => "Location longue durée",
+            ]
+        ];
+
+        foreach ($locationTypes as $locationType) {
+            \App\Models\LocationType::factory()->create($locationType);
+        };
     }
 }

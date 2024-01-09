@@ -20,6 +20,9 @@ use App\Http\Controllers\Api\V1\IMMO\CurrencyController;
 use App\Http\Controllers\Api\V1\IMMO\DepartementController;
 use App\Http\Controllers\Api\V1\IMMO\HouseController;
 use App\Http\Controllers\Api\V1\IMMO\HouseTypeController;
+use App\Http\Controllers\Api\V1\IMMO\LocataireController;
+use App\Http\Controllers\Api\V1\IMMO\LocationController;
+use App\Http\Controllers\Api\V1\IMMO\LocationTypeController;
 use App\Http\Controllers\Api\V1\IMMO\ProprietorController;
 use App\Http\Controllers\Api\V1\IMMO\QuarterController;
 use App\Http\Controllers\Api\V1\IMMO\RoomController;
@@ -49,6 +52,7 @@ use App\Http\Controllers\Api\V1\ProfilController;
 use App\Http\Controllers\Api\V1\RangController;
 use App\Http\Controllers\Api\V1\RightController;
 use App\Http\Controllers\Api\V1\RoleController;
+use App\Models\LocationType;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -546,6 +550,37 @@ Route::prefix('v1')->group(function () {
                 Route::any('{id}/retrieve', 'RetrieveRoom'); #RECUPERATION D'UNE CHAMBRE
                 Route::any('{id}/update', 'UpdateRoom'); #RECUPERATION D'UNE CHAMBRE 
                 Route::any('{id}/delete', 'DeleteRoom'); #SUPPRESSION D'UNE CHAMBRE 
+            });
+        });
+        ##___
+
+        ###========== LOCATAIRE ========###
+        Route::prefix("locataire")->group(function () {
+            Route::controller(LocataireController::class)->group(function () {
+                Route::any('add', '_AddLocataire'); #AJOUT D'UN LOCATAIRE
+                Route::any('all', 'Locataires'); #RECUPERATION D'UN LOCATAIRE
+                Route::any('{id}/retrieve', 'RetrieveLocataire'); #RECUPERATION D'UN LOCATAIRE
+                Route::any('{id}/update', 'UpdateLocataire'); #RECUPERATION D'UN LOCATAIRE 
+                Route::any('{id}/delete', 'DeleteLocataire'); #SUPPRESSION D'UN LOCATAIRE
+            });
+        });
+        ##___
+
+        ###========== LOCATION ========###
+        Route::prefix("location")->group(function () {
+            Route::prefix("type")->group(function () {
+                Route::controller(LocationTypeController::class)->group(function () {
+                    Route::any('all', 'LocationTypes'); #RECUPERATION DE TOUT LES TYPES DE LOCATIONS
+                    Route::any('{id}/retrieve', '_RetrieveLocationType'); #RECUPERATION D'UN TYPE DE LOCATION
+                });
+            });
+
+            Route::controller(LocationController::class)->group(function () {
+                Route::any('add', '_AddLocation'); #AJOUT D'UNE LOCATION
+                Route::any('all', 'Locations'); #RECUPERATION DE TOUTES LES LOCATIONS
+                Route::any('{id}/retrieve', 'RetrieveLocation'); #RECUPERATION D'UNE LOCATION
+                Route::any('{id}/update', 'UpdateLocation'); #RECUPERATION D'UNE LOCATION
+                Route::any('{id}/delete', 'DeleteLocation'); #SUPPRESSION D'UNE LOCATION 
             });
         });
         ##___
