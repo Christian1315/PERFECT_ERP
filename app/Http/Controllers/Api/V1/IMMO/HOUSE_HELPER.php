@@ -146,14 +146,14 @@ class HOUSE_HELPER extends BASE_HELPER
     static function getHouses()
     {
         $user = request()->user();
-        $houses = House::where(["visible" => 1])->with(["Owner", "Proprietor", "Type", "Supervisor", "City", "Country", "Departement", "Quartier", "Zone"])->get();
+        $houses = House::where(["visible" => 1])->with(["Owner", "Proprietor", "Type", "Supervisor", "City", "Country", "Departement", "Quartier", "Zone", "Rooms"])->get();
         return self::sendResponse($houses, 'Toutes les maisons récupérées avec succès!!');
     }
 
     static function _retrieveHouse($id)
     {
         $user = request()->user();
-        $house = House::where(["visible" => 1])->with(["Owner", "Proprietor", "Type", "Supervisor", "City", "Country", "Departement", "Quartier", "Zone"])->find($id);
+        $house = House::where(["visible" => 1])->with(["Owner", "Proprietor", "Type", "Supervisor", "City", "Country", "Departement", "Quartier", "Zone", "Rooms"])->find($id);
         if (!$house) {
             return self::sendError("Cette maison n'existe pas!", 404);
         }

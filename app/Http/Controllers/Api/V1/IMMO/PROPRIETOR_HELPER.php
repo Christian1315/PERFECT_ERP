@@ -103,14 +103,14 @@ class PROPRIETOR_HELPER extends BASE_HELPER
     static function getProprietor()
     {
         $user = request()->user();
-        $proprietors = Proprietor::where(["visible" => 1])->with(["Owner", "City", "Country", "TypeCard"])->get();
+        $proprietors = Proprietor::where(["visible" => 1])->with(["Owner", "City", "Country", "TypeCard", "Houses"])->get();
         return self::sendResponse($proprietors, 'Tout les proprietaires récupérés avec succès!!');
     }
 
     static function _retrieveProprietor($id)
     {
         $user = request()->user();
-        $proprietor = Proprietor::where(["visible" => 1])->with(["Owner", "City", "Country", "TypeCard"])->find($id);
+        $proprietor = Proprietor::where(["visible" => 1])->with(["Owner", "City", "Country", "TypeCard", "Houses"])->find($id);
         if (!$proprietor) {
             return self::sendError("Ce proprietaire de maison n'existe pas!", 404);
         }

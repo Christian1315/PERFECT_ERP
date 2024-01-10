@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Proprietor extends Model
 {
@@ -43,5 +44,10 @@ class Proprietor extends Model
     function TypeCard(): BelongsTo
     {
         return $this->belongsTo(CardType::class, "card_type");
+    }
+
+    function Houses(): HasMany
+    {
+        return $this->hasMany(House::class, "proprietor")->with(["Rooms"]);
     }
 }

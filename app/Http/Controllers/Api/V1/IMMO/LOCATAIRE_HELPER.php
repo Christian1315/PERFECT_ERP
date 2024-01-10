@@ -106,14 +106,14 @@ class LOCATAIRE_HELPER extends BASE_HELPER
     static function getLocataires()
     {
         $user = request()->user();
-        $locataires = Locataire::where(["visible" => 1])->with(["Owner", "CardType", "CardType", "Departement", "Country"])->get();
+        $locataires = Locataire::where(["visible" => 1])->with(["Owner", "CardType", "CardType", "Departement", "Country", "Location"])->get();
         return self::sendResponse($locataires, 'Tout les locataires récupérés avec succès!!');
     }
 
     static function _retrieveLocataire($id)
     {
         $user = request()->user();
-        $locataire = Locataire::where(["visible" => 1])->with(["Owner", "CardType", "CardType", "Departement", "Country"])->find($id);
+        $locataire = Locataire::where(["visible" => 1])->with(["Owner", "CardType", "CardType", "Departement", "Country", "Location"])->find($id);
         if (!$locataire) {
             return self::sendError("Ce locataire n'existe pas!", 404);
         }

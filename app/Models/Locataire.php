@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Locataire extends Model
 {
@@ -45,5 +46,10 @@ class Locataire extends Model
     function Country(): BelongsTo
     {
         return $this->belongsTo(Country::class, "country");
+    }
+
+    function Location(): HasMany
+    {
+        return $this->hasMany(Location::class, "locataire")->with(["Owner", "House", "Locataire", "Type", "Room"]);
     }
 }

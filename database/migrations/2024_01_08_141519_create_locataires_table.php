@@ -36,12 +36,6 @@ return new class extends Migration
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
-            $table->foreignId("card_type")
-                ->nullable()
-                ->constrained("card_types", "id")
-                ->onUpdate("CASCADE")
-                ->onDelete("CASCADE");
-
             $table->foreignId("departement")
                 ->nullable()
                 ->constrained("departements", "id")

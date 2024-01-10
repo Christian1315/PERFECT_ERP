@@ -58,6 +58,9 @@ return new class extends Migration
             $table->text("img_prestation");
             $table->text("caution_electric");
             $table->text("integration_date");
+
+            $table->boolean("visible")->default(true);
+            $table->text("delete_at")->nullable();
             $table->timestamps();
         });
     }

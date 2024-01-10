@@ -21,7 +21,7 @@ class LOCATION_HELPER extends BASE_HELPER
         return [
             'house' => ['required', "integer"],
             'room' => ['required', "integer"],
-            'locataire' => ['required', "integer"],
+            'location' => ['required', "integer"],
             'type' => ['required', "integer"],
 
             'caution_bordereau' => ['required', "file"],
@@ -52,8 +52,8 @@ class LOCATION_HELPER extends BASE_HELPER
             'room.required' => "Le chambre est réquise!",
             'room.integer' => 'Ce champ doit être de type integer',
 
-            'locataire.required' => "Le locataire est réquis!",
-            'locataire.integer' => 'Ce champ doit être de type integer',
+            'location.required' => "Le location est réquis!",
+            'location.integer' => 'Ce champ doit être de type integer',
 
             'type.required' => "Le type de location est réquis!",
             'type.integer' => 'Ce champ doit être de type integer',
@@ -118,7 +118,7 @@ class LOCATION_HELPER extends BASE_HELPER
         ###___TRAITEMENT DES DATAS
         $house = House::find($formData["house"]);
         $room = Room::find($formData["room"]);
-        $locataire = Locataire::find($formData["locataire"]);
+        $location = location::find($formData["location"]);
         $type = LocationType::find($formData["type"]);
 
 
@@ -130,8 +130,8 @@ class LOCATION_HELPER extends BASE_HELPER
             return self::sendError("Cette chambre n'existe pas!", 404);
         }
 
-        if (!$locataire) {
-            return self::sendError("Ce locataire n'existe pas!", 404);
+        if (!$location) {
+            return self::sendError("Ce location n'existe pas!", 404);
         }
 
         if (!$type) {
@@ -164,17 +164,17 @@ class LOCATION_HELPER extends BASE_HELPER
         return self::sendResponse($location, "Location ajoutée avec succès!!");
     }
 
-    static function getLocationes()
+    static function getLocations()
     {
         $user = request()->user();
-        $locations = Location::where(["visible" => 1])->with(["Owner", "CardType", "CardType", "Departement", "Country"])->get();
+        $locations = Location::where(["visible" => 1])->with(["Owner", "House", "Locataire", "Type", "Room"])->get();
         return self::sendResponse($locations, 'Toutes les locations récupérés avec succès!!');
     }
 
     static function _retrieveLocation($id)
     {
         $user = request()->user();
-        $location = Location::where(["visible" => 1])->with(["Owner", "CardType", "CardType", "Departement", "Country"])->find($id);
+        $location = Location::where(["visible" => 1])->with(["Owner", "House", "Locataire", "Type", "Room"])->find($id);
         if (!$location) {
             return self::sendError("Ce location n'existe pas!", 404);
         }
@@ -186,50 +186,76 @@ class LOCATION_HELPER extends BASE_HELPER
         $user = request()->user();
         $formData = $request->all();
         $location = Location::where(["visible" => 1])->find($id);
+
         if (!$location) {
-            return self::sendError("Ce location n'existe pas!", 404);
+            return self::sendError("Cette location n'existe pas!", 404);
         };
 
         if ($location->owner != $user->id) {
-            return self::sendError("Ce location ne vous appartient pas!", 404);
+            return self::sendError("Cette location ne vous appartient pas!", 404);
         }
 
-        ####____TRAITEMENT DU TYPE DE CARTE
-        if ($request->get("card_type")) {
-            $type = CardType::find($request->get("card_type"));
+        ####____TRAITEMENT DU HOUSE
+        if ($request->get("house")) {
+            $house = House::find($request->get("house"));
 
+            if (!$house) {
+                return self::sendError("Cette maison n'existe pas!", 404);
+            }
+        }
+
+        ####____TRAITEMENT DE LA CHAMBRE
+        if ($request->get("room")) {
+            $room = Room::find($request->get("room"));
+
+            if (!$room) {
+                return self::sendError("Cette chambre n'existe pas!", 404);
+            }
+        }
+
+        ####____TRAITEMENT DU LOCATAIRE
+        if ($request->get("locataire")) {
+            $locataire = Locataire::find($request->get("locataire"));
+            if (!$locataire) {
+                return self::sendError("Ce locataire n'existe pas!", 404);
+            }
+        }
+
+        ####____TRAITEMENT DU TYPE DE LOCATION
+        if ($request->get("type")) {
+            $type = LocationType::find($request->get("type"));
             if (!$type) {
-                return self::sendError("Ce type de carte n'existe pas!", 404);
+                return self::sendError("Ce type de location n'existe pas!", 404);
             }
         }
 
-        ####____TRAITEMENT DU DEPARTEMENT
-        if ($request->get("departement")) {
-            $departement = Departement::find($request->get("departement"));
-
-            if (!$departement) {
-                return self::sendError("Ce departement n'existe pas!", 404);
-            }
+        ####____TRAITEMENT DU CAUTION BORDEREAU
+        if ($request->file("caution_bordereau")) {
+            $caution_bordereau = $request->file("caution_bordereau");
+            $caution_bordereauName = $caution_bordereau->getClientOriginalName();
+            $caution_bordereau->move("caution_bordereaus", $caution_bordereauName);
+            $formData["caution_bordereau"] = asset("caution_bordereaus/" . $caution_bordereauName);
         }
 
-        ####____TRAITEMENT DU COUNTRY
-        if ($request->get("country")) {
-            $country = Country::find($request->get("country"));
-            if (!$country) {
-                return self::sendError("Ce pays n'existe pas!", 404);
-            }
+        ####____TRAITEMENT DE L'IMAGE DU CONTRAT
+        if ($request->file("img_contrat")) {
+            $img_contrat = $request->file("img_contrat");
+            $img_contratName = $img_contrat->getClientOriginalName();
+            $img_contrat->move("img_contrats", $img_contratName);
+            $formData["img_contrat"] = asset("img_contrats/" . $img_contratName);
         }
 
-        ####____TRAITEMENT DE L'IMAGE
-        if ($request->file("mandate_contrat")) {
-            $img = $request->file("mandate_contrat");
-            $imgName = $img->getClientOriginalName();
-            $img->move("mandate_contrats", $imgName);
-            $formData["mandate_contrat"] = asset("mandate_contrats/" . $imgName);
+
+        ####____TRAITEMENT DE L'IMAGE DE LA PRESTATION
+        if ($request->file("img_prestation")) {
+            $img_prestation = $request->file("img_prestation");
+            $img_prestationName = $img_contrat->getClientOriginalName();
+            $img_prestation->move("img_prestations", $img_prestationName);
+            $formData["img_prestation"] = asset("img_prestations/" . $img_prestationName);
         }
 
         $location->update($formData);
-        return self::sendResponse($location, 'Ce location a été modifié avec succès!');
+        return self::sendResponse($location, 'Cette location a été modifiée avec succès!');
     }
 
     static function locationDelete($id)
@@ -237,18 +263,18 @@ class LOCATION_HELPER extends BASE_HELPER
         $user = request()->user();
         $location = Location::where(["visible" => 1])->find($id);
         if (!$location) {
-            return self::sendError("Ce location n'existe pas!", 404);
+            return self::sendError("Cette location n'existe pas!", 404);
         };
 
         if (!Is_User_An_Admin($user->id)) {
             if ($location->owner != $user->id) {
-                return self::sendError("Ce location ne vous appartient pas!", 404);
+                return self::sendError("Cette location ne vous appartient pas!", 404);
             }
         }
 
         $location->visible = 0;
         $location->delete_at = now();
         $location->save();
-        return self::sendResponse($location, 'Ce location a été supprimé avec succès!');
+        return self::sendResponse($location, 'Cette location a été supprimée avec succès!');
     }
 }

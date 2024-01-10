@@ -9971,5 +9971,57 @@ class DatabaseSeeder extends Seeder
         foreach ($locationTypes as $locationType) {
             \App\Models\LocationType::factory()->create($locationType);
         };
+
+        ##======== CREATION DES MODULES DE PAIEMENT PAR DEFAUT ============####
+        $paiementModules = [
+            [
+                "name" => "FAI",
+                "description" => "Fournisseur d'Accès Internet",
+            ],
+            [
+                "name" => "IMMO",
+                "description" => "Agence Immobilière",
+            ],
+            [
+                "name" => "GCAD",
+                "description" => "Gestionnaire Courrier Administratif",
+            ],
+            [
+                "name" => "FINANCE",
+                "description" => "Gestionnaire Financière",
+            ],
+            [
+                "name" => "TICKETING",
+                "description" => "Gestion ticketing",
+            ]
+        ];
+
+        foreach ($paiementModules as $paiementModule) {
+            \App\Models\PaiementModule::factory()->create($paiementModule);
+        };
+
+        ##======== CREATION DES STATUS DE PAIEMENT PAR DEFAUT ============####
+        $paiementStatus = [
+            [
+                "name" => "PENDING",
+                "description" => "PENDING - ATTENTE",
+            ],
+            [
+                "name" => "CANCEL",
+                "description" => "CANCEL - ANNULE",
+            ],
+            [
+                "name" => "SUCCESS",
+                "description" => "SUCCESS - SUCCES",
+            ],
+            [
+                "name" => "PROCESSING",
+                "description" => "PROCESSING - EN COURS DE TRAITEMENT",
+            ]
+        ];
+
+        foreach ($paiementStatus as $paiementStatu) {
+            \App\Models\PaiementStatus::factory()->create($paiementStatu);
+        };
     }
 }

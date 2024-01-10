@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Location extends Model
 {
@@ -33,4 +34,29 @@ class Location extends Model
         'integration_date',
         'owner'
     ];
+
+    function Owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "owner");
+    }
+
+    function House(): BelongsTo
+    {
+        return $this->belongsTo(House::class, "house")->with(["Owner", "Proprietor", "Type", "Supervisor", "City", "Country", "Departement", "Quartier", "Zone"]);
+    }
+
+    function Locataire(): BelongsTo
+    {
+        return $this->belongsTo(Locataire::class, "locataire")->with(["Owner", "CardType", "Departement", "Country"]);
+    }
+
+    function Type(): BelongsTo
+    {
+        return $this->belongsTo(LocationType::class, "type");
+    }
+
+    function Room(): BelongsTo
+    {
+        return $this->belongsTo(Room::class, "room")->with(["Owner", "House", "Nature", "Type"]);
+    }
 }
