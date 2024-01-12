@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Api\V1\IMMO;
 
 use App\Http\Controllers\Api\V1\BASE_HELPER;
-use App\Models\CardType;
-use App\Models\Country;
-use App\Models\Departement;
 use App\Models\House;
 use App\Models\Locataire;
 use App\Models\Location;
+use App\Models\LocationStatus;
 use App\Models\LocationType;
 use App\Models\Room;
 use Illuminate\Support\Facades\Validator;
@@ -21,7 +19,7 @@ class LOCATION_HELPER extends BASE_HELPER
         return [
             'house' => ['required', "integer"],
             'room' => ['required', "integer"],
-            'location' => ['required', "integer"],
+            'locataire' => ['required', "integer"],
             'type' => ['required', "integer"],
 
             'caution_bordereau' => ['required', "file"],
@@ -53,7 +51,7 @@ class LOCATION_HELPER extends BASE_HELPER
             'room.integer' => 'Ce champ doit être de type integer',
 
             'location.required' => "Le location est réquis!",
-            'location.integer' => 'Ce champ doit être de type integer',
+            'locataire.integer' => 'Ce champ doit être de type integer',
 
             'type.required' => "Le type de location est réquis!",
             'type.integer' => 'Ce champ doit être de type integer',
@@ -118,7 +116,7 @@ class LOCATION_HELPER extends BASE_HELPER
         ###___TRAITEMENT DES DATAS
         $house = House::find($formData["house"]);
         $room = Room::find($formData["room"]);
-        $location = location::find($formData["location"]);
+        $locataire = Locataire::find($formData["locataire"]);
         $type = LocationType::find($formData["type"]);
 
 
@@ -130,8 +128,8 @@ class LOCATION_HELPER extends BASE_HELPER
             return self::sendError("Cette chambre n'existe pas!", 404);
         }
 
-        if (!$location) {
-            return self::sendError("Ce location n'existe pas!", 404);
+        if (!$locataire) {
+            return self::sendError("Ce locataire n'existe pas!", 404);
         }
 
         if (!$type) {
@@ -167,14 +165,14 @@ class LOCATION_HELPER extends BASE_HELPER
     static function getLocations()
     {
         $user = request()->user();
-        $locations = Location::where(["visible" => 1])->with(["Owner", "House", "Locataire", "Type", "Room"])->get();
+        $locations = Location::where(["visible" => 1])->with(["Owner", "House", "Locataire", "Type", "Room", "Status"])->get();
         return self::sendResponse($locations, 'Toutes les locations récupérés avec succès!!');
     }
 
     static function _retrieveLocation($id)
     {
         $user = request()->user();
-        $location = Location::where(["visible" => 1])->with(["Owner", "House", "Locataire", "Type", "Room"])->find($id);
+        $location = Location::where(["visible" => 1])->with(["Owner", "House", "Locataire", "Type", "Room", "Status"])->find($id);
         if (!$location) {
             return self::sendError("Ce location n'existe pas!", 404);
         }
@@ -253,6 +251,32 @@ class LOCATION_HELPER extends BASE_HELPER
             $img_prestation->move("img_prestations", $img_prestationName);
             $formData["img_prestation"] = asset("img_prestations/" . $img_prestationName);
         }
+
+        ####____TRAITEMENT DU STATUS DE LOCATION
+        if ($request->get("status")) {
+            $status = LocationStatus::find($request->get("status"));
+            if (!$status) {
+                return self::sendError("Ce status de location n'existe pas!", 404);
+            }
+
+            #===SI LE STATUS EST **SUSPEND**=====#
+            if ($request->get("status") == 2) {
+                if (!$request->get("suspend_comments")) {
+                    return self::sendError("Veuillez préciser la raison de suspenssion de cette location!", 404);
+                }
+                $formData["suspend_date"] = now();
+                $formData["suspend_by"] = $user->id;
+            }
+
+            #===SI LE STATUS EST **MOVED**=====#
+            if ($request->get("status") == 3) {
+                if (!$request->get("suspend_comments")) {
+                    return self::sendError("Veuillez préciser la raison de suspenssion de cette location!", 404);
+                }
+                $formData["suspend_date"] = now();
+            }
+        }
+
 
         $location->update($formData);
         return self::sendResponse($location, 'Cette location a été modifiée avec succès!');

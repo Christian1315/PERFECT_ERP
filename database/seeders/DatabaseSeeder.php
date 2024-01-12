@@ -10023,5 +10023,194 @@ class DatabaseSeeder extends Seeder
         foreach ($paiementStatus as $paiementStatu) {
             \App\Models\PaiementStatus::factory()->create($paiementStatu);
         };
+
+        ##======== CREATION DES TYPES DE PAIEMENT PAR DEFAUT ============####
+        $paiementTypes = [
+            [
+                "name" => "MTNMoMo",
+                "description" => "Mobile Money MTN",
+            ],
+            [
+                "name" => "MoovMoney",
+                "description" => "Mobile Money MOOV",
+            ],
+            [
+                "name" => "VISA",
+                "description" => "Carte Prépayées VISA",
+            ],
+            [
+                "name" => "Chèque",
+                "description" => "Paiement par chèqure",
+            ],
+            [
+                "name" => "Virement",
+                "description" => "Paiement par virement bancaire",
+            ],
+            [
+                "name" => "Espèce",
+                "description" => "Paiement espèce",
+            ]
+        ];
+
+        foreach ($paiementTypes as $paiementType) {
+            \App\Models\PaiementType::factory()->create($paiementType);
+        };
+
+
+        ##======== CREATION DES COMPTES PAR DEFAUT ============####
+        $immoAcounts = [
+            [
+                "name" => "BANK",
+                "description" => "Banque Loyer",
+                "phone" => "22967410929",
+                "email" => "info@hard-soft.solution",
+                "status" => 1,
+                "client" => 1,
+                "type" => 1,
+                "plafond_max" => 1000000000,
+            ],
+            [
+                "name" => "CMDE",
+                "description" => "Menu dépenses",
+                "phone" => "22996805252",
+                "email" => "donatien.akpo@jeny.bj",
+                "status" => 1,
+                "client" => 0,
+                "type" => 7,
+                "plafond_max" => 1000000,
+            ],
+            [
+                "name" => "CPPC",
+                "description" => "Compte Paiement Propriétaire Caution",
+                "phone" => "22960082727",
+                "email" => "pay@frikpay.digital",
+                "status" => 1,
+                "client" => 0,
+                "type" => 8,
+                "plafond_max" => 1000000,
+            ],
+            [
+                "name" => "CDEI",
+                "description" => "Compte Dépense Exploitation Interne",
+                "phone" => "22960082727",
+                "email" => "pay@frikpay.digital",
+                "status" => 1,
+                "client" => 0,
+                "type" => 8,
+                "plafond_max" => 1000000,
+            ],
+            [
+                "name" => "CDEP",
+                "description" => "Compte Dépense Exploitation Propriétaire",
+                "phone" => "22960082727",
+                "email" => "pay@frikpay.digital",
+                "status" => 1,
+                "client" => 0,
+                "type" => 8,
+                "plafond_max" => 1000000,
+            ],
+            [
+                "name" => "CAISSE",
+                "description" => "Caisse Loyer",
+                "phone" => "22967410929",
+                "email" => "info@hard-soft.solution",
+                "status" => 1,
+                "client" => 1,
+                "type" => 1,
+                "plafond_max" => 1000000000,
+            ],
+            [
+                "name" => "CDP",
+                "description" => "Caisse Diverses Prestations",
+                "phone" => "22960082727",
+                "email" => "info@hard-soft.solution",
+                "status" => 1,
+                "client" => 0,
+                "type" => 8,
+                "plafond_max" => 1000000,
+            ],
+            [
+                "name" => "Commission",
+                "description" => "COMMISSION",
+                "phone" => "22967410929",
+                "email" => "info@hard-soft.solution",
+                "status" => 1,
+                "client" => 1,
+                "type" => 1,
+                "plafond_max" => 1000000000,
+            ],
+            [
+                "name" => "MTN_MARCHAND",
+                "description" => "MTN MARCHAND",
+                "phone" => "22967410929",
+                "email" => "info@hard-soft.solution",
+                "status" => 1,
+                "client" => 1,
+                "type" => 1,
+                "plafond_max" => 1000000000,
+            ],
+            [
+                "name" => "CC",
+                "description" => "Caisse Caution",
+                "phone" => "22960082727",
+                "email" => "info@hard-soft.solution",
+                "status" => 1,
+                "client" => 0,
+                "type" => 8,
+                "plafond_max" => 1000000,
+            ],
+            [
+                "name" => "CPP",
+                "description" => "Compte Paiement Propriétaire",
+                "phone" => "22960082727",
+                "email" => "info@hard-soft.solution",
+                "status" => 1,
+                "client" => 0,
+                "type" => 8,
+                "plafond_max" => 1000000,
+            ],
+            [
+                "name" => "REGULARISATION",
+                "description" => "Compte de REGULARISATION",
+                "phone" => "22960082727",
+                "email" => "info@hard-soft.solution",
+                "status" => 1,
+                "client" => 0,
+                "type" => 8,
+                "plafond_max" => 1000000,
+            ]
+        ];
+
+        foreach ($immoAcounts as $immoAcount) {
+            \App\Models\ImmoAccount::factory()->create($immoAcount);
+        };
+
+        ##======== CREATION DES STATUS DE LOCATION PAR DEFAUT ============####
+        $locationStatus = [
+            [
+                "name" => "ACTIVE",
+                "description" => "ACTIVE",
+            ],
+            [
+                "name" => "SUSPEND",
+                "description" => "IMPAYE",
+            ],
+            [
+                "name" => "MOVED",
+                "description" => "DEMENAGEMENT",
+            ],
+            [
+                "name" => "STOP",
+                "description" => "ARRETE",
+            ],
+            [
+                "name" => "TERMINATE",
+                "description" => "RESILIER",
+            ]
+        ];
+
+        foreach ($locationStatus as $locationStatu) {
+            \App\Models\LocationStatus::factory()->create($locationStatu);
+        };
     }
 }

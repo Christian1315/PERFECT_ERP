@@ -20,9 +20,14 @@ use App\Http\Controllers\Api\V1\IMMO\CurrencyController;
 use App\Http\Controllers\Api\V1\IMMO\DepartementController;
 use App\Http\Controllers\Api\V1\IMMO\HouseController;
 use App\Http\Controllers\Api\V1\IMMO\HouseTypeController;
+use App\Http\Controllers\Api\V1\IMMO\ImmoAccountController;
 use App\Http\Controllers\Api\V1\IMMO\LocataireController;
 use App\Http\Controllers\Api\V1\IMMO\LocationController;
 use App\Http\Controllers\Api\V1\IMMO\LocationTypeController;
+use App\Http\Controllers\Api\V1\IMMO\PaiementModuleController;
+use App\Http\Controllers\Api\V1\IMMO\PaiementStatusController;
+use App\Http\Controllers\Api\V1\IMMO\PaiementTypeController;
+use App\Http\Controllers\Api\V1\IMMO\PayementController;
 use App\Http\Controllers\Api\V1\IMMO\ProprietorController;
 use App\Http\Controllers\Api\V1\IMMO\QuarterController;
 use App\Http\Controllers\Api\V1\IMMO\RoomController;
@@ -441,7 +446,6 @@ Route::prefix('v1')->group(function () {
         });
         ##___
 
-
         ###========== CURRENCY ========###
         Route::prefix("currency")->group(function () {
             Route::controller(CurrencyController::class)->group(function () {
@@ -487,12 +491,20 @@ Route::prefix('v1')->group(function () {
         });
         ##___
 
-
         ###========== QUARTIERS ======== ###
         Route::prefix("quarter")->group(function () {
             Route::controller(QuarterController::class)->group(function () {
                 Route::any('all', 'Quarters'); ## RECUPERATION DE TOUT LES QUARTIERS
                 Route::any('{id}/retrieve', '_RetrieveQuarter'); ## RECUPERATION D'UN QUARTIER
+            });
+        });
+        ##___
+
+        ###========== ACCOUNT ======== ###
+        Route::prefix("account")->group(function () {
+            Route::controller(ImmoAccountController::class)->group(function () {
+                Route::any('all', 'Accounts'); ## RECUPERATION DE TOUT LES COMPTES
+                Route::any('{id}/retrieve', '_RetrieveAccount'); ## RECUPERATION D'UN COMPTE
             });
         });
         ##___
@@ -581,6 +593,38 @@ Route::prefix('v1')->group(function () {
                 Route::any('{id}/retrieve', 'RetrieveLocation'); #RECUPERATION D'UNE LOCATION
                 Route::any('{id}/update', 'UpdateLocation'); #RECUPERATION D'UNE LOCATION
                 Route::any('{id}/delete', 'DeleteLocation'); #SUPPRESSION D'UNE LOCATION 
+            });
+        });
+        ##___
+
+        ###========== PAIEMENT ========###
+        Route::prefix("paiement")->group(function () {
+            Route::prefix("type")->group(function () {
+                Route::controller(PaiementTypeController::class)->group(function () {
+                    Route::any('all', 'PaiementTypes'); #RECUPERATION DE TOUT LES TYPES DE PAIEMENT
+                    Route::any('{id}/retrieve', '_RetrievePaiementType'); #RECUPERATION D'UN TYPE DE PAIEMENT
+                });
+            });
+
+            Route::prefix("status")->group(function () {
+                Route::controller(PaiementStatusController::class)->group(function () {
+                    Route::any('all', 'PaiementStatus'); #RECUPERATION DE TOUT LES STATUS DE PAIEMENT
+                    Route::any('{id}/retrieve', '_RetrievePaiementStatus'); #RECUPERATION D'UN STATU DE PAIEMENT
+                });
+            });
+
+            Route::prefix("module")->group(function () {
+                Route::controller(PaiementModuleController::class)->group(function () {
+                    Route::any('all', 'PaiementModules'); #RECUPERATION DE TOUT LES MODULES DE PAIEMENT
+                    Route::any('{id}/retrieve', '_RetrievePaiementModule'); #RECUPERATION D'UN MODULE DE PAIEMENT
+                });
+            });
+
+            Route::controller(PayementController::class)->group(function () {
+                Route::any('add', '_AddPaiement'); #AJOUT D'UN PAIEMENT
+                Route::any('all', 'Paiements'); #RECUPERATION DE TOUT LES PAIEMENTS
+                Route::any('{id}/retrieve', 'RetrievePaiement'); #RECUPERATION D'UN PAIEMENT
+                Route::any('{id}/update', 'UpdatePaiement'); #RECUPERATION D'UN PAIEMENT
             });
         });
         ##___

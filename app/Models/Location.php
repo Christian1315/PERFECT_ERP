@@ -15,6 +15,16 @@ class Location extends Model
         'room',
         'locataire',
         'type',
+        "status",
+        "payment_mode",
+
+        "moved_by",
+        "move_date",
+        "move_comments",
+
+        "suspend_by",
+        "suspend_date",
+        "suspend_comments",
 
         'caution_bordereau',
         'loyer',
@@ -53,6 +63,11 @@ class Location extends Model
     function Type(): BelongsTo
     {
         return $this->belongsTo(LocationType::class, "type");
+    }
+
+    function Status(): BelongsTo
+    {
+        return $this->belongsTo(LocationStatus::class, "status");
     }
 
     function Room(): BelongsTo

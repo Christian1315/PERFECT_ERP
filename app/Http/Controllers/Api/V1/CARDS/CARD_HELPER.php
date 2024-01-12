@@ -162,7 +162,7 @@ class CARD_HELPER extends BASE_HELPER
         ###_______GENERATION DU CODE QR DE CETTE CARTE
         $qrcode = "card_qrCode_" . $cretedCard->id . ".png";
         // QrCode::format("png")->size(100)->backgroundColor(32, 135, 131, 1)->merge("logo.png", .3, true)->generate("https://manager.perfect-erp.com/v1/repertory/$id/retrieve", "qrcodes/" . $qrcode);
-        QrCode::format("png")->size(200)->generate("https://manager.perfect-erp.com/card/$cretedCard->id/show", "cardqrcodes/" . $qrcode);
+        QrCode::format("png")->size(200)->generate("https://card.perfect-erp.com/card/$cretedCard->id/show", "cardqrcodes/" . $qrcode);
 
         $cretedCard->qr_code = asset("cardqrcodes/" . $qrcode);
         $cretedCard->save();

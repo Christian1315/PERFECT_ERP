@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('locations', function (Blueprint $table) {
+        Schema::create('payements', function (Blueprint $table) {
             $table->id();
             $table->foreignId("owner")
                 ->nullable()
@@ -19,48 +19,40 @@ return new class extends Migration
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
-            $table->foreignId("house")
+            $table->foreignId("client")
                 ->nullable()
-                ->constrained("houses", "id")
+                ->constrained("users", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
-            $table->foreignId("room")
+            $table->foreignId("module")
                 ->nullable()
-                ->constrained("rooms", "id")
+                ->constrained("paiement_modules", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
-            $table->foreignId("locataire")
+            $table->foreignId("status")
                 ->nullable()
-                ->constrained("locataires", "id")
+                ->constrained("paiement_statuses", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
             $table->foreignId("type")
                 ->nullable()
-                ->constrained("location_types", "id")
+                ->constrained("paiement_types", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
-            $table->text("caution_bordereau");
-            $table->string("loyer");
-            $table->string("water_counter");
-            $table->string("prestation");
-            $table->string("numero_contrat");
+            $table->string("amount");
+            $table->text("facture")->nullable();
 
+            $table->string("reference");
+            $table->string("phone")->nullable();
             $table->text("comments");
-            $table->text("img_contrat");
-            $table->text("caution_water");
-            $table->text("echeance_date");
-            $table->text("latest_loyer_date");
-            $table->text("electric_counter");
-            $table->text("img_prestation");
-            $table->text("caution_electric");
-            $table->text("integration_date");
 
-            $table->boolean("visible")->default(true);
-            $table->text("delete_at")->nullable();
+            $table->string("start_date")->nullable();
+            $table->string("end_date")->nullable();
+
             $table->timestamps();
         });
     }
@@ -70,6 +62,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('payements');
     }
 };
