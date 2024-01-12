@@ -22,7 +22,6 @@ class Payement extends Model
         "comments",
         "start_date",
         "end_date",
-        "facture",
     ];
 
     function Owner(): BelongsTo

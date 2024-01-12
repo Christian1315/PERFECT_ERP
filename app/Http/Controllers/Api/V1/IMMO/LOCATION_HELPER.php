@@ -24,8 +24,10 @@ class LOCATION_HELPER extends BASE_HELPER
 
             'caution_bordereau' => ['required', "file"],
             'loyer' => ['required', "numeric"],
-            'water_counter' => ['required'],
-            'water_counter' => ['required'],
+            'water_counter' => ['required', "numeric"],
+            'electric_counter' => ['required', "numeric"],
+            'caution_number' => ['required', 'integer'],
+
             'prestation' => ['required', "numeric"],
             'numero_contrat' => ['required'],
 
@@ -34,7 +36,6 @@ class LOCATION_HELPER extends BASE_HELPER
             'caution_water' => ['required', "numeric"],
             'echeance_date' => ['required', "date"],
             'latest_loyer_date' => ['required', "date"],
-            'electric_counter' => ['required'],
             'img_prestation' => ['required', "file"],
             'caution_electric' => ['required', "numeric"],
             'integration_date' => ['required', "date"],
@@ -62,7 +63,12 @@ class LOCATION_HELPER extends BASE_HELPER
             'loyer.required' => "Le loyer de la location est réquise!",
             'loyer.numeric' => "Ce champ doit être de type numeric!",
 
+            'caution_number.required' => "Le nombre de caution est réquise!",
+            'caution_number.integer' => "Le nombre de caution doit être de type integer!",
+
             'water_counter.required' => "Le compteur d'eau est réquis",
+            'water_counter.numeric' => "Le champ compteur d'eau doit être de caractère numérique",
+
 
             'prestation.required' => "La prestation est réquise",
             'prestation.file' => "La prestation doit être un fichier",
@@ -83,6 +89,7 @@ class LOCATION_HELPER extends BASE_HELPER
             'latest_loyer_date.date' => "Ce champ doit être de type date",
 
             'electric_counter.required' => "Le compteur éléctrique est réquis!",
+            'electric_counter.numeric' => "Le champ compteur d'électricité doit être de caractère numérique",
 
             'echeance_date.required' => "L'adresse est réquis!",
             'echeance_date.date' => "Ce champ doit être de type date",
@@ -107,6 +114,30 @@ class LOCATION_HELPER extends BASE_HELPER
         return $validator;
     }
 
+    ##======== DEMENAGEMENT VALIDATION =======##
+    static function demenagement_rules(): array
+    {
+        return [
+            'move_comments' => ['required'],
+        ];
+    }
+
+    static function demenagement_messages(): array
+    {
+        return [
+            'move_comments.required' => "Veuillez préciser la raison de demenagement de cette location!",
+        ];
+    }
+
+    static function Demenagement_Validator($formDatas)
+    {
+        $rules = self::demenagement_rules();
+        $messages = self::demenagement_messages();
+
+        $validator = Validator::make($formDatas, $rules, $messages);
+        return $validator;
+    }
+
     ###___
     static function addlocation($request)
     {
@@ -118,7 +149,6 @@ class LOCATION_HELPER extends BASE_HELPER
         $room = Room::find($formData["room"]);
         $locataire = Locataire::find($formData["locataire"]);
         $type = LocationType::find($formData["type"]);
-
 
         if (!$house) {
             return self::sendError("Cette maison n'existe pas!", 404);
@@ -154,9 +184,9 @@ class LOCATION_HELPER extends BASE_HELPER
         $img_prestation->move("img_prestations", $img_prestationName);
         $formData["img_prestation"] = asset("img_prestations/" . $img_prestationName);
 
-
         #ENREGISTREMENT DU location DANS LA DB
         $formData["owner"] = $user->id;
+        $formData["total_amount"] = $formData["loyer"] + $formData["electric_counter"] + $formData["water_counter"];
 
         $location = Location::create($formData);
         return self::sendResponse($location, "Location ajoutée avec succès!!");
@@ -196,7 +226,6 @@ class LOCATION_HELPER extends BASE_HELPER
         ####____TRAITEMENT DU HOUSE
         if ($request->get("house")) {
             $house = House::find($request->get("house"));
-
             if (!$house) {
                 return self::sendError("Cette maison n'existe pas!", 404);
             }
@@ -270,10 +299,12 @@ class LOCATION_HELPER extends BASE_HELPER
 
             #===SI LE STATUS EST **MOVED**=====#
             if ($request->get("status") == 3) {
-                if (!$request->get("suspend_comments")) {
-                    return self::sendError("Veuillez préciser la raison de suspenssion de cette location!", 404);
+                if (!$request->get("move_comments")) {
+                    return self::sendError("Veuillez préciser la raison de demenagement de cette location!", 404);
                 }
-                $formData["suspend_date"] = now();
+                $formData["move_date"] = now();
+                $formData["visible"] = 0;
+                $formData["delete_at"] = now();
             }
         }
 
@@ -300,5 +331,23 @@ class LOCATION_HELPER extends BASE_HELPER
         $location->delete_at = now();
         $location->save();
         return self::sendResponse($location, 'Cette location a été supprimée avec succès!');
+    }
+
+    static function locationDemenage($request, $id)
+    {
+        $user = request()->user();
+        $formData = $request->all();
+        $location = Location::where(["visible" => 1])->find($id);
+
+        if (!$location) {
+            return self::sendError("Cette location n'existe pas!", 404);
+        };
+
+        $formData["move_date"] = now();
+        $formData["visible"] = 0;
+        $formData["delete_at"] = now();
+
+        $location->update($formData);
+        return self::sendResponse($location, 'Cette location a été demenagée avec succès!');
     }
 }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payements', function (Blueprint $table) {
+        Schema::create('factures', function (Blueprint $table) {
             $table->id();
             $table->foreignId("owner")
                 ->nullable()
@@ -19,40 +19,44 @@ return new class extends Migration
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
-            $table->foreignId("client")
+            $table->foreignId("proprietor")
                 ->nullable()
-                ->constrained("users", "id")
+                ->constrained("proprietors", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
-            $table->foreignId("module")
+            $table->foreignId("locataire")
                 ->nullable()
-                ->constrained("paiement_modules", "id")
+                ->constrained("locataires", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
-            $table->foreignId("status")
+            $table->foreignId("location")
                 ->nullable()
-                ->constrained("paiement_statuses", "id")
+                ->constrained("locations", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
             $table->foreignId("type")
-                ->nullable()
-                ->constrained("paiement_types", "id")
+                ->default(1)
+                ->constrained("facture_types", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
-            $table->string("amount");
-            // $table->text("facture")->nullable();
+            $table->foreignId("status")
+                ->default(1)
+                ->constrained("facture_statuses", "id")
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
+            $table->text("facture")->nullable();
+            $table->text("comments")->nullable();
+            $table->text("amount");
 
-            $table->string("reference");
-            $table->string("phone")->nullable();
-            $table->text("comments");
+            $table->text("begin_date")->nullable();
+            $table->text("end_date")->nullable();
 
-            $table->string("start_date")->nullable();
-            $table->string("end_date")->nullable();
-
+            $table->boolean("visible")->default(true);
+            $table->string("delete_at")->nullable();
             $table->timestamps();
         });
     }
@@ -62,6 +66,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payements');
+        Schema::dropIfExists('factures');
     }
 };

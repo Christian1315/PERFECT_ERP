@@ -81,4 +81,20 @@ class LocationController extends LOCATION_HELPER
         };
         return $this->locationDelete($id);
     }
+
+    function DemenageLocation(Request $request, $id)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "POST") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS Card_HELPER
+            return $this->sendError("La méthode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+
+        $validator = $this->Demenagement_Validator($request->all());
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors(), 404);
+        }
+
+        return $this->locationDemenage($request, $id);
+    }
 }

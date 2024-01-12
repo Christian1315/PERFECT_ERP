@@ -160,14 +160,6 @@ class PAIEMENT_HELPER extends BASE_HELPER
             }
         }
 
-        ####____TRAITEMENT DE LA FACTURE
-        if ($request->file("facture")) {
-            $facture = $request->file("facture");
-            $factureName = $facture->getClientOriginalName();
-            $facture->move("paiementFactures", $factureName);
-            $formData["facture"] = asset("paiementFactures/" . $factureName);
-        }
-
         $Paiement->update($formData);
         return self::sendResponse($Paiement, 'Ce paiement a été modifié avec succès!');
     }

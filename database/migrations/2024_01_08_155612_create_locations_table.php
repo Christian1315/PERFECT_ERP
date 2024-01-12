@@ -75,18 +75,24 @@ return new class extends Migration
 
             $table->text("caution_bordereau");
             $table->string("loyer");
-            $table->string("water_counter");
             $table->string("prestation");
             $table->string("numero_contrat");
 
+            $table->text("caution_water");
+            $table->string("total_amount")->nullable();
+
             $table->text("comments");
             $table->text("img_contrat");
+
             $table->text("caution_water");
+            $table->text("caution_electric");
+
+            $table->text("electric_counter");
+            $table->string("water_counter");
+
             $table->text("echeance_date");
             $table->text("latest_loyer_date");
-            $table->text("electric_counter");
             $table->text("img_prestation");
-            $table->text("caution_electric");
             $table->text("integration_date");
 
             $table->boolean("visible")->default(true);

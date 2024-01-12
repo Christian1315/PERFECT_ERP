@@ -10212,5 +10212,50 @@ class DatabaseSeeder extends Seeder
         foreach ($locationStatus as $locationStatu) {
             \App\Models\LocationStatus::factory()->create($locationStatu);
         };
+
+        ##======== CREATION DES TYPES DE FACTURE PAR DEFAUT ============####
+        $factureTypes = [
+            [
+                "name" => "PROFORMA",
+                "description" => "Une facture pro forma",
+            ],
+            [
+                "name" => "FACTURE",
+                "description" => "Une facture",
+            ],
+            [
+                "name" => "COMPTEUR",
+                "description" => "Facture eau ou électricité",
+            ]
+        ];
+
+        foreach ($factureTypes as $factureType) {
+            \App\Models\FactureType::factory()->create($factureType);
+        };
+
+
+        ##======== CREATION DES STATUS DE FACTURE PAR DEFAUT ============####
+        $factureStatus = [
+            [
+                "name" => "VERIFICATION_PENDING",
+                "description" => "En attente de vérification",
+            ],
+            [
+                "name" => "VERIFICATION_SUCCESS",
+                "description" => "Vérifiée et valider",
+            ],
+            [
+                "name" => "VERIFICATION_REJECT",
+                "description" => "Rejeter",
+            ],
+            [
+                "name" => "VERIFICATION_CANCEL",
+                "description" => "Annuler",
+            ]
+        ];
+
+        foreach ($factureStatus as $factureStatu) {
+            \App\Models\FactureStatus::factory()->create($factureStatu);
+        };
     }
 }

@@ -42,7 +42,11 @@ class Location extends Model
         'img_prestation',
         'caution_electric',
         'integration_date',
-        'owner'
+        'owner',
+        'visible',
+        "delete_at",
+        "caution_number",
+        "total_amount"
     ];
 
     function Owner(): BelongsTo

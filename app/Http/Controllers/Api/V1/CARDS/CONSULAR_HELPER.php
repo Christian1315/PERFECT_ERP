@@ -208,6 +208,13 @@ class CONSULAR_HELPER extends BASE_HELPER
             return self::sendError("Cet élu consulaire ne vous appartient pas!", 404);
         }
 
+        if ($request->file("photo")) {
+            $photo = $request->file("photo");
+            $photo_name = $photo->getClientOriginalName();
+            $photo->move("elu_consulaires", $photo_name);
+            $formData["photo"] = asset("elu_consulaires/" . $photo_name);
+        }
+
         $consular->update($formData);
         return self::sendResponse($consular, "Elu consulaire modifié avec succès:!!");
     }

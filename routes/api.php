@@ -18,6 +18,8 @@ use App\Http\Controllers\Api\V1\IMMO\CounterTypeController;
 use App\Http\Controllers\Api\V1\IMMO\CountryController;
 use App\Http\Controllers\Api\V1\IMMO\CurrencyController;
 use App\Http\Controllers\Api\V1\IMMO\DepartementController;
+use App\Http\Controllers\Api\V1\IMMO\FactureStatusController;
+use App\Http\Controllers\Api\V1\IMMO\FactureTypeController;
 use App\Http\Controllers\Api\V1\IMMO\HouseController;
 use App\Http\Controllers\Api\V1\IMMO\HouseTypeController;
 use App\Http\Controllers\Api\V1\IMMO\ImmoAccountController;
@@ -593,6 +595,8 @@ Route::prefix('v1')->group(function () {
                 Route::any('{id}/retrieve', 'RetrieveLocation'); #RECUPERATION D'UNE LOCATION
                 Route::any('{id}/update', 'UpdateLocation'); #RECUPERATION D'UNE LOCATION
                 Route::any('{id}/delete', 'DeleteLocation'); #SUPPRESSION D'UNE LOCATION 
+
+                Route::any('{id}/demenage', 'DemenageLocation'); #DEMENAGEMENT D'UNE LOCATION 
             });
         });
         ##___
@@ -625,6 +629,24 @@ Route::prefix('v1')->group(function () {
                 Route::any('all', 'Paiements'); #RECUPERATION DE TOUT LES PAIEMENTS
                 Route::any('{id}/retrieve', 'RetrievePaiement'); #RECUPERATION D'UN PAIEMENT
                 Route::any('{id}/update', 'UpdatePaiement'); #RECUPERATION D'UN PAIEMENT
+            });
+        });
+        ##___
+
+        ###========== FACTURE ========###
+        Route::prefix("facture")->group(function () {
+            Route::prefix("type")->group(function () {
+                Route::controller(FactureTypeController::class)->group(function () {
+                    Route::any('all', 'FactureTypes'); #RECUPERATION DE TOUT LES TYPES DE FACTURE
+                    Route::any('{id}/retrieve', '_RetrieveFactureType'); #RECUPERATION D'UN TYPE DE FACTURE
+                });
+            });
+
+            Route::prefix("status")->group(function () {
+                Route::controller(FactureStatusController::class)->group(function () {
+                    Route::any('all', 'FactureStatus'); #RECUPERATION DE TOUT LES STATUS DE FACTURE
+                    Route::any('{id}/retrieve', '_RetrieveFactureStatus'); #RECUPERATION D'UN STATU DE FACTURE
+                });
             });
         });
         ##___
