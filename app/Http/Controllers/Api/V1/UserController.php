@@ -13,9 +13,13 @@ class UserController extends USER_HELPER
             "UpdatePassword",
             "Logout",
             "AttachRightToUser",
-            "DesAttachRightToUser"
+            "DesAttachRightToUser",
+            "ArchiveAccount",
+            "DuplicatAccount",
+            "GetAllSupervisors",
         ]);
     }
+
     #GET ALL USERS
     function Users(Request $request)
     {
@@ -83,6 +87,18 @@ class UserController extends USER_HELPER
         return $this->_updatePassword($request->all(), $id);
     }
 
+    #MODIFIER UN COMPTE
+    function UpdateCompte(Request $request, $id)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "POST") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
+            return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+
+        return $this->_updateCompte($request, $id);
+    }
+
     function Logout(Request $request)
     {
         #VERIFICATION DE LA METHOD
@@ -131,7 +147,6 @@ class UserController extends USER_HELPER
         return $this->rightDesAttach($request->all());
     }
 
-
     #DEMANDE DE REINITIALISATION D'UN PASSWORD
     function DemandReinitializePassword(Request $request)
     {
@@ -156,5 +171,38 @@ class UserController extends USER_HELPER
 
         #RECUPERATION D'UN USER VIA SON **id**
         return $this->_reinitializePassword($request);
+    }
+
+    #ARCHIVER UN COMPTE
+    function ArchiveAccount(Request $request, $id)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "GET") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
+            return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+        return $this->archive_an_account($id);
+    }
+
+    #DUPLIQUER UN COMPTE
+    function DuplicatAccount(Request $request, $id)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "GET") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
+            return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+        return $this->duplicate_an_account($id);
+    }
+
+    ###___RECUPERATION DE TOUT LES SUPERVISEURS
+    function GetAllSupervisors(Request $request)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "GET") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR USER_HELPER
+            return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+        return $this->_getAllSupervisors($request);
     }
 }

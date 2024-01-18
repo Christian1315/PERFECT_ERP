@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('immo_accounts', function (Blueprint $table) {
             $table->id();
+
             $table->string("name");
             $table->text("description");
             $table->string("phone");
@@ -20,9 +21,12 @@ return new class extends Migration
             $table->string("balance")->default(0);
 
             $table->string("status")->nullable();
-            $table->string("client")->nullable();
+            $table->foreignId("client")
+                ->nullable()
+                ->constrained("clients", "id")
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
             $table->string("type")->nullable();
-
 
             $table->string("last_balance")->default(0);
             $table->string("plafond_max")->default(0);

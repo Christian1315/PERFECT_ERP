@@ -106,7 +106,6 @@ function Is_User_A_SimpleAdmin_Or_SuperAdmin($userId)
     return false; #S'il n'est ni l'un nil'autre
 }
 
-
 function GET_USER_ROLES($userId)
 {
     $roles = UserRole::with(["role", "user"])->where(["user_id" => $userId])->get();
@@ -148,6 +147,62 @@ function Is_User_A_Exploitation($userId)
     $result = false;
     foreach ($user_roles as $user_role) {
         if ($user_role->role_id == 2) {
+            $result = true;
+        }
+    }
+    ##____
+    return $result;
+}
+
+##======== CE HELPER PERMET DE VERIFIER SI LE USER EST A LE ROLR D'UN MASTER OU PAS ==========## 
+function Is_User_Has_A_Master_Role($userId)
+{ #
+    $user_roles = GET_USER_ROLES($userId);
+    $result = false;
+    foreach ($user_roles as $user_role) {
+        if ($user_role->role_id == 6) {
+            $result = true;
+        }
+    }
+    ##____
+    return $result;
+}
+
+##======== CE HELPER PERMET DE VERIFIER SI LE USER A LE ROLE D'UN CHEF COMPTABLE OU PAS ==========## 
+function Is_User_Has_A_Chief_Accountant_Role($userId)
+{ #
+    $user_roles = GET_USER_ROLES($userId);
+    $result = false;
+    foreach ($user_roles as $user_role) {
+        if ($user_role->role_id == 5) {
+            $result = true;
+        }
+    }
+    ##____
+    return $result;
+}
+
+##======== CE HELPER PERMET DE VERIFIER SI LE USER A LE ROLE D'UN AGENT COMPTABLE OU PAS ==========## 
+function Is_User_Has_An_Agent_Accountant_Role($userId)
+{
+    $user_roles = GET_USER_ROLES($userId);
+    $result = false;
+    foreach ($user_roles as $user_role) {
+        if ($user_role->role_id == 4) {
+            $result = true;
+        }
+    }
+    ##____
+    return $result;
+}
+
+##======== CE HELPER PERMET DE VERIFIER SI LE USER A LE ROLE D'UN SUPERVISEUR OU PAS ==========## 
+function Is_User_Has_A_Supervisor_Role($userId)
+{
+    $user_roles = GET_USER_ROLES($userId);
+    $result = false;
+    foreach ($user_roles as $user_role) {
+        if ($user_role->role_id == 3) {
             $result = true;
         }
     }

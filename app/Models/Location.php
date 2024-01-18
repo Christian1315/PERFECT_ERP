@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Location extends Model
 {
@@ -28,8 +29,8 @@ class Location extends Model
 
         'caution_bordereau',
         'loyer',
-        'water_counter',
-        'water_counter',
+        // 'water_counter',
+        // 'water_counter',
         'prestation',
         'numero_contrat',
 
@@ -38,7 +39,7 @@ class Location extends Model
         'caution_water',
         'echeance_date',
         'latest_loyer_date',
-        'electric_counter',
+        // 'electric_counter',
         'img_prestation',
         'caution_electric',
         'integration_date',
@@ -77,5 +78,10 @@ class Location extends Model
     function Room(): BelongsTo
     {
         return $this->belongsTo(Room::class, "room")->with(["Owner", "House", "Nature", "Type"]);
+    }
+
+    function Factures(): HasMany
+    {
+        return $this->hasMany(Facture::class, "location");
     }
 }

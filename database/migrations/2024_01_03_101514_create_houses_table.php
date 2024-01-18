@@ -30,13 +30,11 @@ return new class extends Migration
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
-
             $table->foreignId("type")
                 ->nullable()
                 ->constrained("house_types", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
-
 
             $table->foreignId("supervisor")
                 ->nullable()

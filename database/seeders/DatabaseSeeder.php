@@ -1604,6 +1604,18 @@ class DatabaseSeeder extends Seeder
             [
                 'label' => 'is_supervisor',
                 'description' => 'Le rôle d\'un superviseur'
+            ],
+            [
+                'label' => 'is_accountant_agent',
+                'description' => 'Le rôle d\'un agent comptable'
+            ],
+            [
+                'label' => 'is_accountant_chief',
+                'description' => 'Le rôle d\'un chef comptable'
+            ],
+            [
+                'label' => 'is_master',
+                'description' => 'Le rôle d\'un master'
             ]
         ];
         foreach ($roles as $role) {
@@ -10065,7 +10077,7 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22967410929",
                 "email" => "info@hard-soft.solution",
                 "status" => 1,
-                "client" => 1,
+                // "client" => 1,
                 "type" => 1,
                 "plafond_max" => 1000000000,
             ],
@@ -10075,7 +10087,7 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22996805252",
                 "email" => "donatien.akpo@jeny.bj",
                 "status" => 1,
-                "client" => 0,
+                // "client" => 0,
                 "type" => 7,
                 "plafond_max" => 1000000,
             ],
@@ -10085,7 +10097,7 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22960082727",
                 "email" => "pay@frikpay.digital",
                 "status" => 1,
-                "client" => 0,
+                // "client" => 0,
                 "type" => 8,
                 "plafond_max" => 1000000,
             ],
@@ -10095,7 +10107,7 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22960082727",
                 "email" => "pay@frikpay.digital",
                 "status" => 1,
-                "client" => 0,
+                // "client" => 0,
                 "type" => 8,
                 "plafond_max" => 1000000,
             ],
@@ -10105,7 +10117,7 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22960082727",
                 "email" => "pay@frikpay.digital",
                 "status" => 1,
-                "client" => 0,
+                // "client" => 0,
                 "type" => 8,
                 "plafond_max" => 1000000,
             ],
@@ -10115,7 +10127,7 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22967410929",
                 "email" => "info@hard-soft.solution",
                 "status" => 1,
-                "client" => 1,
+                // "client" => 1,
                 "type" => 1,
                 "plafond_max" => 1000000000,
             ],
@@ -10125,7 +10137,7 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22960082727",
                 "email" => "info@hard-soft.solution",
                 "status" => 1,
-                "client" => 0,
+                // "client" => 0,
                 "type" => 8,
                 "plafond_max" => 1000000,
             ],
@@ -10135,7 +10147,7 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22967410929",
                 "email" => "info@hard-soft.solution",
                 "status" => 1,
-                "client" => 1,
+                // "client" => 1,
                 "type" => 1,
                 "plafond_max" => 1000000000,
             ],
@@ -10145,7 +10157,7 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22967410929",
                 "email" => "info@hard-soft.solution",
                 "status" => 1,
-                "client" => 1,
+                // "client" => 1,
                 "type" => 1,
                 "plafond_max" => 1000000000,
             ],
@@ -10155,7 +10167,7 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22960082727",
                 "email" => "info@hard-soft.solution",
                 "status" => 1,
-                "client" => 0,
+                // "client" => 0,
                 "type" => 8,
                 "plafond_max" => 1000000,
             ],
@@ -10165,7 +10177,7 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22960082727",
                 "email" => "info@hard-soft.solution",
                 "status" => 1,
-                "client" => 0,
+                // "client" => 0,
                 "type" => 8,
                 "plafond_max" => 1000000,
             ],
@@ -10175,7 +10187,17 @@ class DatabaseSeeder extends Seeder
                 "phone" => "22960082727",
                 "email" => "info@hard-soft.solution",
                 "status" => 1,
-                "client" => 0,
+                // "client" => 0,
+                "type" => 8,
+                "plafond_max" => 1000000,
+            ],
+            [
+                "name" => "CRCF",
+                "description" => "Caisse de Renforcement de Capacité Financière",
+                "phone" => "22960082727",
+                "email" => "info@hard-soft.solution",
+                "status" => 1,
+                // "client" => 0,
                 "type" => 8,
                 "plafond_max" => 1000000,
             ]
@@ -10256,6 +10278,43 @@ class DatabaseSeeder extends Seeder
 
         foreach ($factureStatus as $factureStatu) {
             \App\Models\FactureStatus::factory()->create($factureStatu);
+        };
+
+        ##======== CREATION DES TYPES DE CLIENT PAR DEFAUT ============####
+        $clientTypes = [
+            [
+                "name" => "Particulier",
+                "description" => "Client Particulier",
+            ],
+            [
+                "name" => "Entreprise",
+                "description" => "Entreprise ou société privée",
+            ],
+            [
+                "name" => "Etat",
+                "description" => "Entreprise ou société étatique",
+            ]
+        ];
+
+        foreach ($clientTypes as $clientType) {
+            \App\Models\ClientType::factory()->create($clientType);
+        };
+
+
+        ##======== CREATION DES STATUS D'INITIATION DE PAIEMENT PAR DEFAUT ============####
+        $payementInitiationStatus = [
+            [
+                "name" => "Initié",
+                "description" => "Initiation de paiement",
+            ],
+            [
+                "name" => "Validé",
+                "description" => "Initiation de paiement validée",
+            ]
+        ];
+
+        foreach ($payementInitiationStatus as $payementInitiationStatu) {
+            \App\Models\PaiementInitiationStatus::factory()->create($payementInitiationStatu);
         };
     }
 }

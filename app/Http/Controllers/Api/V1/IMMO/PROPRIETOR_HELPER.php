@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\IMMO;
 use App\Http\Controllers\Api\V1\BASE_HELPER;
 use App\Models\CardType;
 use App\Models\City;
+use App\Models\Client;
 use App\Models\Country;
 use App\Models\Proprietor;
 use Illuminate\Support\Facades\Validator;
@@ -97,6 +98,20 @@ class PROPRIETOR_HELPER extends BASE_HELPER
         $formData["mandate_contrat"] = asset("contrats/" . $file_name);
 
         $proprietor = Proprietor::create($formData);
+
+        ###___CREATION DU CLIENT___###
+        $client = new Client();
+        $client->type = 1;
+        $client->city = $formData["city"];
+        $client->phone = $formData["phone"];
+        $client->email = $formData["email"];
+        $client->name = $formData["firstname"] . " " . $formData["lastname"];
+        $client->sexe = $formData["sexe"];
+        $client->is_proprietor = true;
+        $client->comments = $formData["comments"];
+        $client->save();
+        ###___FIN CREATION DU CLIENT___###
+
         return self::sendResponse($proprietor, "Proprietaire ajouté avec succès!!");
     }
 

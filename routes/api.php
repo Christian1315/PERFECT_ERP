@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\V1\ChargeOrderController;
 use App\Http\Controllers\Api\V1\IMMO\ActivityDomainController;
 use App\Http\Controllers\Api\V1\IMMO\AreaControlller;
 use App\Http\Controllers\Api\V1\IMMO\CityController;
+use App\Http\Controllers\Api\V1\IMMO\ClientController;
+use App\Http\Controllers\Api\V1\IMMO\ClientTypeController;
 use App\Http\Controllers\Api\V1\IMMO\CounterStatusController;
 use App\Http\Controllers\Api\V1\IMMO\CounterTypeController;
 use App\Http\Controllers\Api\V1\IMMO\CountryController;
@@ -36,6 +38,11 @@ use App\Http\Controllers\Api\V1\IMMO\RoomController;
 use App\Http\Controllers\Api\V1\IMMO\RoomNatureController as IMMORoomNatureController;
 use App\Http\Controllers\Api\V1\IMMO\RoomTypeController;
 use App\Http\Controllers\Api\V1\IMMO\ZoneController;
+use App\Http\Controllers\Api\V1\IMMO\FactureController;
+use App\Http\Controllers\Api\V1\IMMO\HouseStopStateController;
+use App\Http\Controllers\Api\V1\IMMO\ManageAccountController;
+use App\Http\Controllers\Api\V1\IMMO\PaiementInitiationController as IMMOPaiementInitiationController;
+use App\Http\Controllers\Api\V1\IMMO\PaiementInitiationStatusController;
 use App\Http\Controllers\Api\V1\MemberController;
 
 use App\Http\Controllers\Api\V1\UserController;
@@ -59,6 +66,7 @@ use App\Http\Controllers\Api\V1\ProfilController;
 use App\Http\Controllers\Api\V1\RangController;
 use App\Http\Controllers\Api\V1\RightController;
 use App\Http\Controllers\Api\V1\RoleController;
+use App\Http\Controllers\PaiementInitiationController;
 use App\Models\LocationType;
 use Illuminate\Support\Facades\Route;
 
@@ -138,9 +146,13 @@ Route::prefix('v1')->group(function () {
             Route::any('{id}/password/update', 'UpdatePassword');
             Route::any('{id}/delete', 'DeleteUser');
 
+            Route::any('{id}/archive', 'ArchiveAccount');
+            Route::any('{id}/duplicate', 'DuplicatAccount');
 
             Route::any('password/demand_reinitialize', 'DemandReinitializePassword');
             Route::any('password/reinitialize', 'ReinitializePassword');
+
+            Route::any('supervisors', 'GetAllSupervisors');
 
             Route::any('attach-user', 'AttachRightToUser'); #Attacher un droit au user 
             Route::any('desattach-user', 'DesAttachRightToUser'); #Attacher un droit au user 
@@ -508,8 +520,37 @@ Route::prefix('v1')->group(function () {
                 Route::any('all', 'Accounts'); ## RECUPERATION DE TOUT LES COMPTES
                 Route::any('{id}/retrieve', '_RetrieveAccount'); ## RECUPERATION D'UN COMPTE
             });
+
+
+            ##__ACCOUNT_SOLD MANAGEMENT
+            Route::prefix("sold")->group(function () {
+                Route::controller(ManageAccountController::class)->group(function () {
+                    Route::any('{accountId}/creditate', '_CreditateAccount'); ## CREDITATION DU SOLDE D'UN COMPTE
+                    Route::any('{accountId}/getSolds', '_GetAccountSolds'); ## RECUPERATION DES SOLDES D'UN COMPTE
+                    Route::any('{id}/retrieve', 'RetrieveSolde'); ## RECUPERATION D'UN SOLDE
+                    Route::any('all', 'GetAllSoldes'); ## RECUPERATION DE TOUT LES SOLDES
+                });
+            });
         });
         ##___
+
+
+        ##========__PAIEMENT INITIATION MANAGEMENT======
+        Route::prefix("payement_initiation")->group(function () {
+            Route::prefix("status")->group(function () {
+                Route::controller(PaiementInitiationStatusController::class)->group(function () {
+                    Route::any('all', 'PaiementInitiationStatus'); ## RECUPERATION DE TOUT LES STATUS D'INITIATION DE PAYEMENT
+                    Route::any('{id}/retrieve', '_RetrievePaiementInitiationStatus'); ## RECUPERATION D'UN STATUS D'INITIATION DE PAYEMENT
+                });
+            });
+
+            Route::controller(IMMOPaiementInitiationController::class)->group(function () {
+                Route::any('initiateToProprio', 'InitiatePaiementToProprietor'); ## INITIER UN PAIEMENT A UN PROPRIETAIRE
+                Route::any('all', 'PaiementInitiations'); ## RECUPERATION DES INITIATIONS DE PAIEMENTS
+                Route::any('{id}/retrieve', 'RetrievePaiementInitiation'); ## RECUPERATION D'UNE INITIATION DE PAIEMENT
+                Route::any('{id}/valide', 'ValidePaiementInitiation'); ## MODIFICATION D'UNE INITIATION DE PAIUEMENT
+            });
+        });
 
         ###========== PROPRIETAIRE ========###
         Route::prefix("proprietor")->group(function () {
@@ -541,6 +582,16 @@ Route::prefix('v1')->group(function () {
             });
         });
         ##___
+
+        ##=========__ ARRETER LES ETATS DES MAISON ======
+        Route::prefix("house_state")->group(function () {
+            Route::controller(HouseStopStateController::class)->group(function () {
+                Route::any('stop', '_StopStatsOfHouse');
+                Route::any('house/{houseId}/all', 'RetrieveHouseStates');
+                Route::any('{id}/retrieve', 'RetrieveState');
+                Route::any('all', 'GetAllStates');
+            });
+        });
 
         ###========== ROOM ========###
         Route::prefix("room")->group(function () {
@@ -598,6 +649,27 @@ Route::prefix('v1')->group(function () {
 
                 Route::any('{id}/demenage', 'DemenageLocation'); #DEMENAGEMENT D'UNE LOCATION 
             });
+
+            Route::controller(LocationController::class)->group(function () {
+                Route::any("generate_cautions", "_ManageCautions"); #GENERATE HOUSE CAUTION 
+            });
+        });
+        ##___
+
+        ###========== CLIENT ========###
+        Route::prefix("client")->group(function () {
+            Route::prefix("type")->group(function () {
+                Route::controller(ClientTypeController::class)->group(function () {
+                    Route::any('all', 'ClientTypes'); #RECUPERATION DE TOUT LES TYPES DE CLIENTS
+                    Route::any('{id}/retrieve', '_RetrieveClientType'); #RECUPERATION D'UN TYPE DE CLIENTS
+                });
+            });
+
+            Route::controller(ClientController::class)->group(function () {
+                Route::any('all', 'Clients'); #RECUPERATION DES CLIENTS
+                Route::any('{id}/retrieve', 'RetrieveClient'); #RECUPERATION D'UN CLIENT
+                Route::any('{id}/delete', 'DeleteClient'); # SUPPRESSION D'UN CLIENT
+            });
         });
         ##___
 
@@ -629,6 +701,10 @@ Route::prefix('v1')->group(function () {
                 Route::any('all', 'Paiements'); #RECUPERATION DE TOUT LES PAIEMENTS
                 Route::any('{id}/retrieve', 'RetrievePaiement'); #RECUPERATION D'UN PAIEMENT
                 Route::any('{id}/update', 'UpdatePaiement'); #RECUPERATION D'UN PAIEMENT
+
+                ###___FILTRE
+                Route::any('filtre_by_date', '_FiltreByDate'); #FILTRER PAR DATE
+                Route::any('{houseId}/filtre_after_stateDate_stoped', 'FiltreAfterStateDateStoped'); #FILTRER LES PAIEMENTS APRES ARRET DES ETATS
             });
         });
         ##___
@@ -647,6 +723,11 @@ Route::prefix('v1')->group(function () {
                     Route::any('all', 'FactureStatus'); #RECUPERATION DE TOUT LES STATUS DE FACTURE
                     Route::any('{id}/retrieve', '_RetrieveFactureStatus'); #RECUPERATION D'UN STATU DE FACTURE
                 });
+            });
+
+            Route::controller(FactureController::class)->group(function () {
+                Route::any('all', 'Factures'); #RECUPERATION DE TOUTES LES FACTURES
+                Route::any('{id}/retrieve', 'RetrieveFacture'); #RECUPERATION D'UNE FACTURE
             });
         });
         ##___

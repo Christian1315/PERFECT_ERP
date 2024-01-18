@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\IMMO;
 
 use App\Http\Controllers\Api\V1\BASE_HELPER;
 use App\Models\CardType;
+use App\Models\Client;
 use App\Models\Country;
 use App\Models\Departement;
 use App\Models\Locataire;
@@ -99,7 +100,22 @@ class LOCATAIRE_HELPER extends BASE_HELPER
         $formData["owner"] = $user->id;
         $formData["mandate_contrat"] = asset("mandate_contrats/" . $imgName);
 
+        // return $formData;
         $locataire = Locataire::create($formData);
+
+
+        ###___CREATION DU CLIENT___###
+        $client = new Client();
+        $client->type = 1;
+        $client->phone = $formData["phone"];
+        $client->email = $formData["email"];
+        $client->name = $formData["name"] . " " . $formData["prenom"];
+        $client->sexe = $formData["sexe"];
+        $client->is_locator = true;
+        $client->comments = $formData["comments"];
+        $client->save();
+        ###___FIN CREATION DU CLIENT___###
+        
         return self::sendResponse($locataire, "Locataire ajouté avec succès!!");
     }
 

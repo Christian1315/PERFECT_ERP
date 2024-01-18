@@ -84,11 +84,11 @@ return new class extends Migration
             $table->text("comments");
             $table->text("img_contrat");
 
-            $table->text("caution_water");
+            // $table->text("caution_water"); 
             $table->text("caution_electric");
 
-            $table->text("electric_counter");
-            $table->string("water_counter");
+            // $table->text("electric_counter");
+            $table->string("caution_number");
 
             $table->text("echeance_date");
             $table->text("latest_loyer_date");

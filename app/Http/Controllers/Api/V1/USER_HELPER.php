@@ -119,7 +119,6 @@ class USER_HELPER extends BASE_HELPER
 
     static function NEW_PASSWORD_Validator($formDatas)
     {
-        #
         $rules = self::NEW_PASSWORD_rules();
         $messages = self::NEW_PASSWORD_messages();
 
@@ -139,6 +138,13 @@ class USER_HELPER extends BASE_HELPER
 
         if (Auth::attempt($credentials)) { #SI LE USER EST AUTHENTIFIE
             $user = Auth::user();
+
+            ###___VERIFIONS SI LE CE COMPTE A ETE ARCHIVE
+            if ($user->is_archive) {
+                return self::sendError("Ce compte a été archivé!", 505);
+            };
+
+            ###__
             $token = $user->createToken('MyToken', ['api-access'])->accessToken;
             $user['roles'] = GET_USER_ROLES($user->id);
             $user['token'] = $token;
@@ -191,6 +197,54 @@ class USER_HELPER extends BASE_HELPER
         $user = User::find($id);
         $user->update(["password" => $formData["new_password"]]);
         return self::sendResponse($user, 'Mot de passe modifié avec succès!');
+    }
+
+    static function _updateCompte($request, $id)
+    {
+        $user = User::find($id);
+        if ($user->is_archive) {
+            return self::sendError("Ce compte a été archivé!", 404);
+        };
+
+        ##__
+        if ($request->get("password")) {
+            return self::sendResponse($user, 'Vous ne pouvez pas modifier le mot de passe de cette façon!');
+        }
+        if ($request->get("is_admin")) {
+            return self::sendResponse($user, 'Vous ne pouvez pas modifier ce champ (is_admin) de cette façon!');
+        }
+        if ($request->get("is_super_admin")) {
+            return self::sendResponse($user, 'Vous ne pouvez pas modifier ce champ (is_super_admin) de cette façon!');
+        }
+        if ($request->get("organisation")) {
+            return self::sendResponse($user, 'Vous ne pouvez pas modifier ce champ (organisation) de cette façon!');
+        }
+        if ($request->get("active_compte_code")) {
+            return self::sendResponse($user, 'Vous ne pouvez pas modifier ce champ (active_compte_code) de cette façon!');
+        }
+        if ($request->get("compte_actif")) {
+            return self::sendResponse($user, 'Vous ne pouvez pas modifier ce champ (compte_actif) de cette façon!');
+        }
+        if ($request->get("pass_code")) {
+            return self::sendResponse($user, 'Vous ne pouvez pas modifier ce champ (pass_code) de cette façon!');
+        }
+        if ($request->get("pass_code_active")) {
+            return self::sendResponse($user, 'Vous ne pouvez pas modifier ce champ (pass_code_active) de cette façon!');
+        }
+        if ($request->get("rang_id ")) {
+            return self::sendResponse($user, 'Vous ne pouvez pas modifier ce champ (rang_id ) de cette façon!');
+        }
+        if ($request->get("profil_id")) {
+            return self::sendResponse($user, 'Vous ne pouvez pas modifier ce champ (profil_id) de cette façon!');
+        }
+        if ($request->get("is_archive")) {
+            return self::sendResponse($user, 'Vous ne pouvez pas modifier ce champ (is_archive) de cette façon!');
+        }
+
+        ###___MODIFICATION
+        $user->update($request->all());
+        ###___
+        return self::sendResponse($user, 'Compte modifié avec succès!');
     }
 
     static function userLogout($request)
@@ -363,5 +417,80 @@ class USER_HELPER extends BASE_HELPER
         }
 
         return self::sendResponse($user, "Réinitialisation éffectuée avec succès!");
+    }
+
+
+    static function archive_an_account($id)
+    {
+        $account = User::find($id);
+        if (!$account) {
+            return self::sendError("Desolé! Ce compte n'existe pas!", 505);
+        }
+
+
+        if ($account->is_archive) {
+            return self::sendError("Desolé! Ce compte est déjà archivé!", 505);
+        }
+        $account->is_archive = true;
+        $account->save();
+
+        return self::sendResponse($account, "Ce compte a été archivé avec succès!");
+    }
+
+    static function duplicate_an_account($id)
+    {
+        $account = User::find($id);
+
+        ###__ARCHIVONS D'ABORD LE COMPTE
+        $account->is_archive = true;
+        $account->save();
+        ###__
+
+        $datas = [
+            "name" => $account["name"],
+            'username' => $account["username"],
+            'email' => "duplicate@gmail.com",
+            'password' => "duplicate",
+            'organisation' => $account["organisation"],
+            "phone" => "123",
+            "is_archive" => 0,
+            "profil_id" => $account["profil_id"],
+            "rang_id" => $account["rang_id"],
+            "pass_code_active" => $account["pass_code_active"],
+            "pass_code" => $account["pass_code"],
+            "compte_actif" => $account["compte_actif"],
+            "active_compte_code" => $account["active_compte_code"],
+            "organisation" => $account["organisation"],
+            "is_super_admin" => $account["is_super_admin"],
+            "is_admin" => $account["is_admin"]
+        ];
+        $account_duplicated = User::create($datas);
+
+        ###___REAFFECTATION DES DROITS DU COMPTE ARCHIVE AU COMPTE DUPLIQUE
+        $user_rights = UserRight::where(["user_id" => $id])->get();
+
+        foreach ($user_rights as $user_right) {
+            $user_right->user_id = $account_duplicated->id;
+            $user_right->save();
+        }
+        return self::sendResponse($account_duplicated, "Compte dupliqué avec succès!");
+    }
+
+    static function _getAllSupervisors($request)
+    {
+        $users = User::all();
+        $supervisors = [];
+
+        foreach ($users as $user) {
+            $user_roles = $user->roles; ##recuperation des roles de ce user
+
+            foreach ($user_roles as $user_role) {
+                if ($user_role->id == 3) {
+                    array_push($supervisors, $user);
+                }
+            }
+        }
+
+        return self::sendResponse($supervisors, "Touts les superviseurs récupérés avec succès!");
     }
 }

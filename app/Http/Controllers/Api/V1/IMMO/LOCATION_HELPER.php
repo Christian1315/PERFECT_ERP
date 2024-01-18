@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Api\V1\IMMO;
 
 use App\Http\Controllers\Api\V1\BASE_HELPER;
+use App\Models\HomeStopState;
 use App\Models\House;
 use App\Models\Locataire;
 use App\Models\Location;
 use App\Models\LocationStatus;
 use App\Models\LocationType;
+use App\Models\Payement;
 use App\Models\Room;
 use Illuminate\Support\Facades\Validator;
+use PDF;
 
 class LOCATION_HELPER extends BASE_HELPER
 {
@@ -24,8 +27,8 @@ class LOCATION_HELPER extends BASE_HELPER
 
             'caution_bordereau' => ['required', "file"],
             'loyer' => ['required', "numeric"],
-            'water_counter' => ['required', "numeric"],
-            'electric_counter' => ['required', "numeric"],
+            // 'water_counter' => ['required', "numeric"],
+            // 'electric_counter' => ['required', "numeric"],
             'caution_number' => ['required', 'integer'],
 
             'prestation' => ['required', "numeric"],
@@ -66,8 +69,8 @@ class LOCATION_HELPER extends BASE_HELPER
             'caution_number.required' => "Le nombre de caution est réquise!",
             'caution_number.integer' => "Le nombre de caution doit être de type integer!",
 
-            'water_counter.required' => "Le compteur d'eau est réquis",
-            'water_counter.numeric' => "Le champ compteur d'eau doit être de caractère numérique",
+            // 'water_counter.required' => "Le compteur d'eau est réquis",
+            // 'water_counter.numeric' => "Le champ compteur d'eau doit être de caractère numérique",
 
 
             'prestation.required' => "La prestation est réquise",
@@ -88,8 +91,8 @@ class LOCATION_HELPER extends BASE_HELPER
             'latest_loyer_date.required' => "La date du dernier loyer est réquis!",
             'latest_loyer_date.date' => "Ce champ doit être de type date",
 
-            'electric_counter.required' => "Le compteur éléctrique est réquis!",
-            'electric_counter.numeric' => "Le champ compteur d'électricité doit être de caractère numérique",
+            // 'electric_counter.required' => "Le compteur éléctrique est réquis!",
+            // 'electric_counter.numeric' => "Le champ compteur d'électricité doit être de caractère numérique",
 
             'echeance_date.required' => "L'adresse est réquis!",
             'echeance_date.date' => "Ce champ doit être de type date",
@@ -172,21 +175,19 @@ class LOCATION_HELPER extends BASE_HELPER
         $caution_bordereau->move("caution_bordereaus", $caution_bordereauName);
         $formData["caution_bordereau"] = asset("caution_bordereaus/" . $caution_bordereauName);
 
-
         $img_contrat = $request->file("img_contrat");
         $img_contratName = $img_contrat->getClientOriginalName();
         $img_contrat->move("img_contrats", $img_contratName);
         $formData["img_contrat"] = asset("img_contrats/" . $img_contratName);
-
 
         $img_prestation = $request->file("img_prestation");
         $img_prestationName = $img_contrat->getClientOriginalName();
         $img_prestation->move("img_prestations", $img_prestationName);
         $formData["img_prestation"] = asset("img_prestations/" . $img_prestationName);
 
-        #ENREGISTREMENT DU location DANS LA DB
+        #ENREGISTREMENT DU LOCATION DANS LA DB
         $formData["owner"] = $user->id;
-        $formData["total_amount"] = $formData["loyer"] + $formData["electric_counter"] + $formData["water_counter"];
+        // $formData["total_amount"] = $formData["loyer"] + $formData["electric_counter"] + $formData["water_counter"];
 
         $location = Location::create($formData);
         return self::sendResponse($location, "Location ajoutée avec succès!!");
@@ -195,14 +196,14 @@ class LOCATION_HELPER extends BASE_HELPER
     static function getLocations()
     {
         $user = request()->user();
-        $locations = Location::where(["visible" => 1])->with(["Owner", "House", "Locataire", "Type", "Room", "Status"])->get();
+        $locations = Location::where(["visible" => 1])->with(["Owner", "House", "Locataire", "Type", "Room", "Status", "Factures"])->get();
         return self::sendResponse($locations, 'Toutes les locations récupérés avec succès!!');
     }
 
     static function _retrieveLocation($id)
     {
         $user = request()->user();
-        $location = Location::where(["visible" => 1])->with(["Owner", "House", "Locataire", "Type", "Room", "Status"])->find($id);
+        $location = Location::where(["visible" => 1])->with(["Owner", "House", "Locataire", "Type", "Room", "Status", "Factures"])->find($id);
         if (!$location) {
             return self::sendError("Ce location n'existe pas!", 404);
         }
@@ -343,11 +344,75 @@ class LOCATION_HELPER extends BASE_HELPER
             return self::sendError("Cette location n'existe pas!", 404);
         };
 
+        $house = House::find($location->house);
+
+        ###___DERNIERE DATE D'ARRET DES ETATS DE CETTE MAISON
+        $state_stop_date_of_this_house = HomeStopState::orderBy("id", "desc")->where(["house" => $location->house])->get();
+        if (count($state_stop_date_of_this_house) == 0) {
+            return self::sendError("Cette maison ne dispose d'aucune date d'arrêt des états!", 505);
+        }
+
+        ###__DATE D'ARRET DES ETATS DE CETTE MAISON
+        $state_stop_date_of_this_house = strtotime($state_stop_date_of_this_house[0]->stats_stoped_day);
+
+        ###__LES LOCATIONS DE CETTE MAISON
+        $this_house_locations = $house->Locations;
+
+        ###__LES PAIEMENTS LIES A LA LOCATION DE CETTE MAISON
+        $locations_that_paid_before_state_stoped_day = [];
+        $locations_that_paid_after_state_stoped_day = [];
+
+        foreach ($this_house_locations as $this_house_location) {
+            ###__RECUPERONS LES LOCATIONS AYANT PAYES
+            $location_payements = Payement::with(["Status", "Location", "Facture"])->where(["location" => $this_house_location->id])->get();
+
+            ##__TRAITEMENT DE LA DATE DE PAIEMENT( puis filtrer les locations avant et après paiement)
+            foreach ($location_payements as $location_payement) {
+                $location_payement_date = strtotime($location_payement->created_at);
+
+                if ($location_payement_date < $state_stop_date_of_this_house) {
+                    array_push($locations_that_paid_before_state_stoped_day, $this_house_location);
+                } else {
+                    array_push($locations_that_paid_after_state_stoped_day, $this_house_location);
+                }
+            }
+        };
+
+        ###___Verifions si ce locataire fait parti des locataires qui ont payé
+        ###___après arret des etats
+
+        $result = false;
+        foreach ($locations_that_paid_after_state_stoped_day as $locations_that_paid_after_state_stoped_day_) {
+            if ($locations_that_paid_after_state_stoped_day_->locataire == $location->locataire) {
+                $result = true;
+            }
+        }
+
+        if ($result) {
+            return self::sendError("Ce locataire a effectué des paiements après l'arrêt des états! Vous ne pouvez pas le démenager!", 505);
+        }
+
         $formData["move_date"] = now();
         $formData["visible"] = 0;
         $formData["delete_at"] = now();
 
         $location->update($formData);
         return self::sendResponse($location, 'Cette location a été demenagée avec succès!');
+    }
+
+    function manageCautions($request)
+    {
+        $locations = Location::with(["Owner", "House", "Locataire", "Type", "Status", "Room"])->get();
+
+        // return "gogo";
+        ###___GESTION DES  FACTURES & TICKETS
+        $pdf = PDF::loadView('cautions', compact("locations"));
+
+        $reference = Custom_Timestamp();
+        $pdf->save(public_path("cautions/" . $reference . ".pdf"));
+        $cautionpdf_path = asset("cautions/" . $reference . ".pdf");
+
+        $data["cautionpdf_path"] = $cautionpdf_path;
+        return self::sendResponse($data, "Cautions generées en pdf avec succès!");
     }
 }

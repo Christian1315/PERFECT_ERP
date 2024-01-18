@@ -21,7 +21,13 @@ return new class extends Migration
 
             $table->foreignId("client")
                 ->nullable()
-                ->constrained("users", "id")
+                ->constrained("clients", "id")
+                ->onUpdate("CASCADE")
+                ->onDelete("CASCADE");
+
+            $table->foreignId("location")
+                ->nullable()
+                ->constrained("locations", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
@@ -44,15 +50,12 @@ return new class extends Migration
                 ->onDelete("CASCADE");
 
             $table->string("amount");
-            // $table->text("facture")->nullable();
-
             $table->string("reference");
             $table->string("phone")->nullable();
             $table->text("comments");
 
             $table->string("start_date")->nullable();
             $table->string("end_date")->nullable();
-
             $table->timestamps();
         });
     }
@@ -60,6 +63,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
+
     public function down(): void
     {
         Schema::dropIfExists('payements');

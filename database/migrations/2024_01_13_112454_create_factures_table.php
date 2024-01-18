@@ -19,15 +19,9 @@ return new class extends Migration
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
-            $table->foreignId("proprietor")
+            $table->foreignId("payement")
                 ->nullable()
-                ->constrained("proprietors", "id")
-                ->onUpdate("CASCADE")
-                ->onDelete("CASCADE");
-
-            $table->foreignId("locataire")
-                ->nullable()
-                ->constrained("locataires", "id")
+                ->constrained("payements", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
 
@@ -48,6 +42,7 @@ return new class extends Migration
                 ->constrained("facture_statuses", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
+
             $table->text("facture")->nullable();
             $table->text("comments")->nullable();
             $table->text("amount");

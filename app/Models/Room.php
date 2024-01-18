@@ -33,6 +33,9 @@ class Room extends Model
         "water_counter_text",
         "water_discounter_text",
         "principal_img",
+        "total_amount",
+        "visible",
+        "delete_at"
     ];
 
     function Owner(): BelongsTo

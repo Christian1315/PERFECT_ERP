@@ -29,7 +29,7 @@ return new class extends Migration
                 ->constrained("room_natures", "id")
                 ->onUpdate("CASCADE")
                 ->onDelete("CASCADE");
-                
+
             $table->foreignId("type")
                 ->nullable()
                 ->constrained("room_types", "id")
@@ -41,18 +41,19 @@ return new class extends Migration
             $table->text("comments");
 
 
-            $table->boolean("security")->default(false);
-            $table->boolean("rubbish")->default(false);
-            $table->boolean("vidange")->default(false);
-            $table->boolean("cleaning")->default(false);
+            $table->string("security")->default(0);
+            $table->string("rubbish")->default(0);
+            $table->string("vidange")->default(0);
+            $table->string("cleaning")->default(0);
+            $table->string("total_amount")->nullable();
 
             $table->boolean("water_counter")->default(false);
             $table->boolean("water_discounter")->default(false);
             $table->boolean("electric_counter")->default(false);
             $table->boolean("electric_discounter")->default(false);
 
-            $table->text("water_counter_text")->nullable();
-            $table->text("water_discounter_text")->nullable();
+            // $table->text("water_counter_text")->nullable();
+            // $table->text("water_discounter_text")->nullable();
 
             $table->boolean("home_banner")->nullable();
             $table->text("principal_img")->nullable();

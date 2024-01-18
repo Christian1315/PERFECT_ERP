@@ -22,7 +22,7 @@ class PayementController extends PAIEMENT_HELPER
             return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
         };
 
-        #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR Card_HELPER
+        #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR PAIEMENT_HELPER
         $validator = $this->Paiement_Validator($request->all());
 
         if ($validator->fails()) {
@@ -69,5 +69,37 @@ class PayementController extends PAIEMENT_HELPER
 
         #RECUPERATION D'UN Paiement VIA SON **id**
         return $this->_updatePaiement($request, $id);
+    }
+
+    function _FiltreByDate(Request $request)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "POST") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR Card_HELPER
+            return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+
+        #VALIDATION DES DATAs DEPUIS LA CLASS BASE_HELPER HERITEE PAR PAIEMENT_HELPER
+        $validator = $this->Filtre_Validator($request->all());
+
+        if ($validator->fails()) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR Card_HELPER
+            return $this->sendError($validator->errors(), 404);
+        }
+
+        #FILTRAGE DES PAIEMENTS VIA DES DATES
+        return $this->filtreByDate($request);
+    }
+
+    ####___PAIEMENTS LIES A L'ARRET DES ETATS
+    function FiltreAfterStateDateStoped(Request $request,$houseId)
+    {
+        #VERIFICATION DE LA METHOD
+        if ($this->methodValidation($request->method(), "GET") == False) {
+            #RENVOIE D'ERREURE VIA **sendError** DE LA CLASS BASE_HELPER HERITEE PAR Card_HELPER
+            return $this->sendError("La methode " . $request->method() . " n'est pas supportée pour cette requete!!", 404);
+        };
+
+        return $this->_filtreAfterStateDateStoped($request,$houseId);
     }
 }

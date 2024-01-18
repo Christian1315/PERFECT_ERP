@@ -76,4 +76,9 @@ class House extends Model
     {
         return $this->hasMany(Room::class, "house")->with(["Owner", "Nature", "Type"]);
     }
+
+    function Locations(): HasMany
+    {
+        return $this->hasMany(Location::class, "house")->with(["Locataire", "Room", "Type", "Status", "Factures"]);
+    }
 }

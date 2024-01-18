@@ -108,7 +108,7 @@ class ROLE_HELPER extends BASE_HELPER
             return self::sendError("Ce role n'existe pas!", 404);
         };
 
-        $is_this_attach_existe = Userrole::where(["user_id" => $formData['user_id'], "role_id" => $formData['role_id']])->first();
+        $is_this_attach_existe = UserRole::where(["user_id" => $formData['user_id'], "role_id" => $formData['role_id']])->first();
 
         if ($is_this_attach_existe) {
             return self::sendError("Ce user dispose déjà de ce role!", 505);

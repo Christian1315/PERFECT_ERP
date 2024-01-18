@@ -19,14 +19,15 @@ class ROOM_HELPER extends BASE_HELPER
             "house" => ["required", "integer"],
             "nature" => ["required", "integer"],
             "type" => ["required", "integer"],
-            "loyer" => ["required"],
+            "loyer" => ["required", "numeric"],
             "number" => ["required"],
             "comments" => ["required"],
 
-            "security" => ["required", "boolean"],
-            "rubbish" => ["required", "boolean"],
-            "vidange" => ["required", "boolean"],
-            "cleaning" => ["required", "boolean"],
+            "security" => ["required", "numeric"],
+            "rubbish" => ["required", "numeric"],
+            "vidange" => ["required", "numeric"],
+            "cleaning" => ["required", "numeric"],
+
             "water_counter" => ["required", "boolean"],
             "water_discounter" => ["required", "boolean"],
             "electric_counter" => ["required", "boolean"],
@@ -34,8 +35,8 @@ class ROOM_HELPER extends BASE_HELPER
             "publish" => ["required", "boolean"],
             "home_banner" => ["required", "boolean"],
 
-            "water_counter_text" => ["required"],
-            "water_discounter_text" => ["required"],
+            // "water_counter_text" => ["required"],
+            // "water_discounter_text" => ["required"],
             "principal_img" => ["required", "file"],
         ];
     }
@@ -52,6 +53,8 @@ class ROOM_HELPER extends BASE_HELPER
             "type.integer" => "Ce champ doit être de type entier!",
 
             "loyer.required" => "Ce champs est réquis",
+            "loyer.numeric" => "Ce Champ doit être de type numérique!",
+
             "number.required" => "Ce champs est réquis",
             "comments.required" => "Ce champs est réquis",
 
@@ -59,6 +62,12 @@ class ROOM_HELPER extends BASE_HELPER
             "rubbish.required" => "Ce Champ est réquis!",
             "vidange.required" => "Ce Champ est réquis!",
             "cleaning.required" => "Ce Champ est réquis!",
+
+            "security.numeric" => "Ce Champ doit être de type numérique!",
+            "rubbish.numeric" => "Ce Champ doit être de type numérique!",
+            "vidange.numeric" => "Ce Champ doit être de type numérique!",
+            "cleaning.numeric" => "Ce Champ doit être de type numérique!",
+
             "water_counter.required" => "Ce Champ est réquis!",
             "water_discounter.required" => "Ce Champ est réquis!",
             "electric_counter.required" => "Ce Champ est réquis!",
@@ -66,10 +75,10 @@ class ROOM_HELPER extends BASE_HELPER
             "publish.required" => "Ce Champ est réquis!",
             "home_banner.required" => "Ce Champ est réquis!",
 
-            "security.boolean" => "Ce Champ est un booléen!",
-            "rubbish.boolean" => "Ce Champ est un booléen!",
-            "vidange.boolean" => "Ce Champ est un booléen!",
-            "cleaning.boolean" => "Ce Champ est un booléen!",
+            // "security.boolean" => "Ce Champ est un booléen!",
+            // "rubbish.boolean" => "Ce Champ est un booléen!",
+            // "vidange.boolean" => "Ce Champ est un booléen!",
+            // "cleaning.boolean" => "Ce Champ est un booléen!",
             "water_counter.boolean" => "Ce Champ est un booléen!",
             "water_discounter.boolean" => "Ce Champ est un booléen!",
             "electric_counter.boolean" => "Ce Champ est un booléen!",
@@ -77,8 +86,8 @@ class ROOM_HELPER extends BASE_HELPER
             "publish.boolean" => "Ce Champ est un booléen!",
             "home_banner.boolean" => "Ce Champ est un booléen!",
 
-            "water_counter_text.required" => "Ce Champ est réquis!",
-            "water_discounter_text.required" => "Ce Champ est réquis!",
+            // "water_counter_text.required" => "Ce Champ est réquis!",
+            // "water_discounter_text.required" => "Ce Champ est réquis!",
 
             "principal_img.required" => "Ce Champ est réquis!",
             "principal_img.file" => "Ce Champ doit être un fichier!",
@@ -126,6 +135,7 @@ class ROOM_HELPER extends BASE_HELPER
         #ENREGISTREMENT DE LA CARTE DANS LA DB
         $formData["owner"] = $user->id;
         $formData["principal_img"] = asset("room_images/" . $imgName);
+        $formData["total_amount"] = $formData["loyer"] + $formData["security"] + $formData["rubbish"] + $formData["vidange"] + $formData["cleaning"];
 
         $room = Room::create($formData);
         return self::sendResponse($room, "Chambre ajoutée avec succès!!");

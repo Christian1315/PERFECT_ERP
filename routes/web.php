@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\CARDS\CardController;
 use App\Http\Controllers\Api\V1\CARDS\ElectedConsularController;
+use App\Http\Controllers\Api\V1\IMMO\LocationController;
 use App\Http\Controllers\Api\V1\MINISTERS\RepertoryController;
 
 use App\Models\User;
@@ -55,3 +56,7 @@ Route::any('/card/elected_consular/export', [ElectedConsularController::class, '
 
 ####___RECUPERATION DES BADGE VIA LE FORMAT HTML
 Route::get("{id}/badge", [RepertoryController::class, "_GenerateRepertoryBadgeViaHtml"]);
+
+
+####___IMMO
+Route::get("/caution", [LocationController::class, "_ManageCautions"]);

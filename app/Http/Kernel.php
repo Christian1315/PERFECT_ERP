@@ -65,6 +65,13 @@ class Kernel extends HttpKernel
         'CheckIfUserIsLogistique' => \App\Http\Middleware\CheckIfUserIsLogistique::class,
         'CheckIfUserIsExploitation' => \App\Http\Middleware\CheckIfUserIsExploitation::class,
 
+        'Check_If_User_Has_A_Master_Role' => \App\Http\Middleware\Check_If_User_Has_A_Master_Role::class,
+        'Check_If_User_Has_A_Chief_Accountant_Role' => \App\Http\Middleware\Check_If_User_Has_A_Chief_Accountant_Role::class,
+        'Check_If_User_Has_A_Supervisor_Role' => \App\Http\Middleware\Check_If_User_Has_A_Supervisor_Role::class,
+        'Check_If_User_Has_An_Agent_Accountant_Role' => \App\Http\Middleware\Check_If_User_Has_An_Agent_Accountant_Role::class,
+
+
+
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

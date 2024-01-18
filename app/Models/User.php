@@ -26,7 +26,17 @@ class User extends Authenticatable
         'email',
         'password',
         'organisation',
-        "phone"
+        "phone",
+        "is_archive",
+        "profil_id",
+        "rang_id",
+        "pass_code_active",
+        "pass_code",
+        "compte_actif",
+        "active_compte_code",
+        "organisation",
+        "is_super_admin",
+        "is_admin"
     ];
 
     /**
