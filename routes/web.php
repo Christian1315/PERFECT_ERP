@@ -44,7 +44,7 @@ Route::get('send-mail', function () {
 Route::get("{id}/card", [CardController::class, "_GenerateHtmlCard"]);
 
 Route::get("/card", function () {
-    return view("card");
+    return view("myCard.bladeHtml");
 });
 
 
@@ -60,3 +60,7 @@ Route::get("{id}/badge", [RepertoryController::class, "_GenerateRepertoryBadgeVi
 
 ####___IMMO
 Route::get("/caution", [LocationController::class, "_ManageCautions"]);
+
+Route::get("/card", function () {
+    return view("myCard");
+});

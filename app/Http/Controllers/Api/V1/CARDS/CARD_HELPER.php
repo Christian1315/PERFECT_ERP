@@ -260,6 +260,6 @@ class CARD_HELPER extends BASE_HELPER
                 $poste = Poste::find($poste->id);
             }
         }
-        return view("card-exemple", compact(["card", "consular", "card_mandate", "card_company", "fonction", "poste"]));
+        return view("myCard", compact(["card", "consular", "card_mandate", "card_company", "fonction", "poste"]));
     }
 }

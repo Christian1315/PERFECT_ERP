@@ -1,0 +1,279 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap");
+:root {
+  --green: #53b034;
+  --red: #e31e24;
+  --yellow: "";
+  --white: #ffff;
+  --font-1: "Montserrat", sans-serif;
+  --font-2: "Montserrat Alternates", sans-serif;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+     font-family: "Poppins";
+  
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  padding: 8px;
+  background-color: "";
+  font-family: var(--font-1);
+  display: flex;
+  align-items: center;
+  background-color: #dfd3c3;
+  padding: 10px;
+}
+.wrapper {
+  width: fit-content;
+  flex-direction: row;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/*  */
+
+/* carte recto */
+.card-recto {
+  background-image: url("back.png");
+  background-repeat: repeat;
+  min-width: 450px;
+  max-width: 450px;
+  height: 300px;
+  border: 1px solid var(--white);
+  padding: 5px 7px 5px 7px;
+  border-radius: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+/*  background-size: cover;*/
+
+}
+
+.card-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+.card-header > .armoirie {
+  height: 40px;
+  flex: 0.7;
+}
+
+.ccib {
+  height: 55px;
+  flex: 1;
+}
+.card-header > div {
+  text-align: center;
+  text-transform: uppercase;
+}
+.card-header > .republic {
+  flex: 2;
+  text-align: center;
+  text-transform: uppercase;
+}
+.card-header > div > p {
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+
+.card-big {
+/*  font-size: 1.3rem;*/
+  color: var(--white);
+  background-color: orangered;
+}
+
+.card-number {
+  text-align: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.8rem;
+  background-color: green;
+  padding: 3px !important;
+  margin-bottom: 5px !important;
+}
+
+.card-details {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-top: 15px;
+}
+
+.card-details > .first {
+  flex: 3;
+  min-height: 170px;
+}
+
+.card-details > .first > div {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-bottom: 4px;
+  align-items: center;
+}
+
+.card-details > .first > div > p {
+  font-size: 0.6rem;
+  font-weight: 600;
+  flex: 0.8;
+  margin-right: 20px;
+}
+
+.card-details > .first > div > span {
+  font-size: 0.9rem;
+  font-weight: 700;
+  flex: 2;
+  text-transform: uppercase;
+}
+
+.card-details > .first > div > .grp-sanguin {
+  color: var(--white);
+}
+
+.card-details > .second {
+  /*font-size: 0.5rem;
+  font-weight: 600;
+  font-style: italic;
+  text-transform: uppercase;
+  text-align: center;
+  height: fit-content;
+  width: 100px;*/
+  margin-right: 15px;
+}
+
+.card-details > .second > .photo {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 8px;
+  background-color: var(--white);
+/*  border: 2px solid green;*/
+  margin-top: 5px;
+}
+.card-details > .second > .signature {
+  margin-top: 5px;
+  width: 100%;
+  height: 30px;
+  object-fit: cover;
+  margin-bottom: 8px;
+  background-color: var(--white);
+}
+
+img {
+  width: auto;
+  height: 100%;
+}
+.card-bottom {
+  background-color: orangered;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  
+ 
+/*  background-color: var(--white);*/
+}
+
+.card-header > div{
+  padding-bottom: 7px;
+}
+.card-bottom > .validity-date {
+  color: var(--white); /* font-weight: 700; */
+  font-weight: 600;
+  background: orangered;
+  
+  padding: 5px;
+  text-align: center;
+}
+.card-bottom > .validity-date > span {
+  font-weight: 600;
+  color: black;
+  font-size: 0.65rem;
+  font-style: normal;
+}
+.card-bottom > p {
+  font-style: italic;
+  padding: 4px;
+  font-weight: 600;
+  color: black;
+  font-size: 0.65rem;
+}
+
+/* carte verso */
+.card-verso {
+  background: url("back.png");
+  min-width: 450px;
+  max-width: 450px;
+  height: 300px;
+  border: 1px solid var(--white);
+  padding: 5px 7px 5px 7px;
+  border-radius: 10px;
+}
+.card-verso > div {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 500;
+}
+.card-verso > div > .armoirie {
+  height: 65px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+.card-verso > div > p {
+  width: 85%;
+  margin-bottom: 5px;
+}
+.card-verso > div > p > span {
+  font-weight: 700;
+}
+.card-verso > div > h1 {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  text-shadow: -1px 1px 1px rgba(255, 255, 255, 0.6);
+  font-weight: 700;
+}
+.card-verso > div > .codeQr {
+  object-fit: cover;
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  width: 90px;
+  height: 70px;
+  background-color: var(--white);
+}
+.card-verso > div > .signature {
+  height: 55px;
+}
+.card-verso > div > :last-child {
+  font-weight: 700;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+
+#footer {
+            background-color: #e4540c !important;
+            color: #fff !important;
+            margin-top: 20px;
+/*            border-radius: 0px 0px 10px 10px;*/
+            /* position:absolute; */
+            /* bottom: 0px!important; */
+            margin: 0;
+            padding: 0;
+        }
