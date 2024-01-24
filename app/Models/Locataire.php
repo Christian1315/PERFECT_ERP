@@ -48,7 +48,7 @@ class Locataire extends Model
         return $this->belongsTo(Country::class, "country");
     }
 
-    function Location(): HasMany
+    function Locations(): HasMany
     {
         return $this->hasMany(Location::class, "locataire")->with(["Owner", "House", "Locataire", "Type", "Room"]);
     }

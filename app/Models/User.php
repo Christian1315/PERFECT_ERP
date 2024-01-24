@@ -36,7 +36,8 @@ class User extends Authenticatable
         "active_compte_code",
         "organisation",
         "is_super_admin",
-        "is_admin"
+        "is_admin",
+        "owner"
     ];
 
     /**

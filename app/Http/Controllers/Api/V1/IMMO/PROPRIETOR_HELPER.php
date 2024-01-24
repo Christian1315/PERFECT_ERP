@@ -22,7 +22,7 @@ class PROPRIETOR_HELPER extends BASE_HELPER
             'email' => ['required', "email"],
             'sexe' => ['required'],
             'piece_number' => ['required'],
-            'mandate_contrat' => ['required', "file"],
+            // 'mandate_contrat' => ['required', "file"],
             'comments' => ['required'],
             'adresse' => ['required'],
 
@@ -41,7 +41,7 @@ class PROPRIETOR_HELPER extends BASE_HELPER
             'email.required' => 'Veuillez précisez le mail!',
             'sexe.required' => 'Veuillez précisez le sexe!',
             'piece_number.required' => 'Veuillez précisez le numéro de la pièce!',
-            'mandate_contrat.required' => 'Veuillez précisez le mandat du contrat!',
+            // 'mandate_contrat.required' => 'Veuillez précisez le mandat du contrat!',
             'comments.required' => 'Veuillez précisez un commantaire!',
             'adresse.required' => 'Veuillez précisez l\'adresse!',
             'city.required' => 'Veuillez précisez la ville!',
@@ -55,7 +55,7 @@ class PROPRIETOR_HELPER extends BASE_HELPER
 
             'phone.numeric' => 'Ce champ doit doit être de type numeric!',
             'email.email' => 'Ce champ doit doit être de type mail!',
-            'mandate_contrat.file' => 'Ce champ doit doit être un fichier!',
+            // 'mandate_contrat.file' => 'Ce champ doit doit être un fichier!',
         ];
     }
 
@@ -89,13 +89,15 @@ class PROPRIETOR_HELPER extends BASE_HELPER
         }
 
         ###__TRAITEMENT DE L'IMAGE
-        $mandate_contrat = $request->file("mandate_contrat");
-        $file_name = $mandate_contrat->getClientOriginalName();
-        $mandate_contrat->move("contrats", $file_name);
-
-        #ENREGISTREMENT DE LA CARTE DANS LA DB
-        $formData["owner"] = $user->id;
-        $formData["mandate_contrat"] = asset("contrats/" . $file_name);
+        if ($request->file("mandate_contrat")) {
+            $mandate_contrat = $request->file("mandate_contrat");
+            $file_name = $mandate_contrat->getClientOriginalName();
+            $mandate_contrat->move("contrats", $file_name);
+    
+            #ENREGISTREMENT DE LA CARTE DANS LA DB
+            $formData["owner"] = $user->id;
+            $formData["mandate_contrat"] = asset("contrats/" . $file_name);
+        }
 
         $proprietor = Proprietor::create($formData);
 

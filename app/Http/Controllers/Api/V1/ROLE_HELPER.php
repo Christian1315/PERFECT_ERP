@@ -141,7 +141,7 @@ class ROLE_HELPER extends BASE_HELPER
         };
 
         ###___retrait du role qui lui a été affecté par defaut
-        $user_role = UserRole::where(["user_id" => $formData['user_id'], "role_id" => $formData['user_id']])->first();
+        $user_role = UserRole::where(["user_id" => $formData['user_id'], "role_id" => $formData['role_id']])->first();
         if (!$user_role) {
             return self::sendError("Ce user ne dispose pas de ce role!", 505);
         }

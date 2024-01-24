@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Room extends Model
 {
@@ -56,5 +57,10 @@ class Room extends Model
     function Type(): BelongsTo
     {
         return $this->belongsTo(RoomType::class, "type");
+    }
+
+    function Locations(): HasMany
+    {
+        return $this->hasMany(Location::class, "room")->with(["Locataire", "House", "Room","Type"]);
     }
 }

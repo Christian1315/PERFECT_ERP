@@ -25,9 +25,9 @@ class LOCATION_HELPER extends BASE_HELPER
             'locataire' => ['required', "integer"],
             'type' => ['required', "integer"],
 
-            'caution_bordereau' => ['required', "file"],
-            'loyer' => ['required', "numeric"],
-            // 'water_counter' => ['required', "numeric"],
+            // 'caution_bordereau' => ["file"],
+            // 'loyer' => ['required', "numeric"],
+            'water_counter' => ['required', "numeric"],
             // 'electric_counter' => ['required', "numeric"],
             'caution_number' => ['required', 'integer'],
 
@@ -35,11 +35,11 @@ class LOCATION_HELPER extends BASE_HELPER
             'numero_contrat' => ['required'],
 
             'comments' => ['required'],
-            'img_contrat' => ['required', "file"],
-            'caution_water' => ['required', "numeric"],
+            // 'img_contrat' => ["file"],
+            // 'caution_water' => ['required', "numeric"],
             'echeance_date' => ['required', "date"],
             'latest_loyer_date' => ['required', "date"],
-            'img_prestation' => ['required', "file"],
+            // 'img_prestation' => ["file"],
             'caution_electric' => ['required', "numeric"],
             'integration_date' => ['required', "date"],
         ];
@@ -54,23 +54,23 @@ class LOCATION_HELPER extends BASE_HELPER
             'room.required' => "Le chambre est réquise!",
             'room.integer' => 'Ce champ doit être de type integer',
 
-            'location.required' => "Le location est réquis!",
+            'locataire.required' => "Le location est réquis!",
             'locataire.integer' => 'Ce champ doit être de type integer',
 
             'type.required' => "Le type de location est réquis!",
             'type.integer' => 'Ce champ doit être de type integer',
 
-            'caution_bordereau.required' => "Le bordereau de la caution est réquise!",
+            // 'caution_bordereau.required' => "Le bordereau de la caution est réquise!",
             'caution_bordereau.file' => "Le bordereau de la caution doit être un fichier!",
 
-            'loyer.required' => "Le loyer de la location est réquise!",
-            'loyer.numeric' => "Ce champ doit être de type numeric!",
+            // 'loyer.required' => "Le loyer de la location est réquise!",
+            // 'loyer.numeric' => "Ce champ doit être de type numeric!",
 
             'caution_number.required' => "Le nombre de caution est réquise!",
             'caution_number.integer' => "Le nombre de caution doit être de type integer!",
 
-            // 'water_counter.required' => "Le compteur d'eau est réquis",
-            // 'water_counter.numeric' => "Le champ compteur d'eau doit être de caractère numérique",
+            'water_counter.required' => "Le compteur d'eau est réquis",
+            'water_counter.numeric' => "Le champ compteur d'eau doit être de caractère numérique",
 
 
             'prestation.required' => "La prestation est réquise",
@@ -82,10 +82,10 @@ class LOCATION_HELPER extends BASE_HELPER
             'img_contrat.required' => "L'image du contrat est réquise",
             'img_contrat.file' => "L'image du contrat doit être un fichier",
 
-            'caution_water.required' => "La caution d'eau est réquise",
-            'caution_water.numeric' => "La caution d'eau doit être de caractère numérique",
+            // 'caution_water.required' => "La caution d'eau est réquise",
+            // 'caution_water.numeric' => "La caution d'eau doit être de caractère numérique",
 
-            'echeance_date.required' => "L'adresse est réquis!",
+            'echeance_date.required' => "La date d'écheance est réquise!",
             'echeance_date.date' => "Ce champ doit être de type date",
 
             'latest_loyer_date.required' => "La date du dernier loyer est réquis!",
@@ -97,7 +97,7 @@ class LOCATION_HELPER extends BASE_HELPER
             'echeance_date.required' => "L'adresse est réquis!",
             'echeance_date.date' => "Ce champ doit être de type date",
 
-            'img_prestation.required' => "L'image de la prestation est réquise",
+            // 'img_prestation.required' => "L'image de la prestation est réquise",
             'img_prestation.file' => "L'image de la prestation doit être un fichier",
 
             'caution_electric.required' => "La caution d'electricité est réquise!",
@@ -170,25 +170,33 @@ class LOCATION_HELPER extends BASE_HELPER
         }
 
         ##___TRAITEMENT DES IMAGES
-        $caution_bordereau = $request->file("caution_bordereau");
-        $caution_bordereauName = $caution_bordereau->getClientOriginalName();
-        $caution_bordereau->move("caution_bordereaus", $caution_bordereauName);
-        $formData["caution_bordereau"] = asset("caution_bordereaus/" . $caution_bordereauName);
+        if ($request->file("caution_bordereau")) {
+            # code...
+            $caution_bordereau = $request->file("caution_bordereau");
+            $caution_bordereauName = $caution_bordereau->getClientOriginalName();
+            $caution_bordereau->move("caution_bordereaus", $caution_bordereauName);
+            $formData["caution_bordereau"] = asset("caution_bordereaus/" . $caution_bordereauName);
+        }
 
-        $img_contrat = $request->file("img_contrat");
-        $img_contratName = $img_contrat->getClientOriginalName();
-        $img_contrat->move("img_contrats", $img_contratName);
-        $formData["img_contrat"] = asset("img_contrats/" . $img_contratName);
+        if ($request->file("img_contrat")) {
+            $img_contrat = $request->file("img_contrat");
+            $img_contratName = $img_contrat->getClientOriginalName();
+            $img_contrat->move("img_contrats", $img_contratName);
+            $formData["img_contrat"] = asset("img_contrats/" . $img_contratName);
+        }
 
-        $img_prestation = $request->file("img_prestation");
-        $img_prestationName = $img_contrat->getClientOriginalName();
-        $img_prestation->move("img_prestations", $img_prestationName);
-        $formData["img_prestation"] = asset("img_prestations/" . $img_prestationName);
+        if ($request->file("img_prestation")) {
+            $img_prestation = $request->file("img_prestation");
+            $img_prestationName = $img_contrat->getClientOriginalName();
+            $img_prestation->move("img_prestations", $img_prestationName);
+            $formData["img_prestation"] = asset("img_prestations/" . $img_prestationName);
+        }
 
         #ENREGISTREMENT DU LOCATION DANS LA DB
         $formData["owner"] = $user->id;
         // $formData["total_amount"] = $formData["loyer"] + $formData["electric_counter"] + $formData["water_counter"];
 
+        $formData["loyer"] = $room->total_amount;
         $location = Location::create($formData);
         return self::sendResponse($location, "Location ajoutée avec succès!!");
     }

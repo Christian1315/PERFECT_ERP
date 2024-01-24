@@ -28,16 +28,16 @@ class ROOM_HELPER extends BASE_HELPER
             "vidange" => ["required", "numeric"],
             "cleaning" => ["required", "numeric"],
 
-            "water_counter" => ["required", "boolean"],
-            "water_discounter" => ["required", "boolean"],
-            "electric_counter" => ["required", "boolean"],
-            "electric_discounter" => ["required", "boolean"],
-            "publish" => ["required", "boolean"],
-            "home_banner" => ["required", "boolean"],
+            "water_counter" => ["boolean"],
+            "water_discounter" => ["boolean"],
+            "electric_counter" => ["boolean"],
+            "electric_discounter" => ["boolean"],
+            "publish" => ["boolean"],
+            "home_banner" => ["boolean"],
 
             // "water_counter_text" => ["required"],
             // "water_discounter_text" => ["required"],
-            "principal_img" => ["required", "file"],
+            // "principal_img" => ["required", "file"],
         ];
     }
 
@@ -55,8 +55,8 @@ class ROOM_HELPER extends BASE_HELPER
             "loyer.required" => "Ce champs est réquis",
             "loyer.numeric" => "Ce Champ doit être de type numérique!",
 
-            "number.required" => "Ce champs est réquis",
-            "comments.required" => "Ce champs est réquis",
+            "number.required" => "Ce champ est réquis",
+            "comments.required" => "Ce champ est réquis",
 
             "security.required" => "Ce Champ est réquis!",
             "rubbish.required" => "Ce Champ est réquis!",
@@ -68,12 +68,8 @@ class ROOM_HELPER extends BASE_HELPER
             "vidange.numeric" => "Ce Champ doit être de type numérique!",
             "cleaning.numeric" => "Ce Champ doit être de type numérique!",
 
-            "water_counter.required" => "Ce Champ est réquis!",
-            "water_discounter.required" => "Ce Champ est réquis!",
-            "electric_counter.required" => "Ce Champ est réquis!",
-            "electric_discounter.required" => "Ce Champ est réquis!",
             "publish.required" => "Ce Champ est réquis!",
-            "home_banner.required" => "Ce Champ est réquis!",
+            "home_banner.boolean" => "Ce Champ est un booléen!",
 
             // "security.boolean" => "Ce Champ est un booléen!",
             // "rubbish.boolean" => "Ce Champ est un booléen!",
@@ -89,8 +85,8 @@ class ROOM_HELPER extends BASE_HELPER
             // "water_counter_text.required" => "Ce Champ est réquis!",
             // "water_discounter_text.required" => "Ce Champ est réquis!",
 
-            "principal_img.required" => "Ce Champ est réquis!",
-            "principal_img.file" => "Ce Champ doit être un fichier!",
+            // "principal_img.required" => "Ce Champ est réquis!",
+            // "principal_img.file" => "Ce Champ doit être un fichier!",
         ];
     }
 
@@ -128,13 +124,15 @@ class ROOM_HELPER extends BASE_HELPER
         }
 
         ###____TRAITEMENT DE L'IMAGE
-        $img = $request->file("principal_img");
-        $imgName = $img->getClientOriginalName();
-        $img->move("room_images", $imgName);
+        if ($request->file("principal_img")) {
+            $img = $request->file("principal_img");
+            $imgName = $img->getClientOriginalName();
+            $img->move("room_images", $imgName);
+            $formData["principal_img"] = asset("room_images/" . $imgName);
+        }
 
         #ENREGISTREMENT DE LA CARTE DANS LA DB
         $formData["owner"] = $user->id;
-        $formData["principal_img"] = asset("room_images/" . $imgName);
         $formData["total_amount"] = $formData["loyer"] + $formData["security"] + $formData["rubbish"] + $formData["vidange"] + $formData["cleaning"];
 
         $room = Room::create($formData);
@@ -144,17 +142,28 @@ class ROOM_HELPER extends BASE_HELPER
     static function getRooms()
     {
         $user = request()->user();
-        $rooms = Room::with(["Owner", "House", "Nature", "Type"])->get();
+        $rooms = Room::with(["Owner", "House", "Nature", "Type", "Locations"])->where(["visible" => 1])->get();
+
+        // return $rooms->Locations;
         return self::sendResponse($rooms, 'Toutes les chambres récupérées avec succès!!');
     }
 
     static function _retrieveRoom($id)
     {
         $user = request()->user();
-        $room = Room::where(["visible" => 1])->with(["Owner", "House", "Nature", "Type"])->find($id);
+        $room = Room::where(["visible" => 1])->with(["Owner", "House", "Nature", "Type", "Locations"])->find($id);
         if (!$room) {
             return self::sendError("Cette chambre n'existe pas!", 404);
         }
+
+        $locataires = [];
+        $thisRoomLocations =  $room->Locations;
+
+        foreach ($thisRoomLocations as $location) {
+            array_push($locataires, $location->Locataire);
+        }
+
+        $room["locataires"] = $locataires;
         return self::sendResponse($room, "Chmabre récupérée avec succès:!!");
     }
 
@@ -220,11 +229,11 @@ class ROOM_HELPER extends BASE_HELPER
             if ($room->owner != $user->id) {
                 return self::sendError("Cette Chambre ne vous appartient pas!", 404);
             }
-
-            $room->visible = 0;
-            $room->delete_at = now();
-            $room->save();
-            return self::sendResponse($room, 'Cette Chambre a été supprimée avec succès!');
         }
+
+        $room->visible = 0;
+        $room->delete_at = now();
+        $room->save();
+        return self::sendResponse($room, 'Cette Chambre a été supprimée avec succès!');
     }
 }

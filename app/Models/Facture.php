@@ -30,7 +30,7 @@ class Facture extends Model
 
     function Location(): BelongsTo
     {
-        return $this->belongsTo(Location::class, "location");
+        return $this->belongsTo(Location::class, "location")->with(["House", "Locataire", "Room"]);
     }
 
     function Type(): BelongsTo

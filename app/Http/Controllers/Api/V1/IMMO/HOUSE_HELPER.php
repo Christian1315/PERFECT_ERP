@@ -41,14 +41,14 @@ class HOUSE_HELPER extends BASE_HELPER
     static function house_messages(): array
     {
         return [
-            'name.required' => 'Le nom de la chambre est réquis!',
+            'name.required' => 'Le nom de la maison est réquis!',
             'latitude.required' => "Latitude est réquise!",
             'longitude.required' => "La longitude est réquise!",
             'comments.required' => "Le commentaire est réquis!",
             'proprietor.required' => "Le propriétaire est réquis",
             'type.required' => "Le type de la chambre est réquis",
             'city.required' => "La ville est réquise",
-            'country.required' => "La Pays est réquis",
+            'country.required' => "Le Pays est réquis",
             'departement.required' => "Le departement est réquis",
             'quartier.required' => "Le quartier est réquis",
             'zone.required' => "La zone est réquise",
@@ -146,14 +146,14 @@ class HOUSE_HELPER extends BASE_HELPER
     static function getHouses()
     {
         $user = request()->user();
-        $houses = House::where(["visible" => 1])->with(["Owner", "Proprietor", "Type", "Supervisor", "City", "Country", "Departement", "Quartier", "Zone", "Rooms"])->get();
+        $houses = House::where(["visible" => 1])->with(["Owner", "Proprietor", "Type", "Supervisor", "City", "Country", "Departement", "Quartier", "Zone", "Rooms", "Locations"])->get();
         return self::sendResponse($houses, 'Toutes les maisons récupérées avec succès!!');
     }
 
     static function _retrieveHouse($id)
     {
         $user = request()->user();
-        $house = House::where(["visible" => 1])->with(["Owner", "Proprietor", "Type", "Supervisor", "City", "Country", "Departement", "Quartier", "Zone", "Rooms"])->find($id);
+        $house = House::where(["visible" => 1])->with(["Owner", "Proprietor", "Type", "Supervisor", "City", "Country", "Departement", "Quartier", "Zone", "Rooms", "Locations"])->find($id);
         if (!$house) {
             return self::sendError("Cette maison n'existe pas!", 404);
         }

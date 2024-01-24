@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\V1\CARDS\CardController;
 use App\Http\Controllers\Api\V1\ChargeOrderController;
 use App\Http\Controllers\Api\V1\IMMO\ActivityDomainController;
 use App\Http\Controllers\Api\V1\IMMO\AreaControlller;
+use App\Http\Controllers\Api\V1\IMMO\CardTypeController;
 use App\Http\Controllers\Api\V1\IMMO\CityController;
 use App\Http\Controllers\Api\V1\IMMO\ClientController;
 use App\Http\Controllers\Api\V1\IMMO\ClientTypeController;
@@ -141,6 +142,7 @@ Route::prefix('v1')->group(function () {
         Route::prefix("user")->group(function () {
             Route::any('login', 'Login');
             Route::middleware(['auth:api'])->get('logout', 'Logout');
+            Route::any('add', 'AddUser');
             Route::any('users', 'Users');
             Route::any('users/{id}', 'RetrieveUser');
             Route::any('{id}/password/update', 'UpdatePassword');
@@ -469,11 +471,30 @@ Route::prefix('v1')->group(function () {
         });
         ##___
 
+        ###========== DEPARTEMENT ========###
+        Route::prefix("departement")->group(function () {
+            Route::controller(DepartementController::class)->group(function () {
+                Route::any('all', 'Departements'); #RECUPERATION DE TOUT LES DEPARTEMENTS
+                Route::any('{id}/retrieve', '_RetrieveDepartement'); #RECUPERATION D'UN DEPARTEMENT
+            });
+        });
+        ##___
+
+
         ###========== TYPES DE COMPTEUR ========###
         Route::prefix("counterType")->group(function () {
             Route::controller(CounterTypeController::class)->group(function () {
                 Route::any('all', 'CounterTypes'); #RECUPERATION DE TOUT LES TYPES DE COMPTEUR
                 Route::any('{id}/retrieve', '_RetrieveCounterType'); #RECUPERATION D'UN TYPE DE COMPTEUR
+            });
+        });
+        ##___
+
+        ###========== TYPES DE CARTES ========###
+        Route::prefix("cardType")->group(function () {
+            Route::controller(CardTypeController::class)->group(function () {
+                Route::any('all', 'CardTypes'); #RECUPERATION DE TOUT LES TYPES DE CARTE
+                Route::any('{id}/retrieve', '_RetrieveCardType'); #RECUPERATION D'UN TYPE DE CARTE
             });
         });
         ##___
@@ -728,6 +749,7 @@ Route::prefix('v1')->group(function () {
             Route::controller(FactureController::class)->group(function () {
                 Route::any('all', 'Factures'); #RECUPERATION DE TOUTES LES FACTURES
                 Route::any('{id}/retrieve', 'RetrieveFacture'); #RECUPERATION D'UNE FACTURE
+                Route::any('{id}/updateStatus', 'UpdateStatus'); #CHANGEMENT DE STATUS
             });
         });
         ##___

@@ -23,17 +23,17 @@ class PAIEMENT_HELPER extends BASE_HELPER
     {
         return [
             'location' => ['required', "integer"],
-            'module' => ['required', "integer"],
-            'status' => ['required', "integer"],
+            // 'module' => ['required', "integer"],
+            // 'status' => ['required', "integer"],
             'type' => ['required', "integer"],
 
-            'amount' => ['required', "numeric"],
-            'reference' => ['required'],
-            'comments' => ['required'],
-            'facture' => ['required', "file"],
+            // 'amount' => ['required', "numeric"],
+            // 'reference' => ['required'],
+            // 'comments' => ['required'],
+            // 'facture' => ['required', "file"],
 
-            'start_date' => ['required', "date"],
-            'end_date' => ['required', "date"],
+            'mounth' => ['required', "date"],
+            // 'end_date' => ['required', "date"],
         ];
     }
 
@@ -41,30 +41,32 @@ class PAIEMENT_HELPER extends BASE_HELPER
     {
         return [
             'location.required' => 'La location  est réquise!',
-            'module.required' => "Le module de paiement est réquis!",
-            'status.required' => "Le status de paiement est réquis!",
+            // 'module.required' => "Le module de paiement est réquis!",
+            // 'status.required' => "Le status de paiement est réquis!",
             'type.required' => "Le type de paiement est réquis!",
 
-            'amount.required' => "Le montant est réquis",
-            'comments.required' => "Le commentaire est réquise",
+            // 'amount.required' => "Le montant est réquis",
+            // 'comments.required' => "Le commentaire est réquise",
 
-            'start_date.required' => "La date de début est réquise",
-            'end_date.required' => "La date de fin est réquise",
+            // 'start_date.required' => "La date de début est réquise",
+            // 'end_date.required' => "La date de fin est réquise",
 
-            'facture.required' => "La facture du paiement est réquise",
-            'facture.file' => "La facture du paiement doit être un fichier",
+            // 'facture.required' => "La facture du paiement est réquise",
+            // 'facture.file' => "La facture du paiement doit être un fichier",
 
             'location.integer' => "Ce champ doit être de type entier!",
-            'module.integer' => "Ce champ doit être de type entier!",
-            'status.integer' => "Ce champ doit être de type entier!",
+            // 'module.integer' => "Ce champ doit être de type entier!",
+            // 'status.integer' => "Ce champ doit être de type entier!",
             'type.integer' => "Ce champ doit être de type entier!",
 
-            'reference.required' => "La reference est réquise!",
+            // 'reference.required' => "La reference est réquise!",
 
-            'amount.numeric' => "Ce champ doit être de type numéric!",
+            // 'amount.numeric' => "Ce champ doit être de type numéric!",
 
-            'start_date.date' => "Ce champ doit être de type date!",
-            'end_date.date' => "Ce champ doit être de type date!",
+            'mounth.required' => "Ce champ est réquis!",
+            'mounth.date' => "Ce champ doit être de type date!",
+
+            // 'end_date.date' => "Ce champ doit être de type date!",
         ];
     }
 
@@ -114,19 +116,18 @@ class PAIEMENT_HELPER extends BASE_HELPER
 
         ###___TRAITEMENT DES DATAS
         $location = Location::with(["House", "Locataire", "Room"])->find($formData["location"]);
-        $module = PaiementModule::find($formData["module"]);
-        $status = PaiementStatus::find($formData["status"]);
         $type = PaiementType::find($formData["type"]);
+
+        $formData["module"] = 2;
+        $formData["status"] = 1;
+        $formData["amount"] = $location->loyer;
+        $formData["comments"] = "Encaissement de loyer pour la location d'ID : <<" . $location->id . ">> à la date de <<" . now() . ">> par <<" . $user->name . ">>";
+        $formData["reference"] = Custom_Timestamp();
 
         if (!$location) {
             return self::sendError("Cette location n'existe pas!", 404);
         }
-        if (!$module) {
-            return self::sendError("Ce Module de paiement n'existe pas!", 404);
-        }
-        if (!$status) {
-            return self::sendError("Ce status de paiement n'existe pas!", 404);
-        }
+
         if (!$type) {
             return self::sendError("Ce type de paiement n'existe pas!", 404);
         }
@@ -137,10 +138,14 @@ class PAIEMENT_HELPER extends BASE_HELPER
 
         ###__ENREGISTREMENT DE LA FACTURE DE PAIEMENT DANS LA DB
         #~~Traitement de la factrure~~#
-        $factureFile = $formData["facture"];
-        $fileName = $factureFile->getClientOriginalName();
-        $factureFile->move("factures", $fileName);
-        $formData["facture"] = asset("factures/" . $fileName);
+        if ($request->file("facture")) {
+            $factureFile = $formData["facture"];
+            $fileName = $factureFile->getClientOriginalName();
+            $factureFile->move("factures", $fileName);
+            $formData["facture"] = asset("factures/" . $fileName);
+        } else {
+            $formData["facture"] = null;
+        }
         ##___
 
         $factureDatas = [
@@ -149,8 +154,8 @@ class PAIEMENT_HELPER extends BASE_HELPER
             "location" => $formData["location"],
             "type" => 1,
             "facture" => $formData["facture"],
-            "begin_date" => $formData["start_date"],
-            "end_date" => $formData["end_date"],
+            "begin_date" => null,
+            "end_date" => null,
             "comments" => $formData["comments"],
             "amount" => $formData["amount"],
         ];
@@ -167,7 +172,7 @@ class PAIEMENT_HELPER extends BASE_HELPER
 
         // return $location;
         $rent_account = ImmoAccount::find(6);
-        $request["description"] = "Encaissement de paiement à la date " . $Paiement->created_at . " par le locataire (" . $location->Locataire->name . " " . $location->Locataire->prenom . " ) habitant la chambre (" . $location->Room->number . ") de la maison (" . $location->House->name." )";
+        $request["description"] = "Encaissement de paiement à la date " . $Paiement->created_at . " par le locataire (" . $location->Locataire->name . " " . $location->Locataire->prenom . " ) habitant la chambre (" . $location->Room->number . ") de la maison (" . $location->House->name . " )";
         $request["sold"] = $formData["amount"];
         MANAGE_ACCOUNT_HELPER::creditateAccount($request, $rent_account->id);
 
@@ -216,6 +221,14 @@ class PAIEMENT_HELPER extends BASE_HELPER
                 return self::sendError("Ce module de paiement n'existe pas!", 404);
             }
         }
+        ####____TRAITEMENT DU STATUS DU PAIEMENT
+        if ($request->get("status")) {
+            $status = PaiementStatus::find($request->get("status"));
+
+            if (!$status) {
+                return self::sendError("Ce status de paiement n'existe pas!", 404);
+            }
+        }
 
         ####____TRAITEMENT DU CLIENT
         if ($request->get("client")) {
@@ -238,9 +251,9 @@ class PAIEMENT_HELPER extends BASE_HELPER
         $start_date = $formData["start_date"];
         $end_date = $formData["end_date"];
 
-        $payements = Payement::with(["Status", "Location", "Facture"])->whereBetween('created_at', [$start_date, $end_date])->get();
+        $payements = Payement::with(["Owner", "Module", "Type", "Client", "Status", "Location", "Facture"])->whereBetween('created_at', [$start_date, $end_date])->get();
 
-        return self::sendResponse($payements, 'Rapport de paiement éffectué avec succès!');
+        return self::sendResponse($payements, 'Filtrage éffectué avec succès!');
     }
 
     static function _filtreAfterStateDateStoped($request, $houseId)

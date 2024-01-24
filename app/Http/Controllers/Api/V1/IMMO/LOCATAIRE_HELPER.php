@@ -23,7 +23,7 @@ class LOCATAIRE_HELPER extends BASE_HELPER
             'sexe' => ['required'],
             'phone' => ['required', "numeric"],
             'piece_number' => ['required'],
-            'mandate_contrat' => ['required', "file"],
+            // 'mandate_contrat' => ['required', "file"],
             'comments' => ['required'],
             'adresse' => ['required'],
             'card_id' => ['required'],
@@ -44,8 +44,8 @@ class LOCATAIRE_HELPER extends BASE_HELPER
             'phone.required' => "Le phone est réquis",
             'phone.numeric' => "Le phone doit être de type numéric",
             'piece_number.required' => "Le numéro de la pièce est réquise",
-            'mandate_contrat.required' => "Le contrat du mandat est réquis",
-            'mandate_contrat.file' => "Le contrat du mandat doit être un fichier",
+            // 'mandate_contrat.required' => "Le contrat du mandat est réquis",
+            // 'mandate_contrat.file' => "Le contrat du mandat doit être un fichier",
             'comments.required' => "Le commentaire est réquis",
             'adresse.required' => "L'adresse est réquis!",
             'card_id.adresse' => "L'ID de la carte est réquis",
@@ -92,13 +92,15 @@ class LOCATAIRE_HELPER extends BASE_HELPER
         }
 
         ##___TRAITEMENT DE L'IMAGE
-        $img = $request->file("mandate_contrat");
-        $imgName = $img->getClientOriginalName();
-        $img->move("mandate_contrats", $imgName);
-
-        #ENREGISTREMENT DU LOCATAIRE DANS LA DB
-        $formData["owner"] = $user->id;
-        $formData["mandate_contrat"] = asset("mandate_contrats/" . $imgName);
+        if ($request->file("mandate_contrat")) {
+            $img = $request->file("mandate_contrat");
+            $imgName = $img->getClientOriginalName();
+            $img->move("mandate_contrats", $imgName);
+    
+            #ENREGISTREMENT DU LOCATAIRE DANS LA DB
+            $formData["owner"] = $user->id;
+            $formData["mandate_contrat"] = asset("mandate_contrats/" . $imgName);
+        }
 
         // return $formData;
         $locataire = Locataire::create($formData);
@@ -115,24 +117,38 @@ class LOCATAIRE_HELPER extends BASE_HELPER
         $client->comments = $formData["comments"];
         $client->save();
         ###___FIN CREATION DU CLIENT___###
-        
+
         return self::sendResponse($locataire, "Locataire ajouté avec succès!!");
     }
 
     static function getLocataires()
     {
         $user = request()->user();
-        $locataires = Locataire::where(["visible" => 1])->with(["Owner", "CardType", "CardType", "Departement", "Country", "Location"])->get();
+        $locataires = Locataire::where(["visible" => 1])->with(["Owner", "CardType", "CardType", "Departement", "Country", "Locations"])->get();
         return self::sendResponse($locataires, 'Tout les locataires récupérés avec succès!!');
     }
 
     static function _retrieveLocataire($id)
     {
         $user = request()->user();
-        $locataire = Locataire::where(["visible" => 1])->with(["Owner", "CardType", "CardType", "Departement", "Country", "Location"])->find($id);
+        $locataire = Locataire::where(["visible" => 1])->with(["Owner", "CardType", "CardType", "Departement", "Country", "Locations"])->find($id);
         if (!$locataire) {
             return self::sendError("Ce locataire n'existe pas!", 404);
         }
+
+        $houses = [];
+        $rooms = [];
+
+        $thisLocataireLocations =  $locataire->Locations;
+
+        foreach ($thisLocataireLocations as $location) {
+            array_push($houses, $location->House);
+            array_push($rooms, $location->Room);
+        }
+
+        $locataire["houses"] = $houses;
+        $locataire["rooms"] = $rooms;
+
         return self::sendResponse($locataire, "Locataire récupéré avec succès:!!");
     }
 

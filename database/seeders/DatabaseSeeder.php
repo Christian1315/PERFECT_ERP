@@ -1491,6 +1491,20 @@ class DatabaseSeeder extends Seeder
 
                 'is_admin' => true,
                 'compte_actif' => true,
+            ],
+            [
+                'name' => 'Master Edou',
+                'username' => 'edou',
+                'email' => 'edou@gmail.com',
+                'password' => '$2y$10$CI5P59ICr/HOihqlnYUrLeKwCajgMKd34HB66.JsJBrIOQY9fazrG', #admin
+                "rang_id" => \App\Models\Rang::find(1),
+                "profil_id" => \App\Models\Profil::find(9),
+                // 'is_admin' => true,
+                'phone' => "22996095312",
+
+                'is_admin' => true,
+                'compte_actif' => true,
+                'owner' => 1,
             ]
         ];
 

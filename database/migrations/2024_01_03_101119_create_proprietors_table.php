@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string("sexe");
 
             $table->string("piece_number");
-            $table->text("mandate_contrat");
+            $table->text("mandate_contrat")->nullable();
             $table->string("comments");
             $table->string("adresse");
 

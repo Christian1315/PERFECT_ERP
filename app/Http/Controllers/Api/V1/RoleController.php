@@ -10,6 +10,17 @@ class RoleController extends ROLE_HELPER
     public function __construct()
     {
         $this->middleware(['auth:api', 'scope:api-access']);
+
+        $this->middleware(["ChechSuperAdminOrSimpleAdmin"])->only([
+            "UpdateCompte",
+            "AttachRightToUser",
+            "DesAttachRightToUser",
+            "ArchiveAccount",
+            "DuplicatAccount",
+
+            "DesAttachRoleToUser",
+            "AttachRoleToUser"
+        ]);
     }
 
     function CreateRole(Request $request)

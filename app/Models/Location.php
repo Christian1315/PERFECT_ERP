@@ -82,6 +82,6 @@ class Location extends Model
 
     function Factures(): HasMany
     {
-        return $this->hasMany(Facture::class, "location");
+        return $this->hasMany(Facture::class, "location")->with(["Owner", "Location", "Type", "Status", "Payement"]);
     }
 }

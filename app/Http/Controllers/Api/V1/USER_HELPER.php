@@ -16,20 +16,24 @@ class USER_HELPER extends BASE_HELPER
     static function register_rules(): array
     {
         return [
-            'account' => 'required',
+            'name' => 'required',
+            'username' => 'required',
+            'phone' => ['required', 'numeric', Rule::unique('users')],
             'email' => ['required', 'email', Rule::unique('users')],
-            'password' => ['required', Rule::unique('users')],
         ];
     }
 
     static function register_messages(): array
     {
         return [
-            'account.required' => 'Le champ username est réquis!',
+            'name.required' => 'Le nom entier de l\'utilisateur est réquis!',
+            'username.required' => 'L\'identifiant(uersname) est réquis!',
             'email.required' => 'Le champ Email est réquis!',
             'email.email' => 'Ce champ est un mail!',
-            'email.unique' => 'Ce mail existe déjà!',
-            'password.required' => 'Le champ Password est réquis!',
+            'email.unique' => 'Un compte existe déjà au nom de ce mail!',
+            'phone.unique' => 'Un compte existe déjà au nom de ce phone',
+            'phone.required' => 'Le phone est réquis!',
+            'phone.numeric' => 'Le phone doit être de type numéric!',
         ];
     }
 
@@ -68,11 +72,41 @@ class USER_HELPER extends BASE_HELPER
         return $validator;
     }
 
-    static function createUser($formData)
+    static function createUser($request)
     {
-        $formData['password'] = Hash::make($formData['password']); #Hashing du password
-        $user = User::create($formData); #ENREGISTREMENT DU USER DANS LA DB
-        return self::sendResponse($user, 'User crée avec succès!!');
+        $formData = $request->all();
+        // $formData['password'] = Hash::make($formData['password']); #Hashing du password
+        #SON ENREGISTREMENT EN TANT QU'UN USER
+        $user = request()->user();
+
+        $userData = [
+            "name" => $formData['name'],
+            "username" => $formData['username'],
+            "phone" => $formData['phone'],
+            "email" => $formData['email'],
+            "password" => $formData['username'],
+            "organisation" => null,
+            "pass_default" => Custom_Timestamp(),
+            "owner" => $user->id,
+            "rang_id" => 3,
+            "profil_id" => 4,
+        ];
+
+        // return $userData;
+
+        $create_user = User::create($userData); #ENREGISTREMENT
+
+        try {
+            Send_Notification(
+                $create_user,
+                "Création de compte sur Perfect ERP",
+                "Votre compte a été crée avec succès sur PERFECT ERP"
+            );
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        return self::sendResponse($create_user, 'Utilisateur ajouté avec succès!!');
     }
 
     ##======== LOGIN VALIDATION =======##
@@ -175,14 +209,15 @@ class USER_HELPER extends BASE_HELPER
 
     static function getUsers()
     {
-        $users =  User::with(["as_admin", "my_admins", "belong_to_organisation"])->orderBy("id", "desc")->get();
+        $user = request()->user();
+        $users =  User::with(["as_admin", "my_admins", "belong_to_organisation", "roles"])->where(["owner" => $user->id])->orderBy("id", "desc")->get();
         return self::sendResponse($users, 'Touts les utilisatreurs récupérés avec succès!!');
     }
 
     static function retrieveUsers($id)
     {
-        $user = User::with(["as_admin", "my_admins", "belong_to_organisation"])->where('id', $id)->get();
-        if ($user->count() == 0) {
+        $user = User::with(["as_admin", "my_admins", "belong_to_organisation", "roles"])->find($id);
+        if (!$user) {
             return self::sendError("Ce utilisateur n'existe pas!", 404);
         }
         return self::sendResponse($user, "Utilisateur récupéré(e) avec succès:!!");
@@ -447,10 +482,11 @@ class USER_HELPER extends BASE_HELPER
         ###__
 
         $datas = [
+            "owner" => request()->user()->id,
             "name" => $account["name"],
             'username' => $account["username"],
-            'email' => "duplicate@gmail.com",
-            'password' => "duplicate",
+            'email' => $account["username"],
+            'password' => $account["password"],
             'organisation' => $account["organisation"],
             "phone" => "123",
             "is_archive" => 0,

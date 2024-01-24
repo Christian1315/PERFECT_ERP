@@ -24,7 +24,8 @@ class Payement extends Model
         "comments",
         "start_date",
         "end_date",
-        "location"
+        "location",
+        "mounth"
     ];
 
     function Owner(): BelongsTo
